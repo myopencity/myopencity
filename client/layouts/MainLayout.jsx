@@ -26,6 +26,10 @@ export class MainLayout extends TrackerReact(Component){
     this.state.subscription.configuration.stop()
   }
 
+  componentDidMount(){
+    new WOW().init()
+  }
+
   configuration(){
     const configuration = Configuration.findOne({})
     Session.set('global_configuration', configuration)
@@ -55,7 +59,7 @@ export class MainLayout extends TrackerReact(Component){
             </Sidebar>
             <Sidebar.Pusher>
               <Grid>
-                <Grid.Column width={16}>
+                <Grid.Column width={16} className="navbar-container">
                   <Navbar />
                 </Grid.Column>
                 <Grid.Column width={16}>

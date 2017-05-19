@@ -23,14 +23,15 @@ export default class Navbar extends TrackerReact(Component){
 
   render(){
     const navbar_color = Session.get('global_configuration').navbar_color
-    console.log("width", this.state.screen_size);
 
     return(
       <div>
         {this.state.screen_size > 768 ?
-          <Menu secondary className="main-navbar" size="large" style={{backgroundColor: navbar_color}}>
+          <Menu secondary className="main-navbar" size="massive" style={{backgroundColor: navbar_color}}>
             <Container>
-              <Menu.Item className="navbar-item" name='header' header/>
+              <Menu.Item className="navbar-item" header>
+                {Session.get('global_configuration').main_title}
+              </Menu.Item>
               <Menu.Item className="navbar-item" name='home'/>
               <Menu.Item className="navbar-item" name='messages'/>
               <Menu.Item className="navbar-item" name='amis'/>
