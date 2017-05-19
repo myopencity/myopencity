@@ -18,8 +18,14 @@ export class MainLayout extends TrackerReact(Component){
     }
   }
 
+  componentWillUnmount(){
+    this.state.subscription.configuration.stop()
+  }
+
   configuration(){
-    return Configuration.findOne({})
+    const configuration = Configuration.findOne({})
+    Session.set('global_configuration', configuration)
+    return configuration
   }
 
   render(){
@@ -30,7 +36,7 @@ export class MainLayout extends TrackerReact(Component){
         <Grid>
           <Grid.Column width={16}>
             <header>
-              <Navbar color={configuration.navbar_color} />
+              <Navbar />
             </header>
           </Grid.Column>
           <Grid.Column width={16}>
