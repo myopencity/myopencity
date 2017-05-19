@@ -9,11 +9,9 @@ export const MainLayout = ({content}) => {
   return (
     <Grid>
         <Grid.Column width={16}>
-          <Container>
             <header>
               <Navbar />
             </header>
-          </Container>
         </Grid.Column>
         <Grid.Column width={16}>
           <main>
