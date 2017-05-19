@@ -1,3 +1,4 @@
+@import './global_variables.scss';
 /*
   This file contains all helpers and global SCSS declarations
 */
@@ -27,6 +28,31 @@
 .white{
   color: white !important;
 }
+
+.emerald{
+  color: $global_emerald;
+}
+
+.turquoise{
+  color: $global_turquoise;
+}
+
+.nephritis{
+  color: $global_nephritis;
+}
+
+.pomegranate{
+  color: $global_pomegranate;
+}
+
+.pumpkin{
+  color: $global_pumpkin;
+}
+
+.karot{
+  color: $global_karot;
+}
+
 
 /* -------- MAIN CLASSES */
 .main-container{
