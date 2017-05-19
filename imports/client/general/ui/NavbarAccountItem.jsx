@@ -14,7 +14,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
   constructor(props){
     super(props);
     this.state = {
-
+      screen_size: window.innerWith
     }
   }
 
