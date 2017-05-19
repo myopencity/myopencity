@@ -13,7 +13,7 @@ export default class Navbar extends TrackerReact(Component){
 
   render(){
     return(
-      <Menu secondary className="main-navbar">
+      <Menu secondary className="main-navbar" size="big" style={{backgroundColor: this.props.color}}>
         <Container>
           <Menu.Item className="navbar-item" name='header' header/>
           <Menu.Item className="navbar-item" name='home'/>

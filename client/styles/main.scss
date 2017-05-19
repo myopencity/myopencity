@@ -1,1 +1,24 @@
-/* CSS declarations go here */
+/*
+  This file contains all helpers and global SCSS declarations
+*/
+
+/* ---------- HELPERS */
+.center-align{
+  text-align: center !important;
+}
+
+.right-align{
+  text-align: right !important;
+}
+
+.left-align{
+  text-align: left !important;
+}
+
+.justiy-align{
+  text-align: justiy !important;
+}
+
+.inline-block{
+  display: inline-block !important;
+}
