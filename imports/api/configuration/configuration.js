@@ -15,6 +15,10 @@ const ConfigurationSchema = new SimpleSchema({
     type: String,
     defaultValue: "Ma ville"
   },
+  landing_main_title_color: {
+    type: String,
+    defaultValue: "#FFFFFF"
+  },
   landing_header_background_url: {
     type: String,
     defaultValue: "http://4vector.com/i/free-vector-modern-city_093317_bluecity.jpg"
@@ -22,7 +26,11 @@ const ConfigurationSchema = new SimpleSchema({
   landing_header_description: {
     type: String,
     defaultValue: "Participez activement à la démocratie locale"
-  }
+  },
+  landing_header_description_color: {
+    type: String,
+    defaultValue: "#FFFFFF"
+  },
 })
 
 Configuration.attachSchema(ConfigurationSchema);
