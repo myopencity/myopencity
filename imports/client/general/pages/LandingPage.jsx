@@ -14,7 +14,7 @@ export default class LandingPage extends TrackerReact(Component){
   render(){
     return(
       <Grid stackable centered>
-        <Grid.Column width={12} color="green">
+        <Grid.Column width={16} color="green">
           <Header as="h1">Landing page</Header>
         </Grid.Column>
       </Grid>
