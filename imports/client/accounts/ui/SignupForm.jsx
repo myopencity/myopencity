@@ -49,19 +49,19 @@ export default class SignupForm extends Component{
        <Form>
          <Form.Field>
            <label>Nom d'utilisateur</label>
-           <Input type="text" onChange={(e) => {this.handleChange('username', e)}} />
+           <Input fluid type="text" onChange={(e) => {this.handleChange('username', e)}} />
          </Form.Field>
          <Form.Field>
            <label>Votre adresse email</label>
-           <Input type="email" onChange={(e) => {this.handleChange('email', e)}} />
+           <Input fluid type="email" onChange={(e) => {this.handleChange('email', e)}} />
          </Form.Field>
          <Form.Field>
            <label>Mot de passe</label>
-           <Input type="password" onChange={(e) => {this.handleChange('password', e)}} />
+           <Input fluid type="password" onChange={(e) => {this.handleChange('password', e)}} />
          </Form.Field>
          <Form.Field>
            <label>Confirmez votre mot de passe</label>
-           <Input type="password" onChange={(e) => {this.handleChange('confirm_password', e)}} />
+           <Input fluid type="password" onChange={(e) => {this.handleChange('confirm_password', e)}} />
            {this.state.confirm_password && (this.state.password != this.state.confirm_password) ?
             <p>Le mot de passe et la confirmation ne sont pas identiques</p>
            : ''}

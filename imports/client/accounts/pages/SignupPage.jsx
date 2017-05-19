@@ -18,7 +18,7 @@ export default class SignupPage extends TrackerReact(Component){
 
   render(){
     return(
-       <Grid>
+       <Grid centered>
          <Container>
            <Grid.Column width={16} className="center-align">
              <Header as="h1">Inscription</Header>

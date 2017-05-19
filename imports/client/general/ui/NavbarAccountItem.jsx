@@ -22,8 +22,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
 
     if(current_user){
       return(
-        <Menu.Item className="navbar-item">
-          </Menu.Item>
+        <Menu.Item className="navbar-item">{current_user.username}</Menu.Item>
         )
     }else{
       return <Menu.Item className="navbar-item" name="Connexion"/>
