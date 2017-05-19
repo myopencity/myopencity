@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
-import {Grid} from 'semantic-ui-react';
+import {Grid, Container} from 'semantic-ui-react';
 import Navbar from '../../imports/client/general/ui/Navbar.jsx';
 
 export const MainLayout = ({content}) => {
@@ -8,20 +8,18 @@ export const MainLayout = ({content}) => {
 
   return (
     <Grid>
-      <Grid.Row>
-        <Grid.Column>
-          <header>
-            <Navbar />
-          </header>
+        <Grid.Column width={16}>
+          <Container>
+            <header>
+              <Navbar />
+            </header>
+          </Container>
         </Grid.Column>
-      </Grid.Row>
-      <Grid.Row>
-        <Grid.Column>
+        <Grid.Column width={16}>
           <main>
             {content}
           </main>
         </Grid.Column>
-      </Grid.Row>
     </Grid>
   );
 }
