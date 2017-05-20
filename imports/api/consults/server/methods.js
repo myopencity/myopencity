@@ -1,5 +1,11 @@
 import {Meteor} from 'meteor/meteor'
 import {Consults} from '../consults'
+import _ from 'lodash'
+import {Random} from 'meteor/random'
+
+const generate_url_shorten = (title) => {
+  return _.random(100,9999) + '-' + _.kebabCase(title)
+}
 
 Meteor.methods({
   'consults.insert'(consult){
@@ -7,6 +13,7 @@ Meteor.methods({
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
       consult.author = this.userId
+      consult.url_shorten = generate_url_shorten(consult.title)
       Consults.insert(consult)
     }
   },

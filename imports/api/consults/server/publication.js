@@ -10,5 +10,5 @@ Meteor.publish('consults.visible', function(){
 })
 
 Meteor.publish('consult', function(urlShorten){
-  return Consults.find({urlShorten: urlShorten, visible: true})
+  return Consults.find({url_shorten: urlShorten, visible: true})
 })

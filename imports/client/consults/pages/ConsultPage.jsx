@@ -1,9 +1,10 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
-import {Grid, Header} from 'semantic-ui-react'
+import {Grid, Header, Loader} from 'semantic-ui-react'
+import {Consults} from '/imports/api/consults/consults'
 
-export default class ConsultPage extends TrackerReact(Component){
+export class ConsultPage extends TrackerReact(Component){
 
   /*
     required props:
@@ -22,9 +23,9 @@ export default class ConsultPage extends TrackerReact(Component){
 
     if(consult){
       return(
-        <Grid>
+        <Grid stackable className="wow fadeInUp">
           <Grid.Column width={16} className="center-align">
-            {consult.title}
+            <Header as="h1">{consult.title}</Header>
           </Grid.Column>
         </Grid>
       )
@@ -37,7 +38,7 @@ export default class ConsultPage extends TrackerReact(Component){
 export default ConsultPageContainer = createContainer(({ urlShorten }) => {
   const consultPublication = Meteor.subscribe('consult', urlShorten)
   const loading = !consultPublication.ready()
-  const consult = Consult.findOne({_id: id, visible: true})
+  const consult = Consults.findOne({url_shorten: urlShorten, visible: true})
   return {
     loading,
     consult

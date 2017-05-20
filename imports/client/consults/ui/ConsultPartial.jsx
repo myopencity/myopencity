@@ -45,6 +45,11 @@ export default class ConsultPartial extends TrackerReact(Component){
     });
   }
 
+  go(route, params, e){
+    e.preventDefault()
+    FlowRouter.go(route, params)
+  }
+
   render(){
     const consult = this.props.consult
 
@@ -68,7 +73,7 @@ export default class ConsultPartial extends TrackerReact(Component){
             </Card.Description>
           </Card.Content>
           <Card.Content className="center-align" extra>
-            <Button fluid>Consulter</Button>
+            <Button onClick={(e) => {this.go('Consult', {urlShorten: consult.url_shorten}, e)}} fluid>Consulter</Button>
             {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
               <div>
                 <Button fluid positive={this.state.display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
