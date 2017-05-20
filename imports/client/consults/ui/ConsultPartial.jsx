@@ -15,7 +15,8 @@ export default class ConsultPartial extends TrackerReact(Component){
   constructor(props){
     super(props)
     this.state = {
-      display_manage_buttons: false
+      display_manage_buttons: false,
+      remove_confirm: false
     }
   }
 
@@ -52,6 +53,26 @@ export default class ConsultPartial extends TrackerReact(Component){
     FlowRouter.go(route, params)
   }
 
+  removeConsult(e){
+    Meteor.call('consults.remove', this.props.consult._id, (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors de la suppression de la consultation",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }else{
+        Bert.alert({
+          title: "La consultation a été supprimée",
+          type: 'success',
+          style: 'growl-bottom-left',
+        })
+      }
+    });
+  }
+
   render(){
     const consult = this.props.consult
 
@@ -79,11 +100,20 @@ export default class ConsultPartial extends TrackerReact(Component){
               <Button onClick={(e) => {this.go('Consult', {urlShorten: consult.url_shorten}, e)}} fluid>Consulter</Button>
               {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
                 <div>
-                  <Button fluid positive={this.state.display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
+                  <Button fluid active={this.state.display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
                   {this.state.display_manage_buttons ?
                     <div>
                       <Button onClick={(e) => {this.toggleEditConsult('visible', e)}} fluid>{consult.visible ? "Rendre invisible" : "Rendre visible"}</Button>
                       <Button onClick={(e) => {this.toggleEditConsult('votable', e)}} fluid>{consult.votable ? "Stopper les votes" : "Lancer les votes"}</Button>
+                      {this.state.remove_confirm ?
+                        <div className="wow fadeInUp">
+                          <p>Vous confirmez ?</p>
+                          <Button onClick={(e) => {this.toggleState('remove_confirm', e)}}>Annuler</Button>
+                          <Button color="red" onClick={(e) => {this.removeConsult(e)}}>Supprimer</Button>
+                        </div>
+                      :
+                        <Button color="red" onClick={(e) => {this.toggleState('remove_confirm', e)}} fluid>Supprimer</Button>
+                      }
                     </div>
                     : ''}
                   </div>
