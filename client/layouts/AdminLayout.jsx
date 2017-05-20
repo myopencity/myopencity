@@ -21,7 +21,7 @@ export class AdminLayout extends TrackerReact(Component){
   }
 
   componentWillMount(){
-    Session.set('open_sidebar', window.innerWidth > 768)
+    Session.set('open_sidebar', false)
   }
 
   componentDidMount(){
@@ -47,17 +47,35 @@ export class AdminLayout extends TrackerReact(Component){
         <div className="main-container">
           <Sidebar.Pushable>
             <Sidebar as={Menu} animation='push' width='thin' visible={Session.get('open_sidebar')} className="main-sidebar" icon='labeled' vertical inverted>
-              <Menu.Item name='home'>
-                <Icon name='home' />
-                Home
+              <Menu.Item onClick={() => {this.go('AdminConfiguration')}} name='cogs'>
+                <Icon name='cogs' />
+                Configuration
+              </Menu.Item>
+              <Menu.Item onClick={() => {this.go('AdminConsults')}} name='comments'>
+                <Icon name='comments' />
+                Consultations
               </Menu.Item>
             </Sidebar>
             <Sidebar.Pusher>
-              <Grid>
+              <Grid stackable>
                 <Grid.Column width={16} className="navbar-container">
                   <Navbar />
                 </Grid.Column>
-                <Grid.Column width={16}>
+                {window.innerWidth > 768 ?
+                  <Grid.Column width={2}>
+                    <Menu vertical>
+                      <Menu.Item name='configuration' onClick={() => {this.go('AdminConfiguration')}}>
+                        <Icon name='cogs' />
+                        Configuration
+                      </Menu.Item>
+                      <Menu.Item name='consultations' onClick={() => {this.go('AdminConsults')}}>
+                        <Icon name='comments' />
+                        Consultations
+                      </Menu.Item>
+                    </Menu>
+                  </Grid.Column>
+                : ''}
+                <Grid.Column width={window.innerWidth > 768 ? 14 : 16}>
                   <main>
                     {this.props.content}
                   </main>

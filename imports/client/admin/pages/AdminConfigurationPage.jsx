@@ -53,7 +53,7 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
     if(conf){
 
       return(
-        <Grid stackable>
+        <Grid stackable className="wow fadeInLeft">
           <Grid.Column width={16} className="center-align">
             <Header as="h1">Configuration de votre OpenCity</Header>
           </Grid.Column>
