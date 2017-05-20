@@ -21,6 +21,10 @@ export default class Navbar extends TrackerReact(Component){
     Session.set('open_sidebar', !Session.get('open_sidebar'))
   }
 
+  go(route){
+    FlowRouter.go(route)
+  }
+
   render(){
     const navbar_color = Session.get('global_configuration').navbar_color
 
@@ -29,7 +33,7 @@ export default class Navbar extends TrackerReact(Component){
         {this.state.screen_size > 768 ?
           <Menu secondary className="main-navbar" size="massive" style={{backgroundColor: navbar_color}}>
             <Container>
-              <Menu.Item className="navbar-item" header>
+              <Menu.Item className="navbar-item" onClick={() => {this.go('Landing')}} header>
                 {Session.get('global_configuration').main_title}
               </Menu.Item>
               <Menu.Item className="navbar-item" name='home'/>

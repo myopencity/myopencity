@@ -13,7 +13,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   landing_main_title: {
     type: String,
-    defaultValue: "Ma ville"
+    defaultValue: ""
   },
   landing_main_title_color: {
     type: String,
