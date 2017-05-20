@@ -1,0 +1,10 @@
+.consult-header{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .consult-header-inner-grid{
+    height: inherit !important;
+    background-color: rgba(0,0,0,0.5);
+  }
+}

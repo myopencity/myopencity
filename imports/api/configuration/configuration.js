@@ -31,6 +31,14 @@ const ConfigurationSchema = new SimpleSchema({
     type: String,
     defaultValue: "#FFFFFF"
   },
+  consult_header_height: {
+    type: Number,
+    defaultValue: 20
+  },
+  consult_header_color: {
+    type: Number,
+    defaultValue: "#FFFFFF"
+  }
 })
 
 Configuration.attachSchema(ConfigurationSchema);
