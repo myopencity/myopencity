@@ -67,13 +67,17 @@ export default class ConsultPartial extends TrackerReact(Component){
               }
             </Card.Description>
           </Card.Content>
-          {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator'])}
           <Card.Content className="center-align" extra>
-            <Button fluid positive={this.state.display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
-            {this.state.display_manage_buttons ?
+            <Button fluid>Consulter</Button>
+            {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
               <div>
-                <Button onClick={(e) => {this.toggleEditConsult('visible', e)}} fluid>{consult.visible ? "Rendre invisible" : "Rendre visible"}</Button>
-                <Button onClick={(e) => {this.toggleEditConsult('votable', e)}} fluid>{consult.votable ? "Stopper les votes" : "Lancer les votes"}</Button>
+                <Button fluid positive={this.state.display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
+                {this.state.display_manage_buttons ?
+                  <div>
+                    <Button onClick={(e) => {this.toggleEditConsult('visible', e)}} fluid>{consult.visible ? "Rendre invisible" : "Rendre visible"}</Button>
+                    <Button onClick={(e) => {this.toggleEditConsult('votable', e)}} fluid>{consult.votable ? "Stopper les votes" : "Lancer les votes"}</Button>
+                  </div>
+                  : ''}
               </div>
             : ''}
           </Card.Content>

@@ -8,3 +8,7 @@ Meteor.publish('consults.all', function(){
 Meteor.publish('consults.visible', function(){
   return Consults.find({visible: true})
 })
+
+Meteor.publish('consult', function(urlShorten){
+  return Consults.find({urlShorten: urlShorten, visible: true})
+})

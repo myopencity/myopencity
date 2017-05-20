@@ -13,6 +13,7 @@ import AdminConfigurationPage from '../imports/client/admin/pages/AdminConfigura
 import AdminConsultsPage from '../imports/client/admin/pages/AdminConsultsPage'
 import AdminConsultCreationPage from '../imports/client/admin/pages/AdminConsultCreationPage'
 import ConsultsPage from '../imports/client/consults/pages/ConsultsPage'
+import ConsultPage from '../imports/client/consults/pages/ConsultPage'
 
 FlowRouter.wait()
 
@@ -84,6 +85,15 @@ FlowRouter.route('/consults',{
   action(){
     mount(MainLayout, {
       content: (<ConsultsPage />)
+    })
+  }
+})
+
+FlowRouter.route('/consult/:urlShorten',{
+  name: "Consult",
+  action(params){
+    mount(MainLayout, {
+      content: (<ConsultPage urlShorten={params.urlShorten}/>)
     })
   }
 })

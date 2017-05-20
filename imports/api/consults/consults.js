@@ -33,6 +33,10 @@ const ConsultsSchema = new SimpleSchema({
     type: String,
     defaultValue: "https://image.freepik.com/free-vector/business-people-with-speech-bubbles_1325-25.jpg"
   },
+  url_shorten: {
+    type: String,
+    unique: true
+  },
   created_at: {
     type: Date,
     defaultValue: new Date()
