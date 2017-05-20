@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor'
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Menu, Modal} from 'semantic-ui-react'
+import {Menu, Modal, Dropdown} from 'semantic-ui-react'
 import SigninForm from '/imports/client/accounts/ui/SigninForm'
 
 export default class NavbarAccountItem extends TrackerReact(Component){
@@ -22,6 +22,26 @@ export default class NavbarAccountItem extends TrackerReact(Component){
     FlowRouter.go('Landing')
   }
 
+  logout(){
+    Meteor.logout((error, result) => {
+      if(error){
+        Bert.alert({
+          title: "Erreur lors de la déconnexion",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }else{
+        Bert.alert({
+          title: "Au revoir",
+          message: "Vous avez été déconnecté",
+          type: 'success',
+          style: 'growl-bottom-left',
+        })
+      }
+    })
+  }
+
   toggleState(attr, e){
     e.preventDefault()
     let state = this.state
@@ -34,7 +54,13 @@ export default class NavbarAccountItem extends TrackerReact(Component){
 
     if(current_user){
       return(
-        <Menu.Item className="navbar-item">{current_user.username}</Menu.Item>
+        <Dropdown item text={current_user.username}>
+          <Dropdown.Menu>
+            <Dropdown.Item>Profil</Dropdown.Item>
+            <Dropdown.Item>Admin</Dropdown.Item>
+            <Dropdown.Item onClick={this.logout.bind(this)}>Déconnexion</Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
         )
     }else{
       return (
