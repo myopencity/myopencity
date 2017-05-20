@@ -4,6 +4,8 @@ import '/imports/api/configuration/server/methods'
 import '/imports/api/configuration/server/publication'
 import '/imports/api/accounts/server/methods'
 import '/imports/api/accounts/server/publication'
+import '/imports/api/consults/server/methods'
+import '/imports/api/consults/server/publication'
 
 Meteor.startup(() => {
   // Initialization of global configuration singleton
@@ -13,5 +15,5 @@ Meteor.startup(() => {
     Configuration.insert({})
   }
 
-  
+
 });

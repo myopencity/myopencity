@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Grid, Header, Button} from 'semantic-ui-react'
+import {Grid, Header, Button, Loader} from 'semantic-ui-react'
+import ConsultForm from '/imports/client/consults/ui/ConsultForm'
+import {Consults} from '/imports/api/consults/consults'
+import { createContainer } from 'meteor/react-meteor-data';
 
-export default class AdminConsultsPage extends TrackerReact(Component){
+export class AdminConsultsPage extends TrackerReact(Component){
 
   /*
     required props:
@@ -10,22 +13,42 @@ export default class AdminConsultsPage extends TrackerReact(Component){
   */
 
   constructor(props){
-    super(props);
+    super(props)
     this.state = {
 
     }
+    console.log(this.props.consults)
+
   }
 
   render(){
-    return(
-       <Grid stackable className="wow fadeInLeft">
-         <Grid.Column width={16} className="center-align">
-           <Header as="h1">Gestion des consultations</Header>
-         </Grid.Column>
-         <Grid.Column width={16}>
-
-         </Grid.Column>
-       </Grid>
-    )
+    const consults = this.props.consults
+    if(!this.props.loading){
+      return(
+        <Grid stackable className="wow fadeInLeft">
+          <Grid.Column width={16} className="center-align">
+            <Header as="h1">Gestion des consultations</Header>
+          </Grid.Column>
+          <Grid.Column width={16}>
+            <ConsultForm />
+            {consults.map((consult, index) => {
+              return consult.title
+            })}
+          </Grid.Column>
+        </Grid>
+      )
+    }else{
+      return <Loader className="inline-block">Chargement des consultations</Loader>
+    }
   }
 }
+
+export default AdminConsultsPageContainer = createContainer(({ id }) => {
+  const consultsPublication = Meteor.subscribe('consults.all')
+  const loading = !consultsPublication.ready()
+  const consults = Consults.find({}).fetch()
+  return {
+    loading,
+    consults
+  }
+}, AdminConsultsPage)
