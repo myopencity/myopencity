@@ -12,6 +12,7 @@ import InitialConfigPage from '../imports/client/initial_pages/pages/InitialConf
 import AdminConfigurationPage from '../imports/client/admin/pages/AdminConfigurationPage'
 import AdminConsultsPage from '../imports/client/admin/pages/AdminConsultsPage'
 import AdminConsultCreationPage from '../imports/client/admin/pages/AdminConsultCreationPage'
+import ConsultsPage from '../imports/client/consults/pages/ConsultsPage'
 
 FlowRouter.wait()
 
@@ -74,6 +75,15 @@ FlowRouter.route('/signup',{
   action(){
     mount(MainLayout, {
       content: (<SignupPage />)
+    })
+  }
+})
+
+FlowRouter.route('/consults',{
+  name: "Consults",
+  action(){
+    mount(MainLayout, {
+      content: (<ConsultsPage />)
     })
   }
 })

@@ -36,6 +36,11 @@ export class MainLayout extends TrackerReact(Component){
     return configuration
   }
 
+  go(route, e){
+    e.preventDefault()
+    FlowRouter.go(route)
+  }
+
   render(){
     const configuration = this.configuration()
 
@@ -44,17 +49,11 @@ export class MainLayout extends TrackerReact(Component){
         <div className="main-container">
           <Sidebar.Pushable>
             <Sidebar as={Menu} animation='push' width='thin' visible={Session.get('open_sidebar')} className="main-sidebar" icon='labeled' vertical inverted>
-              <Menu.Item name='home'>
-                <Icon name='home' />
-                Home
+              <Menu.Item name='consultations' onClick={(e) => {this.go('Landing', e)}}>
+                Accueil
               </Menu.Item>
-              <Menu.Item name='gamepad'>
-                <Icon name='gamepad' />
-                Games
-              </Menu.Item>
-              <Menu.Item name='camera'>
-                <Icon name='camera' />
-                Channels
+              <Menu.Item name='consultations' onClick={(e) => {this.go('Consults', e)}}>
+                Consultations
               </Menu.Item>
             </Sidebar>
             <Sidebar.Pusher>
