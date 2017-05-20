@@ -67,8 +67,9 @@ export default class NavbarAccountItem extends TrackerReact(Component){
         <Dropdown item text={current_user.username}>
           <Dropdown.Menu>
             <Dropdown.Item>Profil</Dropdown.Item>
-            {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator'])}
-            <Dropdown.Item onClick={(e) => {this.go('AdminConsults', e)}}>Admin</Dropdown.Item>
+            {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
+              <Dropdown.Item onClick={(e) => {this.go('AdminConsults', e)}}>Admin</Dropdown.Item>
+            : ''}
             <Dropdown.Item onClick={this.logout.bind(this)}>Déconnexion</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
