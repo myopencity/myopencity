@@ -32,6 +32,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
           style: 'growl-bottom-left',
         })
       }else{
+        FlowRouter.go('Landing')
         Bert.alert({
           title: "Au revoir",
           message: "Vous avez été déconnecté",
@@ -52,6 +53,10 @@ export default class NavbarAccountItem extends TrackerReact(Component){
     let state = this.state
     state[attr] = !state[attr]
     this.setState(state)
+  }
+
+  onSignupClick(){
+    this.setState({open_modal: false})
   }
 
   render(){
@@ -76,7 +81,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
             <Modal.Header>Connexion</Modal.Header>
             <Modal.Content>
               <Modal.Description>
-                <SigninForm onSignin={this.onSignin.bind(this)} />
+                <SigninForm onSignin={this.onSignin.bind(this)} onSignupClick={this.onSignupClick.bind(this)} />
               </Modal.Description>
             </Modal.Content>
           </Modal>

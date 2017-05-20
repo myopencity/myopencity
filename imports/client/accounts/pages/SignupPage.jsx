@@ -18,7 +18,7 @@ export default class SignupPage extends TrackerReact(Component){
 
   render(){
     return(
-       <Grid centered>
+       <Grid stackable centered className="wow fadeInUp">
          <Container>
            <Grid.Column width={16} className="center-align">
              <Header as="h1">Inscription</Header>
