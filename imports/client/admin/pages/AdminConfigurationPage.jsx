@@ -51,7 +51,6 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
     const conf = this.state.configuration
 
     if(conf){
-      console.log("CHARGEMENT OK");
 
       return(
         <Grid stackable>
@@ -61,6 +60,7 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
           <Grid.Column width={16}>
             <Container>
               <Form onSubmit={(e) => {this.submit_configuration(e)}}>
+                <Header as="h3">Textes généraux</Header>
                 <Form.Field>
                   <label>Nom de votre espace (nom du territoire)</label>
                   <Input type="text" value={conf.main_title} onChange={(e) => {this.handleConfigurationChange('main_title', e)}} />
@@ -69,6 +69,7 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                   <label>Phrase d'accroche</label>
                   <Input type="text" value={conf.landing_header_description} onChange={(e) => {this.handleConfigurationChange('landing_header_description', e)}} />
                 </Form.Field>
+                <Header as="h3">Page d'accueil</Header>
                 <Form.Field>
                   <label>URL de l'image d'arrière plan sur la page d'accueil</label>
                   <Input type="text" value={conf.landing_header_background_url} onChange={(e) => {this.handleConfigurationChange('landing_header_background_url', e)}} />

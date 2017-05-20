@@ -20,6 +20,10 @@ export class AdminLayout extends TrackerReact(Component){
     this.state.subscription.configuration.stop()
   }
 
+  componentWillMount(){
+    Session.set('open_sidebar', window.innerWidth > 768)
+  }
+
   componentDidMount(){
     new WOW().init()
   }
@@ -27,8 +31,6 @@ export class AdminLayout extends TrackerReact(Component){
   configuration(){
     const configuration = Configuration.findOne({})
     Session.set('global_configuration', configuration)
-    console.log("configuration", configuration)
-
     return configuration
   }
 
@@ -44,7 +46,7 @@ export class AdminLayout extends TrackerReact(Component){
       return (
         <div className="main-container">
           <Sidebar.Pushable>
-            <Sidebar as={Menu} animation='push' width='thin' visible={true} className="main-sidebar" icon='labeled' vertical inverted>
+            <Sidebar as={Menu} animation='push' width='thin' visible={Session.get('open_sidebar')} className="main-sidebar" icon='labeled' vertical inverted>
               <Menu.Item name='home'>
                 <Icon name='home' />
                 Home
