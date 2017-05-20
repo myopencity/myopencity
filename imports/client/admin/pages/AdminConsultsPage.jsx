@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Button, Loader} from 'semantic-ui-react'
 import ConsultForm from '/imports/client/consults/ui/ConsultForm'
+import ConsultPartial from '/imports/client/consults/ui/ConsultPartial'
 import {Consults} from '/imports/api/consults/consults'
 import { createContainer } from 'meteor/react-meteor-data';
 
@@ -31,9 +32,15 @@ export class AdminConsultsPage extends TrackerReact(Component){
           </Grid.Column>
           <Grid.Column width={16}>
             <ConsultForm />
-            {consults.map((consult, index) => {
-              return consult.title
-            })}
+            <Grid stackable>
+              {consults.map((consult, index) => {
+                return (
+                  <Grid.Column key={index} width={4} className="center-align">
+                    <ConsultPartial consult={consult} />
+                  </Grid.Column>
+                )
+              })}
+            </Grid>
           </Grid.Column>
         </Grid>
       )

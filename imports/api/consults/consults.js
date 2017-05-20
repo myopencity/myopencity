@@ -29,6 +29,10 @@ const ConsultsSchema = new SimpleSchema({
     type: String,
     optional: true
   },
+  image_url: {
+    type: String,
+    defaultValue: "https://image.freepik.com/free-vector/business-people-with-speech-bubbles_1325-25.jpg"
+  },
   created_at: {
     type: Date,
     defaultValue: new Date()
