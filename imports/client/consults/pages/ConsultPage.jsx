@@ -19,7 +19,8 @@ export class ConsultPage extends TrackerReact(Component){
   }
 
   render(){
-    const consult = this.props.consult
+    const {consult} = this.props
+    const {consult_header_height, consult_header_color} = Session.get('global_configuration')
 
     if(consult){
       return(
@@ -29,11 +30,11 @@ export class ConsultPage extends TrackerReact(Component){
             className="center-align consult-header"
             style={{
               backgroundImage: "url('" + consult.image_url + "')",
-              height: Session.get('global_configuration').consult_header_height + "em"
+              height: consult_header_height
             }}>
             <Grid verticalAlign="middle" className="consult-header-inner-grid">
               <Grid.Column width={16} className="center-align">
-                <Header className="wow fadeInUp" data-wow-delay="1s" as="h1" style={{color: Session.get('global_configuration').consult_header_color}}>{consult.title}</Header>
+                <Header className="wow fadeInUp" data-wow-delay="1s" as="h1" style={{color: consult_header_color}}>{consult.title}</Header>
               </Grid.Column>
             </Grid>
           </Grid.Column>

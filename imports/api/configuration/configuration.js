@@ -32,11 +32,11 @@ const ConfigurationSchema = new SimpleSchema({
     defaultValue: "#FFFFFF"
   },
   consult_header_height: {
-    type: Number,
+    type: String,
     defaultValue: 20
   },
   consult_header_color: {
-    type: Number,
+    type: String,
     defaultValue: "#FFFFFF"
   }
 })
