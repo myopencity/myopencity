@@ -6,6 +6,8 @@ import '/imports/api/accounts/server/methods'
 import '/imports/api/accounts/server/publication'
 import '/imports/api/consults/server/methods'
 import '/imports/api/consults/server/publication'
+import '/imports/api/consult_parts/server/methods'
+import '/imports/api/consult_parts/server/publication'
 
 Meteor.startup(() => {
   // Initialization of global configuration singleton

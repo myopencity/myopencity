@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Grid, Header, Form, Button, Input, TextArea, Menu} from 'semantic-ui-react'
+import {Grid, Header, Form, Button, Input, TextArea, Menu, Segment} from 'semantic-ui-react'
 import ConsultPartial from '/imports/client/consults/ui/ConsultPartial'
+import ConsultPartForm from '/imports/client/consult_parts/ui/ConsultPartForm'
 
 export default class ConsultForm extends TrackerReact(Component){
 
@@ -14,7 +15,10 @@ export default class ConsultForm extends TrackerReact(Component){
     super(props);
     this.state = {
       consult: {},
-      step: 'global', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
+      step: 'parts', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
+      editing_part: null,
+      parts: [],
+      display_part_form: false
     }
   }
 
@@ -32,10 +36,11 @@ export default class ConsultForm extends TrackerReact(Component){
 
   submit_form(e){
     e.preventDefault()
+    const {consult, parts} = this.state
     if(this.props.consult){
 
     }else{
-      Meteor.call('consults.insert', this.state.consult, (error, result) => {
+      Meteor.call('consults.insert', {consult, parts}, (error, result) => {
         if(error){
           console.log(error)
           Bert.alert({
@@ -60,8 +65,25 @@ export default class ConsultForm extends TrackerReact(Component){
     this.setState({step: step})
   }
 
+  create_new_part(new_part){
+    let {parts, display_part_form} = this.state
+    parts.push(new_part)
+    display_part_form = false
+    this.setState({parts, display_part_form})
+  }
+
+  edit_part(new_part){
+    this.parts.push(new_part)
+  }
+
+  toggleState(attr, e){
+    let state = this.state
+    state[attr] = !state[attr]
+    this.setState(state)
+  }
+
   render(){
-    const consult = this.state.consult
+    const {consult, editing_part, parts, display_part_form} = this.state
 
     return(
       <Grid stackable>
@@ -98,7 +120,7 @@ export default class ConsultForm extends TrackerReact(Component){
             {this.state.step == 'design' ?
               <Grid stackable className="wow fadeInUp">
                 <Grid.Column width={16}>
-                  <Form onSubmit={(e) => {this.changeStep('design', e)}}>
+                  <Form onSubmit={(e) => {this.changeStep('parts', e)}}>
                     <Form.Field>
                       <label>URL de l'image de votre consultation</label>
                       <Input type="text" placeholder="http://...." value={consult.image_url} onChange={(e) => {this.handleConsultChange('image_url', e)}} />
@@ -112,6 +134,37 @@ export default class ConsultForm extends TrackerReact(Component){
                   <ConsultPartial hideButtons consult={this.state.consult}/>
                   <p>Voilà à quoi ressemble votre consultation</p>
                 </Grid.Column>
+              </Grid>
+            : ''}
+            {this.state.step == 'parts' ?
+              <Grid stackable className="wow fadeInUp">
+                <Grid.Column width={16} className="center-align">
+                  <Button positive={!display_part_form} onClick={(e) => {this.toggleState('display_part_form', e)}}>
+                    {display_part_form ?
+                      "Annuler"
+                    :
+                      "Ajouter une partie"
+                    }
+                  </Button>
+                </Grid.Column>
+                <Grid.Column width={4}>
+                  {parts.map((part, index) => {
+                    return (
+                      <Segment clearing>
+                        <Header as="h4" floated='left'>{part.title}</Header>
+                        <Button.Group stackable floated='right'>
+                          <Button icon='edit'/>
+                          <Button icon='remove'/>
+                        </Button.Group>
+                      </Segment>
+                    )
+                  })}
+                </Grid.Column>
+                {display_part_form ?
+                  <Grid.Column width={12}>
+                    <ConsultPartForm consult_part={editing_part} onCreateSubmit={this.create_new_part.bind(this)} onEditSubmit={this.edit_part.bind(this)} />
+                  </Grid.Column>
+                : ''}
               </Grid>
             : ''}
         </Grid.Column>
