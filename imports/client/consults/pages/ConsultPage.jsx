@@ -44,7 +44,7 @@ export class ConsultPage extends TrackerReact(Component){
             <Grid.Column width={16} className="center-align">
                 <p>{consult.description}</p>
             </Grid.Column>
-            <Grid.Column width={16}>
+            <Grid.Column width={16} className="parts-container">
               {consult_parts.map((part, index) => {
                 return <ConsultPart consult_part={part} />
               })}
