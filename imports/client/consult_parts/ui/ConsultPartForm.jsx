@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import TinyMCE from 'react-tinymce'
-import {Grid, Form, Button, Input, Header, Checkbox} from 'semantic-ui-react'
+import {Grid, Form, Button, Input, Header, Checkbox, Label} from 'semantic-ui-react'
 
 export default class ConsultPartForm extends TrackerReact(Component){
 
@@ -63,24 +63,66 @@ export default class ConsultPartForm extends TrackerReact(Component){
     this.setState({consult_part})
   }
 
+  handleChange(attr, e){
+    let state = this.state
+    state[attr] = e.target.value
+    this.setState(state)
+  }
+
+  addVote(e){
+    e.preventDefault()
+    let {consult_part, editing_vote} = this.state
+    consult_part.vote_values.push({vote_value: editing_vote})
+    editing_vote = ""
+    this.setState({consult_part, editing_vote})
+  }
+
+  removeVote(index, e){
+    e.preventDefault()
+    let {consult_part} = this.state
+    consult_part.vote_values.splice(index, 1)
+    this.setState({consult_part})
+  }
+
   render(){
-    const {consult_part} = this.state
+    const {consult_part, editing_vote} = this.state
     return(
        <Grid stackable>
          <Grid.Column width={16}>
              <Form>
-                 <Form.Field inline={true} as="div">
-                   <label>Visibilité ({consult_part.visible ? "Actuellement visible" : "Actuellement caché"})</label>
-                   <Checkbox checked={consult_part.visible} onClick={(e) => {this.toggleConsultPart('visible', e)}} toggle/>
-                 </Form.Field>
-                 <Form.Field inline={true} as="div">
-                   <label>Votes ({consult_part.votes_activated ? "Actuellement activé" : "Actuellement désactivé"})</label>
-                   <Checkbox checked={consult_part.votes_activated} onClick={(e) => {this.toggleConsultPart('votes_activated', e)}} toggle/>
-                 </Form.Field>
-                 <Form.Field inline={true} as="div">
-                   <label>Alternatives ({consult_part.alternatives_activated ? "Actuellement activé" : "Actuellement désactivé"})</label>
-                   <Checkbox checked={consult_part.alternatives_activated} onClick={(e) => {this.toggleConsultPart('alternatives_activated', e)}} toggle/>
-                 </Form.Field>
+               <Grid stackable>
+                 <Grid.Column width={8}>
+                   <Form.Field inline={true} as="div">
+                     <label>Visibilité ({consult_part.visible ? "Actuellement visible" : "Actuellement caché"})</label>
+                     <Checkbox checked={consult_part.visible} onClick={(e) => {this.toggleConsultPart('visible', e)}} toggle/>
+                   </Form.Field>
+                   <Form.Field inline={true} as="div">
+                     <label>Votes ({consult_part.votes_activated ? "Actuellement activé" : "Actuellement désactivé"})</label>
+                     <Checkbox checked={consult_part.votes_activated} onClick={(e) => {this.toggleConsultPart('votes_activated', e)}} toggle/>
+                   </Form.Field>
+                   <Form.Field inline={true} as="div">
+                     <label>Alternatives ({consult_part.alternatives_activated ? "Actuellement activé" : "Actuellement désactivé"})</label>
+                     <Checkbox checked={consult_part.alternatives_activated} onClick={(e) => {this.toggleConsultPart('alternatives_activated', e)}} toggle/>
+                   </Form.Field>
+                 </Grid.Column>
+                 {consult_part.votes_activated ?
+                   <Grid.Column width={8}>
+                     <Form>
+                       <Form.Field>
+                         <label>Valeur de vote</label>
+                         <Input value={editing_vote} type="text" onChange={(e) => {this.handleChange('editing_vote', e)}} />
+                       </Form.Field>
+                       <Form.Field>
+                         <Button onClick={(e) => {this.addVote(e)}}>Ajouter</Button>
+                       </Form.Field>
+                     </Form>
+                     <Header as="h3">Valeurs de vote</Header>
+                     {consult_part.vote_values.map((vote_value, index) => {
+                       return <Label style={{cursor: "pointer"}} content={vote_value.vote_value} icon='remove' onClick={(e) => {this.removeVote(index, e)}} />
+                     })}
+                   </Grid.Column>
+                 : ''}
+               </Grid>
                  <Form.Field inline={true} as="div">
                    <label>Titre</label>
                    <Input value={consult_part.title} onChange={(e) => {this.handleConsultPartChange('title', e)}}/>
@@ -97,6 +139,7 @@ export default class ConsultPartForm extends TrackerReact(Component){
                  <Button positive onClick={(e) => {this.submit_form(e)}}>{this.props.consult_part ? 'Modifier' : 'Créer'}</Button>
                </Form.Field>
              </Form>
+
          </Grid.Column>
        </Grid>
     )

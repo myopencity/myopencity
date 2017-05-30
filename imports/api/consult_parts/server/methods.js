@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor'
 import {ConsultParts} from '../consult_parts'
 import {Consults} from '/imports/api/consults/consults'
+import {ConsultPartVotes} from '/imports/api/consult_part_votes/consult_part_votes'
 
 Meteor.methods({
   'consult_parts.insert'({consult_part, consult_id}){
@@ -31,7 +32,7 @@ Meteor.methods({
       ConsultParts.remove({_id: consult_part_id})
     }
   },
-  'consult_parts.vote'(consult_part_id, index){
+  'consult_parts.vote'({consult_part_id, index}){
     if(!this.userId){
       throw new Meteor.Error('403', "Vous devez vous connecter")
     }else{
@@ -39,7 +40,7 @@ Meteor.methods({
       if(consult_part_vote){
         throw new Meteor.Error('403', "Vous avez déjà voté")
       }else{
-        const consult_part = ConsultParts.findOne({_id: consult_part_id})
+        let consult_part = ConsultParts.findOne({_id: consult_part_id})
         consult_part.vote_values[index].counter = consult_part.vote_values[index].counter + 1
         ConsultParts.update({_id: consult_part_id}, {$set: {vote_values: consult_part.vote_values}})
         Meteor.call('consult_part_votes.insert', consult_part_id)

@@ -24,7 +24,7 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
 
   vote(value, index, e){
     e.preventDefault()
-    Meteor.call('consult_parts.vote', index , (error, result) => {
+    Meteor.call('consult_parts.vote', {consult_part_id: this.props.consult_part._id, index: index} , (error, result) => {
       if(error){
         console.log(error)
         Bert.alert({
@@ -49,7 +49,7 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
     const {consult_part} = this.props
     return(
       <div>
-        <Button onClick={(e) => {this.toggleVoteModal(e)}}>{consult_part.vote_label}</Button>
+        <Button onClick={(e) => {this.toggleState('open_modal', e)}}>{consult_part.vote_label}</Button>
           <Modal open={open_modal} onClose={(e) => {this.toggleState('open_modal', e)}}>
             <Modal.Header>{consult_part.vote_question}</Modal.Header>
             <Modal.Content>
