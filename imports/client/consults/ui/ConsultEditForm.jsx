@@ -4,10 +4,10 @@ import {Grid, Header, Form, Button, Input, TextArea, Menu, Segment} from 'semant
 import ConsultPartial from '/imports/client/consults/ui/ConsultPartial'
 import ConsultPartForm from '/imports/client/consult_parts/ui/ConsultPartForm'
 
-export default class ConsultForm extends TrackerReact(Component){
+export default class ConsultEditForm extends TrackerReact(Component){
 
   /*
-    facultative props:
+    required props:
       - consult: Object (Consult to enable edit mode)
   */
 
@@ -20,6 +20,10 @@ export default class ConsultForm extends TrackerReact(Component){
       parts: [],
       display_part_form: false
     }
+  }
+
+  componentWillMount(){
+    this.setState({consult: this.props.consult})
   }
 
   componentWillReceiveProps(new_props){

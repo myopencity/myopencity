@@ -29,6 +29,10 @@ const ConsultPartsSchema = new SimpleSchema({
       type: String,
       defaultValue: ""
     },
+    question: {
+      type: String,
+      optional: true
+    },
     active: {
       type: Boolean,
       defaultValue: false

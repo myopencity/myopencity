@@ -44,18 +44,36 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
     });
   }
 
+  on_mouse_over(e){
+    e.preventDefault()
+    if(this.props.onMouseOver){
+      this.props.onMouseOver()
+    }
+  }
+
+  on_mouse_out(e){
+    e.preventDefault()
+    if(this.props.onMouseOut){
+      this.props.onMouseOut()
+    }
+  }
+
   render(){
     const {open_modal} = this.state
     const {consult_part} = this.props
     return(
       <div>
-        <Button onClick={(e) => {this.toggleState('open_modal', e)}}>{consult_part.vote_label}</Button>
+        <Button onMouseOver={(e) => {this.on_mouse_over(e)}} onMouseOut={(e) => {this.on_mouse_out(e)}} size="huge" positive onClick={(e) => {this.toggleState('open_modal', e)}}>{consult_part.vote_label}</Button>
           <Modal open={open_modal} onClose={(e) => {this.toggleState('open_modal', e)}}>
-            <Modal.Header>{consult_part.vote_question}</Modal.Header>
+            <Modal.Header>{consult_part.question}</Modal.Header>
             <Modal.Content>
               <Modal.Description>
                 {consult_part.vote_values.map((vote_value, index) => {
-                  return <Button onClick={(e) => {this.vote(vote_value, index, e)}}>{vote_value.vote_value}</Button>
+                  return (
+                    <div>
+                      <Button fluid onClick={(e) => {this.vote(vote_value, index, e)}}>{vote_value.vote_value}</Button><br/>
+                    </div>
+                  )
                 })}
               </Modal.Description>
             </Modal.Content>

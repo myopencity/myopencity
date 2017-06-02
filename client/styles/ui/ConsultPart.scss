@@ -1,0 +1,8 @@
+@import '../global_variables.scss';
+
+.consult-part{
+
+  &.hover{
+    border: 2px dashed $global_turquoise !important;
+  }
+}

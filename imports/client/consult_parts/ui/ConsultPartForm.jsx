@@ -108,6 +108,10 @@ export default class ConsultPartForm extends TrackerReact(Component){
                  {consult_part.votes_activated ?
                    <Grid.Column width={8}>
                      <Form>
+                       <Form.Field as="div">
+                         <label>Question de vote</label>
+                         <Input fluid value={consult_part.question} placeholder="ex: Quel revêtement pour le rond-point ?" onChange={(e) => {this.handleConsultPartChange('question', e)}}/>
+                       </Form.Field>
                        <Form.Field>
                          <label>Valeur de vote</label>
                          <Input value={editing_vote} type="text" onChange={(e) => {this.handleChange('editing_vote', e)}} />

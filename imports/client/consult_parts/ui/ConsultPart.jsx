@@ -17,16 +17,29 @@ export class ConsultPart extends TrackerReact(Component){
   constructor(props){
     super(props);
     this.state = {
-
+      hover_vote: false
     }
+  }
+
+  on_mouse_over(){
+    console.log("over");
+
+    this.setState({hover_vote: true})
+  }
+
+  on_mouse_out(){
+    console.log("over");
+
+    this.setState({hover_vote: false})
   }
 
   render(){
     const {consult_part, consult_part_vote, loading} = this.props
+    const consult_part_hover_class = this.state.hover_vote ? "hover" : ""
 
     if(!loading){
       return(
-        <Grid stackable>
+        <Grid stackable className={"consult-part " + consult_part_hover_class}>
           <Grid.Column width={16}>
             <div className="consult-part-content" dangerouslySetInnerHTML={{__html: consult_part.content }}></div>
           </Grid.Column>
@@ -39,7 +52,7 @@ export class ConsultPart extends TrackerReact(Component){
                     <ConsultPartResults consult_part={consult_part} chart_type="bar" />
                   </div>
                   :
-                  <ConsultPartVoteButton consult_part={consult_part} />
+                  <ConsultPartVoteButton onMouseOut={this.on_mouse_out.bind(this)} onMouseOver={this.on_mouse_over.bind(this)} consult_part={consult_part} />
                 }
               </div>
               : ''}
