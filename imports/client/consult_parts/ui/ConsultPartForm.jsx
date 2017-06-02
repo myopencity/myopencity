@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import TinyMCE from 'react-tinymce'
-import {Grid, Form, Button, Input, Header, Checkbox, Label} from 'semantic-ui-react'
+import {Grid, Form, Button, Input, Header, Checkbox, Label, Select} from 'semantic-ui-react'
 
 export default class ConsultPartForm extends TrackerReact(Component){
 
@@ -84,8 +84,21 @@ export default class ConsultPartForm extends TrackerReact(Component){
     this.setState({consult_part})
   }
 
+  handleResultsFormatChange(event, data){
+    let {consult_part} = this.state
+    consult_part.results_format = data.value
+    this.setState({consult_part})
+  }
+
   render(){
     const {consult_part, editing_vote} = this.state
+    const results_formats = [
+      {key: 'bar', value: 'bar', text: 'Graphique en barres'},
+      {key: 'pie', value: 'pie', text: 'Graphique camembert'},
+      {key: 'doughnut', value: 'doughnut', text: 'Graphique beignet'},
+      {key: 'line', value: 'line', text: 'Graphique en lignes'},
+      {key: 'radar', value: 'radar', text: 'Graphique radar'},
+    ]
     return(
        <Grid stackable>
          <Grid.Column width={16}>
@@ -108,6 +121,10 @@ export default class ConsultPartForm extends TrackerReact(Component){
                  {consult_part.votes_activated ?
                    <Grid.Column width={8}>
                      <Form>
+                       <Form.Field as="div">
+                         <label>Format des résultats</label>
+                         <Select onChange={this.handleResultsFormatChange.bind(this)} value={consult_part.results_format} options={results_formats} />
+                       </Form.Field>
                        <Form.Field as="div">
                          <label>Question de vote</label>
                          <Input fluid value={consult_part.question} placeholder="ex: Quel revêtement pour le rond-point ?" onChange={(e) => {this.handleConsultPartChange('question', e)}}/>

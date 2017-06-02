@@ -48,7 +48,9 @@ export class ConsultPage extends TrackerReact(Component){
           </Grid.Column>
           {consult.description ?
             <Grid.Column width={16} style={{fontSize: consult_description_font_size, backgroundColor: consult_description_background_color, color: consult_description_color}} className="consult-description-container center-align">
-              <p>{consult.description}</p>
+              <Container>
+                <p>{consult.description}</p>
+              </Container>
             </Grid.Column>
             : ''}
           <Container>

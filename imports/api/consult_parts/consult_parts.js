@@ -60,6 +60,11 @@ const ConsultPartsSchema = new SimpleSchema({
     vote_values: {
       type: [VoteValuesSchema],
       defaultValue: []
+    },
+    results_format: {
+      type: String,
+      defaultValue: 'bar',
+      allowedValues: ['bar', 'line', 'radar', 'pie', 'doughnut']
     }
 })
 

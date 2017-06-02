@@ -79,20 +79,15 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                 <Header as="h3">Page d'accueil</Header>
                 <Form.Field>
                   <label>Titre principal de la page d'accueil</label>
-                  <Input type="text" value={configuration.main_title} onChange={(e) => {this.handleConfigurationChange('landing_main_title', e)}} />
+                  <Input type="text" value={configuration.landing_main_title} onChange={(e) => {this.handleConfigurationChange('landing_main_title', e)}} />
                 </Form.Field>
                 <Form.Field>
                   <label>Phrase d'accroche</label>
                   <Input type="text" value={configuration.landing_header_description} onChange={(e) => {this.handleConfigurationChange('landing_header_description', e)}} />
                 </Form.Field>
-                <Header as="h3">Page d'accueil</Header>
                 <Form.Field>
                   <label>URL de l'image d'arrière plan sur la page d'accueil</label>
                   <Input type="text" value={configuration.landing_header_background_url} onChange={(e) => {this.handleConfigurationChange('landing_header_background_url', e)}} />
-                </Form.Field>
-                <Form.Field>
-                  <label>Titre de la page d'accueil</label>
-                  <Input type="text" value={configuration.landing_main_title} onChange={(e) => {this.handleConfigurationChange('landing_main_title', e)}} />
                 </Form.Field>
                 <Form.Field>
                   <label>Couleur de la phrase d'accroche</label>
