@@ -5,9 +5,11 @@ import {ConsultPartVotes} from '/imports/api/consult_part_votes/consult_part_vot
 
 Meteor.methods({
   'consult_parts.insert'({consult_part, consult_id}){
-    if(!this.userId || !Roles.userIsInRole(this.userId, 'admin')){
-      throw new Meteor.Error('403', "Vous devez vous connecter")
+    if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+      throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
+      console.log("CONSULT PART CREATION", consult_part.title, consult_id);
+
       const consult = Consults.findOne({_id: consult_id})
       if(consult){
         consult_part.consult_url_shorten = consult.url_shorten
@@ -18,9 +20,9 @@ Meteor.methods({
       }
     }
   },
-  'consult_parts.update'(consult_part){
-    if(!this.userId){
-      throw new Meteor.Error('403', "Vous devez vous connecter")
+  'consult_parts.update'({consult_part}){
+    if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+      throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
       ConsultParts.update({_id: consult_part._id}, {$set: consult_part})
     }

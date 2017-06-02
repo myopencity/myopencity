@@ -29,7 +29,7 @@ export default class ConsultPartial extends TrackerReact(Component){
   toggleEditConsult(attr, e){
     let consult = this.props.consult
     consult[attr] = !consult[attr]
-    Meteor.call('consults.update', consult, (error, result) => {
+    Meteor.call('consults.update', {consult}, (error, result) => {
       if(error){
         console.log(error)
         Bert.alert({

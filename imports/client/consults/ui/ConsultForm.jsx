@@ -45,7 +45,9 @@ export default class ConsultForm extends TrackerReact(Component){
   submit_form(e){
     e.preventDefault()
     const {consult, consult_parts} = this.state
+
     if(this.props.consult){
+      console.log("EDIT CONSULT", consult_parts);
       Meteor.call('consults.update', {consult, consult_parts} , (error, result) => {
         if(error){
           console.log(error)
@@ -115,20 +117,20 @@ export default class ConsultForm extends TrackerReact(Component){
   }
 
   render(){
-    const {consult, editing_part, consult_parts, display_part_form} = this.state
+    const {consult, editing_part, consult_parts, display_part_form, step} = this.state
 
     return(
       <Grid stackable>
         <Grid.Column width={16} className="center-align">
           <Menu>
-            <Menu.Item onClick={(e) => {this.changeStep('global', e)}} active={this.state.step == 'global'}>Informations générales</Menu.Item>
-            <Menu.Item onClick={(e) => {this.changeStep('design', e)}} active={this.state.step == 'design'}>Apparence de la consultation</Menu.Item>
-            <Menu.Item onClick={(e) => {this.changeStep('parts', e)}} active={this.state.step == 'parts'}>Parties / Contenu</Menu.Item>
-            <Menu.Item onClick={(e) => {this.changeStep('documents', e)}} active={this.state.step == 'documents'}>Documents</Menu.Item>
-            <Menu.Item onClick={(e) => {this.changeStep('settings', e)}} active={this.state.step == 'settings'}>Configuration</Menu.Item>
+            <Menu.Item onClick={(e) => {this.changeStep('global', e)}} active={step == 'global'}>Informations générales</Menu.Item>
+            <Menu.Item onClick={(e) => {this.changeStep('design', e)}} active={step == 'design'}>Apparence de la consultation</Menu.Item>
+            <Menu.Item onClick={(e) => {this.changeStep('parts', e)}} active={step == 'parts'}>Parties / Contenu</Menu.Item>
+            <Menu.Item onClick={(e) => {this.changeStep('documents', e)}} active={step == 'documents'}>Documents</Menu.Item>
+            <Menu.Item onClick={(e) => {this.changeStep('settings', e)}} active={step == 'settings'}>Configuration</Menu.Item>
             <Menu color="green" floated='right'>
               <Menu.Item>
-                <Button positive onClick={(e) => {this.submit_form(e)}}>Valider</Button>
+                <Button positive onClick={(e) => {this.submit_form(e)}}>{this.props.consult ? "Modifier la consultation" : "Créer la consultation"}</Button>
               </Menu.Item>
             </Menu>
           </Menu>

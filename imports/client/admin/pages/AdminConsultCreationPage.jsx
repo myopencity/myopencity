@@ -17,9 +17,8 @@ export default class AdminConsultCreationPage extends TrackerReact(Component){
     }
   }
 
-  go(route, e){
-    e.preventDefault()
-    FlowRouter.go(route)
+  go_consults_page(){
+    FlowRouter.go('AdminConsults')
   }
 
   render(){
@@ -30,7 +29,7 @@ export default class AdminConsultCreationPage extends TrackerReact(Component){
          </Grid.Column>
          <Grid.Column width={16}>
            <Container>
-             <ConsultForm onFormSubmit={(e) => {this.go('AdminConsults', e)}} />
+             <ConsultForm onFormSubmit={this.go_consults_page.bind(this)} />
            </Container>
          </Grid.Column>
        </Grid>

@@ -21,11 +21,19 @@ Meteor.methods({
       })
     }
   },
-  'consults.update'(consult){
+  'consults.update'({consult, consult_parts}){
     if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
+      const consult_id = consult._id
       Consults.update({_id: consult._id}, {$set: consult})
+      _.each(consult_parts, (consult_part) => {
+        if(consult_part._id){
+          Meteor.call('consult_parts.update', {consult_part})
+        }else{
+          Meteor.call('consult_parts.insert', {consult_part: consult_part, consult_id: consult_id })
+        }
+      })
     }
   },
   'consults.remove'(consult_id){
