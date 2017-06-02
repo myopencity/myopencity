@@ -17,6 +17,11 @@ export default class AdminConsultCreationPage extends TrackerReact(Component){
     }
   }
 
+  go(route, e){
+    e.preventDefault()
+    FlowRouter.go(route)
+  }
+
   render(){
     return(
        <Grid stackable className="wow fadeInLeft">
@@ -25,7 +30,7 @@ export default class AdminConsultCreationPage extends TrackerReact(Component){
          </Grid.Column>
          <Grid.Column width={16}>
            <Container>
-             <ConsultForm />
+             <ConsultForm onFormSubmit={(e) => {this.go('AdminConsults', e)}} />
            </Container>
          </Grid.Column>
        </Grid>

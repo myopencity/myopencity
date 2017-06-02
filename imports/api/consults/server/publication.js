@@ -12,3 +12,7 @@ Meteor.publish('consults.visible', function(){
 Meteor.publish('consult', function(urlShorten){
   return Consults.find({url_shorten: urlShorten, visible: true})
 })
+
+Meteor.publish('consult.admin_by_shorten_url', function(urlShorten){
+  return Consults.find({url_shorten: urlShorten})
+})

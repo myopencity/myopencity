@@ -17,30 +17,57 @@ export default class ConsultForm extends TrackerReact(Component){
       consult: {},
       step: 'global', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
       editing_part: null,
-      parts: [],
+      consult_parts: [],
       display_part_form: false
     }
   }
 
   componentWillReceiveProps(new_props){
-    if(new_props.consult){
-      this.setState({consult: new_props.consult})
+    const {consult, consult_parts} = new_props
+    if(consult && consult_parts){
+      this.setState({consult, consult_parts})
+    }
+  }
+
+  componentWillMount(){
+    const {consult, consult_parts} = this.props
+    if(consult && consult_parts){
+      this.setState({consult, consult_parts})
     }
   }
 
   handleConsultChange(attr, e){
-    let consult = this.state.consult
+    let {consult} = this.state
     consult[attr] = e.target.value
-    this.setState({consult: consult})
+    this.setState({consult})
   }
 
   submit_form(e){
     e.preventDefault()
-    const {consult, parts} = this.state
+    const {consult, consult_parts} = this.state
     if(this.props.consult){
-
+      Meteor.call('consults.update', {consult, consult_parts} , (error, result) => {
+        if(error){
+          console.log(error)
+          Bert.alert({
+            title: "Erreur lors de la modification de la consultation",
+            message: error.reason,
+            type: 'danger',
+            style: 'growl-bottom-left',
+          })
+        }else{
+          if(this.props.onFormSubmit){
+            this.props.onFormSubmit(result)
+          }
+          Bert.alert({
+            title: "Consultation modifiée",
+            type: 'success',
+            style: 'growl-bottom-left',
+          })
+        }
+      });
     }else{
-      Meteor.call('consults.insert', {consult, parts}, (error, result) => {
+      Meteor.call('consults.insert', {consult, consult_parts}, (error, result) => {
         if(error){
           console.log(error)
           Bert.alert({
@@ -50,6 +77,9 @@ export default class ConsultForm extends TrackerReact(Component){
             style: 'growl-bottom-left',
           })
         }else{
+          if(this.props.onFormSubmit){
+            this.props.onFormSubmit(result)
+          }
           Bert.alert({
             title: "Consultation créée !",
             type: 'success',
@@ -62,18 +92,20 @@ export default class ConsultForm extends TrackerReact(Component){
 
   changeStep(step, e){
     e.preventDefault()
-    this.setState({step: step})
+    this.setState({step})
   }
 
   create_new_part(new_part){
-    let {parts, display_part_form} = this.state
-    parts.push(new_part)
+    let {consult_parts, display_part_form} = this.state
+    consult_parts.push(new_part)
     display_part_form = false
-    this.setState({parts, display_part_form})
+    this.setState({consult_parts, display_part_form})
   }
 
-  edit_part(new_part){
-    this.parts.push(new_part)
+  edit_part(part){
+    let {consult_parts} = this.state
+    console.log("editing part", part, consult_parts)
+
   }
 
   toggleState(attr, e){
@@ -83,7 +115,7 @@ export default class ConsultForm extends TrackerReact(Component){
   }
 
   render(){
-    const {consult, editing_part, parts, display_part_form} = this.state
+    const {consult, editing_part, consult_parts, display_part_form} = this.state
 
     return(
       <Grid stackable>
@@ -148,7 +180,7 @@ export default class ConsultForm extends TrackerReact(Component){
                   </Button>
                 </Grid.Column>
                 <Grid.Column width={4}>
-                  {parts.map((part, index) => {
+                  {consult_parts.map((part, index) => {
                     return (
                       <Segment clearing>
                         <Header as="h4" floated='left'>{part.title}</Header>

@@ -12,6 +12,7 @@ import InitialConfigPage from '../imports/client/initial_pages/pages/InitialConf
 import AdminConfigurationPage from '../imports/client/admin/pages/AdminConfigurationPage'
 import AdminConsultsPage from '../imports/client/admin/pages/AdminConsultsPage'
 import AdminConsultCreationPage from '../imports/client/admin/pages/AdminConsultCreationPage'
+import AdminConsultEditPage from '../imports/client/admin/pages/AdminConsultEditPage'
 import ConsultsPage from '../imports/client/consults/pages/ConsultsPage'
 import ConsultPage from '../imports/client/consults/pages/ConsultPage'
 
@@ -122,6 +123,15 @@ adminRoutes.route('/consults/new',{
   action(){
     mount(AdminLayout, {
       content: (<AdminConsultCreationPage />)
+    })
+  }
+})
+
+adminRoutes.route('/consults/:consult_shorten_url/edit',{
+  name: "AdminConsultEdit",
+  action(params){
+    mount(AdminLayout, {
+      content: (<AdminConsultEditPage consult_shorten_url={params.consult_shorten_url} />)
     })
   }
 })

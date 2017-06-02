@@ -9,14 +9,14 @@ const generate_url_shorten = (title) => {
 }
 
 Meteor.methods({
-  'consults.insert'({consult, parts}){
+  'consults.insert'({consult, consult_parts}){
     if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
       consult.author = this.userId
       consult.url_shorten = generate_url_shorten(consult.title)
       const new_consult_id = Consults.insert(consult)
-      _.each(parts, function(part){
+      _.each(consult_parts, function(part){
         Meteor.call('consult_parts.insert', {consult_part: part, consult_id: new_consult_id })
       })
     }
