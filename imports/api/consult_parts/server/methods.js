@@ -8,8 +8,6 @@ Meteor.methods({
     if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
-      console.log("CONSULT PART CREATION", consult_part.title, consult_id);
-
       const consult = Consults.findOne({_id: consult_id})
       if(consult){
         consult_part.consult_url_shorten = consult.url_shorten
@@ -32,6 +30,13 @@ Meteor.methods({
       throw new Meteor.Error('403', "Vous devez vous connecter")
     }else{
       ConsultParts.remove({_id: consult_part_id})
+    }
+  },
+  'consult_parts.remove_multiple'(consult_parts_ids){
+    if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+      throw new Meteor.Error('403', "Vous devez être administrateur")
+    }else{
+      ConsultParts.remove({_id: {$in: consult_parts_ids}}, {multi: true})
     }
   },
   'consult_parts.vote'({consult_part_id, index}){

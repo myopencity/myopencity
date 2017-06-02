@@ -26,6 +26,10 @@ export class AdminConsultEditPage extends TrackerReact(Component){
     this.setState({consult, consult_parts})
   }
 
+  go_consults_page(){
+    FlowRouter.go('AdminConsults')
+  }
+
   render(){
     const {loading, consult, consult_parts} = this.props
 
@@ -37,7 +41,7 @@ export class AdminConsultEditPage extends TrackerReact(Component){
           </Grid.Column>
           <Grid.Column width={16}>
             <Container>
-              <ConsultForm consult={consult} consult_parts={consult_parts}/>
+              <ConsultForm consult={consult} consult_parts={consult_parts} onFormSubmit={this.go_consults_page.bind(this)}/>
             </Container>
           </Grid.Column>
         </Grid>

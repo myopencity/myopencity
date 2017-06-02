@@ -18,7 +18,8 @@ export default class ConsultForm extends TrackerReact(Component){
       step: 'global', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
       editing_part: null,
       consult_parts: [],
-      display_part_form: false
+      display_part_form: false,
+      removing_consult_parts: []
     }
   }
 
@@ -44,7 +45,7 @@ export default class ConsultForm extends TrackerReact(Component){
 
   submit_form(e){
     e.preventDefault()
-    const {consult, consult_parts} = this.state
+    const {consult, consult_parts, removing_consult_parts} = this.state
 
     if(this.props.consult){
       console.log("EDIT CONSULT", consult_parts);
@@ -58,6 +59,17 @@ export default class ConsultForm extends TrackerReact(Component){
             style: 'growl-bottom-left',
           })
         }else{
+          Meteor.call('consult_parts.remove_multiple', removing_consult_parts , (error, result) => {
+            if(error){
+              console.log(error)
+              Bert.alert({
+                title: "Erreur lors de la suppression des parties",
+                message: error.reason,
+                type: 'danger',
+                style: 'growl-bottom-left',
+              })
+            }
+          })
           if(this.props.onFormSubmit){
             this.props.onFormSubmit(result)
           }
@@ -107,7 +119,17 @@ export default class ConsultForm extends TrackerReact(Component){
   edit_part(part){
     let {consult_parts} = this.state
     console.log("editing part", part, consult_parts)
+  }
 
+  remove_part(index, e){
+    e.preventDefault()
+    let {consult_parts, removing_consult_parts} = this.state
+    const consult_part = consult_parts[index]
+    if(consult_part._id){
+      removing_consult_parts.push(consult_part._id)
+    }
+    consult_parts.splice(index, 1)
+    this.setState({consult_parts, removing_consult_parts})
   }
 
   toggleState(attr, e){
@@ -184,11 +206,11 @@ export default class ConsultForm extends TrackerReact(Component){
                 <Grid.Column width={4}>
                   {consult_parts.map((part, index) => {
                     return (
-                      <Segment clearing>
+                      <Segment clearing key={index}>
                         <Header as="h4" floated='left'>{part.title}</Header>
                         <Button.Group stackable floated='right'>
                           <Button icon='edit'/>
-                          <Button icon='remove'/>
+                          <Button icon='remove' onClick={(e) => {this.remove_part(index, e)}}/>
                         </Button.Group>
                       </Segment>
                     )
