@@ -17,6 +17,7 @@ export default class ConsultForm extends TrackerReact(Component){
       consult: {},
       step: 'global', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
       editing_part: null,
+      editing_part_index: null,
       consult_parts: [],
       display_part_form: false,
       removing_consult_parts: []
@@ -117,8 +118,21 @@ export default class ConsultForm extends TrackerReact(Component){
   }
 
   edit_part(part){
+    let {consult_parts, editing_part_index} = this.state
+    consult_parts[editing_part_index] = part
+    this.setState({
+      consult_parts,
+      editing_part_index: null,
+      editing_part: null,
+      display_part_form: false
+    })
+  }
+
+  toggle_edit_part(index, e){
+    e.preventDefault()
     let {consult_parts} = this.state
-    console.log("editing part", part, consult_parts)
+    const part = consult_parts[index]
+    this.setState({editing_part: part, editing_part_index: index, display_part_form: true})
   }
 
   remove_part(index, e){
@@ -130,6 +144,16 @@ export default class ConsultForm extends TrackerReact(Component){
     }
     consult_parts.splice(index, 1)
     this.setState({consult_parts, removing_consult_parts})
+  }
+
+  togglePartForm(e){
+    let {display_part_form} = this.state
+    display_part_form = !display_part_form
+    if(!display_part_form){
+      this.setState({display_part_form: display_part_form, editing_part: null, editing_part_index: null})
+    }else{
+      this.setState({display_part_form})
+    }
   }
 
   toggleState(attr, e){
@@ -195,7 +219,7 @@ export default class ConsultForm extends TrackerReact(Component){
             {this.state.step == 'parts' ?
               <Grid stackable className="wow fadeInUp">
                 <Grid.Column width={16} className="center-align">
-                  <Button positive={!display_part_form} onClick={(e) => {this.toggleState('display_part_form', e)}}>
+                  <Button positive={!display_part_form} onClick={(e) => {this.togglePartForm(e)}}>
                     {display_part_form ?
                       "Annuler"
                     :
@@ -209,7 +233,7 @@ export default class ConsultForm extends TrackerReact(Component){
                       <Segment clearing key={index}>
                         <Header as="h4" floated='left'>{part.title}</Header>
                         <Button.Group stackable floated='right'>
-                          <Button icon='edit'/>
+                          <Button icon='edit' onClick={(e) => {this.toggle_edit_part(index, e)}}/>
                           <Button icon='remove' onClick={(e) => {this.remove_part(index, e)}}/>
                         </Button.Group>
                       </Segment>

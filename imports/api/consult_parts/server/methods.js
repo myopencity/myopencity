@@ -22,6 +22,11 @@ Meteor.methods({
     if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
+      _.each(consult_part.vote_values, (vote_value) => {
+        if(!vote_value.counter){
+          vote_value.counter = 0
+        }
+      })
       ConsultParts.update({_id: consult_part._id}, {$set: consult_part})
     }
   },
