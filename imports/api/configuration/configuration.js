@@ -38,6 +38,18 @@ const ConfigurationSchema = new SimpleSchema({
   consult_header_color: {
     type: String,
     defaultValue: "#FFFFFF"
+  },
+  consult_description_background_color: {
+    type: String,
+    defaultValue: "#ecf0f1"
+  },
+  consult_description_color: {
+    type: String,
+    defaultValue: "#000000"
+  },
+  consult_description_font_size: {
+    type: String,
+    defaultValue: "1.2em"
   }
 })
 

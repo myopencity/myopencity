@@ -22,7 +22,13 @@ export class ConsultPage extends TrackerReact(Component){
 
   render(){
     const {consult, consult_parts} = this.props
-    const {consult_header_height, consult_header_color} = Session.get('global_configuration')
+    const {
+      consult_header_height,
+      consult_header_color,
+      consult_description_background_color,
+      consult_description_color,
+      consult_description_font_size
+    } = Session.get('global_configuration')
 
     if(consult){
       return(
@@ -40,10 +46,12 @@ export class ConsultPage extends TrackerReact(Component){
               </Grid.Column>
             </Grid>
           </Grid.Column>
-          <Container>
-            <Grid.Column width={16} className="center-align">
-                <p>{consult.description}</p>
+          {consult.description ?
+            <Grid.Column width={16} style={{fontSize: consult_description_font_size, backgroundColor: consult_description_background_color, color: consult_description_color}} className="consult-description-container center-align">
+              <p>{consult.description}</p>
             </Grid.Column>
+            : ''}
+          <Container>
             <Grid.Column width={16} className="parts-container">
               {consult_parts.map((part, index) => {
                 return <ConsultPart consult_part={part} />

@@ -9,6 +9,10 @@ export default class ConsultPartResults extends TrackerReact(Component){
   /*
     required props:
       - chart_type: String // 'line' / 'bar'
+
+    facultative props:
+      - height: Number
+      - width: Number
   */
 
   constructor(props){
@@ -19,7 +23,7 @@ export default class ConsultPartResults extends TrackerReact(Component){
   }
 
   render(){
-    const {chart_type, results, className, consult_part} = this.props
+    const {chart_type, results, className, consult_part, height, width} = this.props
     console.log("results", consult_part.vote_values);
 
     const chartData = {
@@ -35,10 +39,12 @@ export default class ConsultPartResults extends TrackerReact(Component){
       <Grid stackable className={className}>
         <Grid.Column width={16}>
           {chart_type == 'bar' ?
-            <Bar data={chartData}/>
+            <Bar
+              data={chartData} />
           : ''}
           {chart_type == 'line' ?
-            <Line data={chartData}/>
+            <Line
+              data={chartData} />
           : ''}
         </Grid.Column>
       </Grid>

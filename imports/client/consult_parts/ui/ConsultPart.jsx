@@ -49,7 +49,7 @@ export class ConsultPart extends TrackerReact(Component){
                 {consult_part_vote ?
                   <div>
                     <Header as="h3">Vous avez déjà voté</Header>
-                    <ConsultPartResults consult_part={consult_part} chart_type="bar" />
+                    <ConsultPartResults consult_part={consult_part} chart_type="bar"/>
                   </div>
                   :
                   <ConsultPartVoteButton onMouseOut={this.on_mouse_out.bind(this)} onMouseOver={this.on_mouse_over.bind(this)} consult_part={consult_part} />

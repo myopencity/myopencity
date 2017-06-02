@@ -103,9 +103,21 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                   <label>Hauteur de la bannière de consultation</label>
                   <Input type="text" value={configuration.consult_header_height} onChange={(e) => {this.handleConfigurationChange('consult_header_height', e)}} />
                 </Form.Field>
-                <Form.Field>
+                <Form.Field className="inline-block">
                   <label>Couleur des titres de consultation</label>
                   <SketchPicker color={configuration.consult_header_color} onChangeComplete={(e) => {this.handleColorChange('consult_header_color', e)}} />
+                </Form.Field>
+                <Form.Field className="inline-block">
+                  <label>Couleur du fond de description</label>
+                  <SketchPicker color={configuration.consult_description_background_color} onChangeComplete={(e) => {this.handleColorChange('consult_description_background_color', e)}} />
+                </Form.Field>
+                <Form.Field className="inline-block">
+                  <label>Couleur du texte de description</label>
+                  <SketchPicker color={configuration.consult_description_color} onChangeComplete={(e) => {this.handleColorChange('consult_description_color', e)}} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Taille du texte de description</label>
+                  <Input type="text" value={configuration.consult_description_font_size} onChange={(e) => {this.handleConfigurationChange('consult_description_font_size', e)}} />
                 </Form.Field>
                 <Button positive>Modifier la configuration</Button>
               </Form>
