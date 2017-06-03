@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Grid, Button, Loader, Header} from 'semantic-ui-react'
+import {Grid, Button, Loader, Header, Input, Feed} from 'semantic-ui-react'
 import ConsultPartVoteButton from '/imports/client/consult_parts/ui/ConsultPartVoteButton'
 import {ConsultParts} from '/imports/api/consult_parts/consult_parts'
 import {ConsultPartVotes} from '/imports/api/consult_part_votes/consult_part_votes'
@@ -8,6 +8,7 @@ import {Alternatives} from '/imports/api/alternatives/alternatives'
 import ConsultPartResults from '/imports/client/consult_parts/ui/ConsultPartResults'
 import { createContainer } from 'meteor/react-meteor-data'
 import AlternativeForm from '/imports/client/alternatives/ui/AlternativeForm'
+import AlternativePartial from '/imports/client/alternatives/ui/AlternativePartial'
 
 export class ConsultPart extends TrackerReact(Component){
 
@@ -20,7 +21,8 @@ export class ConsultPart extends TrackerReact(Component){
     super(props);
     this.state = {
       hover_vote: false,
-      display_alternative_form: false
+      display_alternative_form: false,
+      search_alternatives_terms: ""
     }
   }
 
@@ -61,6 +63,12 @@ export class ConsultPart extends TrackerReact(Component){
     });
   }
 
+  handleChange(attr, e){
+    let state = this.state
+    state[attr] = e.target.value
+    this.setState(state)
+  }
+
   render(){
     const {consult_part, consult_part_vote, alternatives, loading} = this.props
     const {display_alternatives, display_alternative_form} = this.state
@@ -69,7 +77,7 @@ export class ConsultPart extends TrackerReact(Component){
     if(!loading){
       return(
         <Grid stackable className={"consult-part " + consult_part_hover_class}>
-          <Grid.Column width={display_alternative_form ? 8 : 16}>
+          <Grid.Column width={(display_alternative_form || display_alternatives) ? 8 : 16}>
             <div className="consult-part-content" dangerouslySetInnerHTML={{__html: consult_part.content }}></div>
           </Grid.Column>
           {display_alternative_form ?
@@ -80,6 +88,26 @@ export class ConsultPart extends TrackerReact(Component){
                 </Button>
               </div>
               <AlternativeForm onCreate={this.create_alternative.bind(this)}/>
+            </Grid.Column>
+          : ''}
+          {display_alternatives ?
+            <Grid.Column width={8} className="wow fadeInLeft">
+              <Grid stackable>
+                <Grid.Column width={16} className="center-align">
+                  <Header as="h3">Alternatives proposées</Header>
+                </Grid.Column>
+                <Grid.Column width={16}>
+                  <Input icon="search" fluid placeholder="Recherchez une alternative" type="text" onClick={(e) => {this.handleChange('search_alternatives_terms', e)}} />
+                </Grid.Column>
+                <Grid.Column width={16} className="">
+                  <Feed>
+                    {alternatives.map((alternative, index) => {
+                      return <AlternativePartial alternative={alternative} />
+                    })}
+
+                  </Feed>
+                </Grid.Column>
+              </Grid>
             </Grid.Column>
           : ''}
           {consult_part.alternatives_activated ?

@@ -1,14 +1,14 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import TinyMCE from 'react-tinymce'
-import {Grid, Header, Form, Input, Button} from 'semantic-ui-react'
+import {Grid, Header, Form, Input, Button, Icon} from 'semantic-ui-react'
 
 export default class AlternativeForm extends TrackerReact(Component){
 
   /*
     required props:
       - none
-      
+
     facultative props:
       - alternative: Object (enable the edit mode)
       - onCreate: Function
@@ -18,7 +18,9 @@ export default class AlternativeForm extends TrackerReact(Component){
   constructor(props){
     super(props);
     this.state = {
-      alternative: {}
+      alternative: {
+        anonymous: true
+      }
     }
   }
 
@@ -49,6 +51,13 @@ export default class AlternativeForm extends TrackerReact(Component){
   isValid(){
     const {title, content} = this.state.alternative
     return title && content
+  }
+
+  toggleAlternative(attr, e){
+    e.preventDefault()
+    let {alternative} = this.state
+    alternative[attr] = !alternative[attr]
+    this.setState({alternative})
   }
 
   submit_form(e){
@@ -88,6 +97,9 @@ export default class AlternativeForm extends TrackerReact(Component){
                 />
              </Form.Field>
              <Form.Field>
+               <Button onClick={(e) => {this.toggleAlternative('anonymous', e)}} icon="spy" content={alternative.anonymous ?
+                  "Votre nom ne sera pas affiché"
+               : 'Votre nom sera affiché'} />
                <Button disabled={!this.isValid()} positive onClick={(e) => {this.submit_form(e)}}>{this.props.alternative ? "Modifier l'alternative" : "Proposer l'alternative"}</Button>
              </Form.Field>
            </Form>

@@ -12,3 +12,22 @@ Meteor.publish('alternatives.all', function(){
 Meteor.publish('alternatives.paginated_by_consult_part',function({consult_part_id, page, results_size}){
     return Alternatives.find({validated: true, consult_part: consult_part_id}, {limit: results_size, skip: page*results_size})
 })
+
+Meteor.publishComposite('alternatives.user', function(alternative_id){
+  return {
+    find: function(){
+      return Alternatives.find({_id: alternative_id})
+    },
+    children: [
+      {
+        find: function(alternative){
+          if(alternative.anonymous){
+            return null
+          }else{
+            return Meteor.users.find({_id: alternative.user}, {username: 1})
+          }
+        }
+      }
+    ]
+  }
+});

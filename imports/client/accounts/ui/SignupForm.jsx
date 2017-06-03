@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Form, Input, Button} from 'semantic-ui-react'
+import {Meteor} from 'meteor/meteor'
 
 export default class SignupForm extends Component{
 
@@ -22,6 +23,7 @@ export default class SignupForm extends Component{
 
   create_account(e){
     e.preventDefault()
+    const that = this
     Meteor.call('user.signup', this.state.user, (error, result) => {
       if(error){
         console.log("signup error", error)
@@ -32,6 +34,14 @@ export default class SignupForm extends Component{
           style: 'growl-bottom-left',
         })
       }else{
+        const {email, password} = that.state.user
+        Meteor.loginWithPassword(email, password)
+        const return_route = Session.get('return_route')
+        if(return_route){
+          FlowRouter.go(return_route)
+        }else{
+          FlowRouter.go('Consults')
+        }
         Bert.alert({
           title: "Votre compte a bien été créé",
           type: 'success',

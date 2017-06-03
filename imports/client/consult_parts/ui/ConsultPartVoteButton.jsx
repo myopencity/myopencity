@@ -6,7 +6,8 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
 
   /*
     required props:
-      - consult_part
+      - consult_part: Object
+      - onNonConnected: Function (called if no user)
   */
 
   constructor(props){
@@ -44,6 +45,15 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
     });
   }
 
+  toggleVoteModal(e){
+    if(!Meteor.userId()){
+      Session.set('return_route', FlowRouter.current().path)
+      FlowRouter.go('Signup')
+    }else{
+      this.toggleState('open_modal', e)
+    }
+  }
+
   on_mouse_over(e){
     e.preventDefault()
     if(this.props.onMouseOver){
@@ -63,7 +73,7 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
     const {consult_part} = this.props
     return(
       <div>
-        <Button onMouseOver={(e) => {this.on_mouse_over(e)}} onMouseOut={(e) => {this.on_mouse_out(e)}} size="huge" positive onClick={(e) => {this.toggleState('open_modal', e)}}>{consult_part.vote_label}</Button>
+        <Button onMouseOver={(e) => {this.on_mouse_over(e)}} onMouseOut={(e) => {this.on_mouse_out(e)}} size="huge" positive onClick={(e) => {this.toggleVoteModal(e)}}>{consult_part.vote_label}</Button>
           <Modal open={open_modal} onClose={(e) => {this.toggleState('open_modal', e)}}>
             <Modal.Header>{consult_part.question}</Modal.Header>
             <Modal.Content>
