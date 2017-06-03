@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor'
 import {Alternatives} from '../alternatives'
 import {ConsultParts} from '/imports/api/consult_parts/consult_parts'
+import {AlternativeLikes} from '/imports/api/alternative_likes/alternative_likes'
 
 Meteor.methods({
   'alternatives.insert'({alternative, consult_part_id}){
@@ -38,5 +39,25 @@ Meteor.methods({
   },
   'alternatives.count_by_part'(consult_part_id){
     return Alternatives.find({consult_part: consult_part_id, validated: true}).count()
+  },
+  'alternatives.toggle_like'(alternative_id){
+    if(!this.userId){
+      throw new Meteor.Error('403', "Vous devez vous connecter pour soutenir une alternative")
+    }else{
+      const alternative = Alternatives.findOne({_id: alternative_id})
+      const alternative_like = AlternativeLikes.findOne({user: this.userId, alternative: alternative_id})
+      if(!alternative_like){
+        console.log("CREATION");
+
+        Meteor.call('alternative_likes.insert', {user: this.userId, alternative: alternative_id})
+        alternative.likes++
+        Meteor.call('alternatives.update', alternative)
+      }else{
+        console.log("SUPPRESSION");
+        AlternativeLikes.remove({user: this.userId, alternative: alternative_id})
+        alternative.likes--
+        Meteor.call('alternatives.update', alternative)
+      }
+    }
   }
 })

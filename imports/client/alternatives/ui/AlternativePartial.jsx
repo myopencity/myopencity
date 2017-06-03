@@ -18,6 +18,21 @@ export class AlternativePartial extends TrackerReact(Component){
     }
   }
 
+  toggle_like(e){
+    e.preventDefault()
+    Meteor.call('alternatives.toggle_like', this.props.alternative._id , (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors de l'ajout de votre soutien",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }
+    });
+  }
+
   render(){
     const {user, loading, alternative} = this.props
 
@@ -35,7 +50,7 @@ export class AlternativePartial extends TrackerReact(Component){
                 <Feed.Date>{moment().to(moment(alternative.created_at))}</Feed.Date>
               </Feed.Summary>
               <Feed.Meta>
-                <Feed.Like>
+                <Feed.Like onClick={(e) => {this.toggle_like(e)}}>
                   <Icon name='like' />
                   {alternative.likes}
                 </Feed.Like>

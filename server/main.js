@@ -12,6 +12,8 @@ import '/imports/api/consult_part_votes/server/methods'
 import '/imports/api/consult_part_votes/server/publication'
 import '/imports/api/alternatives/server/methods'
 import '/imports/api/alternatives/server/publication'
+import '/imports/api/alternative_likes/server/methods'
+import '/imports/api/alternative_likes/server/publication'
 
 Meteor.startup(() => {
   // Initialization of global configuration singleton
