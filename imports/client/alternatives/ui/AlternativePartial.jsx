@@ -3,12 +3,16 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Feed, Icon} from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import moment from 'moment'
+import 'moment/locale/fr'
 
 export class AlternativePartial extends TrackerReact(Component){
 
   /*
     required props:
       - alternative: Object
+
+    facultative props:
+      - onTitleClick: Function
   */
 
   constructor(props){
@@ -33,25 +37,30 @@ export class AlternativePartial extends TrackerReact(Component){
     });
   }
 
+  onTitleClick(e){
+    e.preventDefault()
+    this.props.onTitleClick(this.props.alternative)
+  }
+
   render(){
     const {user, loading, alternative} = this.props
-
+    moment.locale('fr')
 
     if(!loading){
       console.log("user", user);
       return(
-        <Feed.Event>
+        <Feed.Event className="animated fadeInUp">
           <Feed.Label>
             <Icon name="idea" />
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
-              <Feed.User>{alternative.anonymous ? "Quelqu'un" : user.username}</Feed.User> a proposé ceci
+              <Feed.User>{alternative.anonymous ? "Quelqu'un" : user.username}</Feed.User> a proposé l'alternative <a onClick={(e) => {this.onTitleClick(e)}}>{alternative.title}</a>
                 <Feed.Date>{moment().to(moment(alternative.created_at))}</Feed.Date>
               </Feed.Summary>
               <Feed.Meta>
                 <Feed.Like onClick={(e) => {this.toggle_like(e)}}>
-                  <Icon name='like' />
+                  <Icon name='thumbs up' />
                   {alternative.likes}
                 </Feed.Like>
               </Feed.Meta>

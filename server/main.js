@@ -23,5 +23,5 @@ Meteor.startup(() => {
     Configuration.insert({})
   }
 
-
+ 
 });

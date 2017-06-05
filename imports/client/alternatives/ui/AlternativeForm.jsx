@@ -91,7 +91,8 @@ export default class AlternativeForm extends TrackerReact(Component){
                  content={alternative.content}
                  config={{
                    plugins: 'image',
-                   toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | formatselect'
+                   toolbar: false,
+                   menubar: false
                  }}
                  onChange={this.handleContentChange.bind(this)}
                 />

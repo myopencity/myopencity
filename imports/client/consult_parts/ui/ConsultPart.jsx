@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Promise} from 'meteor/promise'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Button, Loader, Header, Input, Feed} from 'semantic-ui-react'
 import ConsultPartVoteButton from '/imports/client/consult_parts/ui/ConsultPartVoteButton'
@@ -9,6 +10,7 @@ import ConsultPartResults from '/imports/client/consult_parts/ui/ConsultPartResu
 import { createContainer } from 'meteor/react-meteor-data'
 import AlternativeForm from '/imports/client/alternatives/ui/AlternativeForm'
 import AlternativePartial from '/imports/client/alternatives/ui/AlternativePartial'
+import AlternativesList from '/imports/client/alternatives/ui/AlternativesList'
 
 export class ConsultPart extends TrackerReact(Component){
 
@@ -22,7 +24,8 @@ export class ConsultPart extends TrackerReact(Component){
     this.state = {
       hover_vote: false,
       display_alternative_form: false,
-      search_alternatives_terms: ""
+      search_alternatives_terms: "",
+      alternatives_page: 0
     }
   }
 
@@ -69,15 +72,28 @@ export class ConsultPart extends TrackerReact(Component){
     this.setState(state)
   }
 
+  handleSearchAlternative(e){
+    e.preventDefault()
+    const alternativesPublication = Meteor.subscribe('alternatives.paginated_by_consult_part', {consult_part_id: consult_part._id, page: 0, results_size: 10})
+  }
+
+  componentWillReceiveProps(new_props){
+    const count = Meteor.call('alternatives.count_by_part', new_props.consult_part._id, (error, result) => {
+      this.setState({alternatives_count: result})
+    })
+  }
+
   render(){
     const {consult_part, consult_part_vote, alternatives, loading} = this.props
-    const {display_alternatives, display_alternative_form} = this.state
+    const {display_alternatives, display_alternative_form, search_alternatives_terms, alternatives_page, alternatives_count} = this.state
     const consult_part_hover_class = this.state.hover_vote ? "hover" : ""
 
     if(!loading){
+      console.log("alternatives_count", alternatives_count);
+
       return(
         <Grid stackable className={"consult-part " + consult_part_hover_class}>
-          <Grid.Column width={(display_alternative_form || display_alternatives) ? 8 : 16}>
+          <Grid.Column width={(display_alternative_form) ? 8 : 16}>
             <div className="consult-part-content" dangerouslySetInnerHTML={{__html: consult_part.content }}></div>
           </Grid.Column>
           {display_alternative_form ?
@@ -91,30 +107,27 @@ export class ConsultPart extends TrackerReact(Component){
             </Grid.Column>
           : ''}
           {display_alternatives ?
-            <Grid.Column width={8} className="wow fadeInLeft">
+            <Grid.Column width={16}>
               <Grid stackable>
                 <Grid.Column width={16} className="center-align">
                   <Header as="h3">Alternatives proposées</Header>
                 </Grid.Column>
                 <Grid.Column width={16}>
-                  <Input icon="search" fluid placeholder="Recherchez une alternative" type="text" onClick={(e) => {this.handleChange('search_alternatives_terms', e)}} />
-                </Grid.Column>
-                <Grid.Column width={16} className="">
-                  <Feed>
-                    {alternatives.map((alternative, index) => {
-                      return <AlternativePartial alternative={alternative} />
-                    })}
-
-                  </Feed>
+                  <AlternativesList
+                    consult_part={consult_part}
+                    results_size={10}
+                    page={alternatives_page}
+                    search_term={search_alternatives_terms}
+                     />
                 </Grid.Column>
               </Grid>
             </Grid.Column>
           : ''}
           {consult_part.alternatives_activated ?
             <Grid.Column width={16} className="center-align">
-              {alternatives.length > 0 ?
+              {alternatives_count > 0 ?
                 <Button onClick={(e) => {this.toggleState('display_alternatives', e)}}>
-                  {display_alternatives ? "Cacher les alternatives" : "Voir les alternatives" }
+                  {display_alternatives ? "Cacher les alternatives" : "Voir les " + alternatives_count + " alternatives" }
                 </Button>
               : ''}
               {!display_alternative_form ?
@@ -148,8 +161,7 @@ export class ConsultPart extends TrackerReact(Component){
 
 export default ConsultPartContainer = createContainer(({ consult_part }) => {
   const consultPartVotePublication = Meteor.subscribe('consult_part_votes.my_vote_by_part', consult_part._id)
-  const alternativesPublication = Meteor.subscribe('alternatives.paginated_by_consult_part', {consult_part_id: consult_part._id, page: 0, results_size: 10})
-  const loading = !consultPartVotePublication.ready() || !alternativesPublication.ready()
+  const loading = !consultPartVotePublication.ready()
   const consult_part_vote = ConsultPartVotes.findOne({user: Meteor.userId(), consult_part: consult_part._id})
   const alternatives = Alternatives.find({consult_part: consult_part._id, validated: true}).fetch()
   return {

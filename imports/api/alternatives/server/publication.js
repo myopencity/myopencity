@@ -10,7 +10,7 @@ Meteor.publish('alternatives.all', function(){
 })
 
 Meteor.publish('alternatives.paginated_by_consult_part',function({consult_part_id, page, results_size}){
-    return Alternatives.find({validated: true, consult_part: consult_part_id}, {limit: results_size, skip: page*results_size})
+    return Alternatives.find({validated: true, consult_part: consult_part_id}, {limit: results_size, skip: page*results_size, sort: {likes: -1}})
 })
 
 Meteor.publishComposite('alternatives.user', function(alternative_id){
@@ -30,4 +30,8 @@ Meteor.publishComposite('alternatives.user', function(alternative_id){
       }
     ]
   }
-});
+})
+
+Meteor.publish('alternative', function(alternative_id){
+  return Alternatives.find({_id: alternative_id, validated: true})
+})
