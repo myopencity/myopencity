@@ -91,7 +91,7 @@ export class ConsultPart extends TrackerReact(Component){
   }
 
   toggleDisplayAlternative(displaying){
-    this.setState({displaying_alternative: displaying})
+    this.setState({displaying_alternative: displaying, search_alternatives_terms: ""})
   }
 
   render(){
@@ -130,6 +130,11 @@ export class ConsultPart extends TrackerReact(Component){
                 <Grid.Column width={16} className="center-align">
                   <Header as="h3">Alternatives proposées</Header>
                 </Grid.Column>
+                {!displaying_alternative ?
+                  <Grid.Column width={16}>
+                    <Input icon="search" fluid placeholder="Recherchez une alternative" type="text" onChange={(e) => {this.handleChange('search_alternatives_terms', e)}} />
+                  </Grid.Column>
+                : ''}
                 <Grid.Column width={16} className="center-align">
                   <AlternativesList
                     consult_part={consult_part}

@@ -46,9 +46,6 @@ export class AlternativesList extends TrackerReact(Component){
           :
             <Grid.Column width={16}>
               <Grid stackable>
-                <Grid.Column width={16}>
-                  <Input icon="search" fluid placeholder="Recherchez une alternative" type="text" onClick={(e) => {this.handleChange('search_alternatives_terms', e)}} />
-                </Grid.Column>
                 <Grid.Column width={16} className="">
                   <Feed>
                     {_.sortBy(alternatives, function(al){return -al.likes}).map((alternative, index) => {

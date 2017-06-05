@@ -9,11 +9,9 @@ Meteor.publish('alternatives.all', function(){
   }
 })
 
-Meteor.publish('alternatives.paginated_by_consult_part',function({consult_part_id, page, results_size}){
+Meteor.publish('alternatives.paginated_by_consult_part',function({consult_part_id, page, results_size, search_term}){
   const skip_entities = page*results_size
-  console.log("SKIP ENTITIES", skip_entities);
-
-    return Alternatives.find({validated: true, consult_part: consult_part_id}, {limit: results_size, skip: skip_entities, sort: {likes: -1}})
+  return Alternatives.find({validated: true, consult_part: consult_part_id, content: {$regex: search_term}}, {limit: results_size, skip: skip_entities, sort: {likes: -1}})
 })
 
 Meteor.publishComposite('alternatives.user', function(alternative_id){
@@ -27,7 +25,7 @@ Meteor.publishComposite('alternatives.user', function(alternative_id){
           if(alternative.anonymous){
             return null
           }else{
-            return Meteor.users.find({_id: alternative.user}, {fields: {username: 1, 'profile.avatar_url': 1}})
+            return Meteor.users.find({_id: alternative.user}, {fields: {username: 1, profile: 1}})
           }
         }
       }
