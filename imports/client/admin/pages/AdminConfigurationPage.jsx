@@ -114,6 +114,15 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                   <label>Taille du texte de description</label>
                   <Input type="text" value={configuration.consult_description_font_size} onChange={(e) => {this.handleConfigurationChange('consult_description_font_size', e)}} />
                 </Form.Field>
+                <Header as="h3">Alternatives</Header>
+                <Form.Field className="inline-block">
+                  <label>Couleur de l'icone des soutiens</label>
+                  <SketchPicker color={configuration.alternative_like_icon_color} onChangeComplete={(e) => {this.handleColorChange('alternative_like_icon_color', e)}} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Terme pour les soutiens d'alternatives</label>
+                  <Input type="text" value={configuration.alternative_likes_term} onChange={(e) => {this.handleConfigurationChange('alternative_likes_term', e)}} />
+                </Form.Field>
                 <Button positive>Modifier la configuration</Button>
               </Form>
             </Container>
