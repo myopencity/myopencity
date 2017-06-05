@@ -10,7 +10,10 @@ Meteor.publish('alternatives.all', function(){
 })
 
 Meteor.publish('alternatives.paginated_by_consult_part',function({consult_part_id, page, results_size}){
-    return Alternatives.find({validated: true, consult_part: consult_part_id}, {limit: results_size, skip: page*results_size, sort: {likes: -1}})
+  const skip_entities = page*results_size
+  console.log("SKIP ENTITIES", skip_entities);
+
+    return Alternatives.find({validated: true, consult_part: consult_part_id}, {limit: results_size, skip: skip_entities, sort: {likes: -1}})
 })
 
 Meteor.publishComposite('alternatives.user', function(alternative_id){

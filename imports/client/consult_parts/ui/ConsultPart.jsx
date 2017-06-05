@@ -11,6 +11,7 @@ import { createContainer } from 'meteor/react-meteor-data'
 import AlternativeForm from '/imports/client/alternatives/ui/AlternativeForm'
 import AlternativePartial from '/imports/client/alternatives/ui/AlternativePartial'
 import AlternativesList from '/imports/client/alternatives/ui/AlternativesList'
+import ReactPaginate from 'react-paginate'
 
 export class ConsultPart extends TrackerReact(Component){
 
@@ -83,9 +84,21 @@ export class ConsultPart extends TrackerReact(Component){
     })
   }
 
+  handleAlternativesPageChange(data){
+     let selected = data.selected
+     this.setState({alternatives_page: selected})
+
+  }
+
   render(){
     const {consult_part, consult_part_vote, alternatives, loading} = this.props
-    const {display_alternatives, display_alternative_form, search_alternatives_terms, alternatives_page, alternatives_count} = this.state
+    const {
+      display_alternatives,
+      display_alternative_form,
+      search_alternatives_terms,
+      alternatives_page,
+      alternatives_count
+    } = this.state
     const consult_part_hover_class = this.state.hover_vote ? "hover" : ""
 
     if(!loading){
@@ -119,6 +132,14 @@ export class ConsultPart extends TrackerReact(Component){
                     page={alternatives_page}
                     search_term={search_alternatives_terms}
                      />
+                </Grid.Column>
+                <Grid.Column width={16}>
+                  <ReactPaginate previousLabel={"précédent"}
+                       nextLabel={"suivant"}
+                       pageCount={alternatives_count / 10}
+                       pageRangeDisplayed={alternatives_page}
+                       onPageChange={this.handleAlternativesPageChange.bind(this)}
+                       activeClassName={"active"} />
                 </Grid.Column>
               </Grid>
             </Grid.Column>
@@ -163,10 +184,8 @@ export default ConsultPartContainer = createContainer(({ consult_part }) => {
   const consultPartVotePublication = Meteor.subscribe('consult_part_votes.my_vote_by_part', consult_part._id)
   const loading = !consultPartVotePublication.ready()
   const consult_part_vote = ConsultPartVotes.findOne({user: Meteor.userId(), consult_part: consult_part._id})
-  const alternatives = Alternatives.find({consult_part: consult_part._id, validated: true}).fetch()
   return {
     loading,
-    consult_part_vote,
-    alternatives
+    consult_part_vote
   }
 }, ConsultPart)

@@ -51,6 +51,7 @@ export class AlternativesList extends TrackerReact(Component){
 
                   </Feed>
                 </Grid.Column>
+
               </Grid>
             </Grid.Column>
           }
@@ -64,7 +65,9 @@ export class AlternativesList extends TrackerReact(Component){
 }
 
 export default AlternativesListContainer = createContainer(({ consult_part, page, results_size, search_term }) => {
-  const alternativesPublication = Meteor.subscribe('alternatives.paginated_by_consult_part', {consult_part_id: consult_part._id, page: 0, results_size: 10, search_term: search_term})
+  console.log("LIST PAGE", page);
+
+  const alternativesPublication = Meteor.subscribe('alternatives.paginated_by_consult_part', {consult_part_id: consult_part._id, page: page, results_size: results_size, search_term: search_term})
   const loading = !alternativesPublication.ready()
   const alternatives = Alternatives.find({}).fetch()
   return {
