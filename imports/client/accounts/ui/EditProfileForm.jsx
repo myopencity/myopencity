@@ -77,8 +77,8 @@ export default class EditProfileForm extends TrackerReact(Component){
                    onChange={this.handleDescriptionChange.bind(this)}
                   />
              </Form.Field>
-             <Form.Field>
-              <Button positive onClick={(e) => {this.edit_profile(e)}}>Modifier mon profil</Button>
+             <Form.Field className="padded-bottom center-align">
+              <Button size="big" positive onClick={(e) => {this.edit_profile(e)}}>Modifier mon profil</Button>
              </Form.Field>
            </Form>
          </Grid.Column>

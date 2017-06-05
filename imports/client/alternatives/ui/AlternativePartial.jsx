@@ -42,6 +42,11 @@ export class AlternativePartial extends TrackerReact(Component){
     this.props.onTitleClick(this.props.alternative)
   }
 
+  go(route, params, e){
+    e.preventDefault()
+    FlowRouter.go(route, params)
+  }
+
   render(){
     const {user, loading, alternative} = this.props
     moment.locale('fr')
@@ -55,7 +60,7 @@ export class AlternativePartial extends TrackerReact(Component){
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
-              <Feed.User>{alternative.anonymous ? "Quelqu'un" : user.username}</Feed.User> a proposé l'alternative <a onClick={(e) => {this.onTitleClick(e)}}>{alternative.title}</a>
+              {alternative.anonymous ? <Feed.User>Quelqu'un</Feed.User> : <Feed.User onClick={(e) => {this.go('Profile', {user_id: user._id}, e)}}>{user.username}</Feed.User>} a proposé l'alternative <a onClick={(e) => {this.onTitleClick(e)}}>{alternative.title}</a>
                 <Feed.Date>{moment().to(moment(alternative.created_at))}</Feed.Date>
               </Feed.Summary>
               <Feed.Meta>

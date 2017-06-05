@@ -27,7 +27,7 @@ Meteor.publishComposite('alternatives.user', function(alternative_id){
           if(alternative.anonymous){
             return null
           }else{
-            return Meteor.users.find({_id: alternative.user}, {username: 1, 'profile.avatar_url': 1})
+            return Meteor.users.find({_id: alternative.user}, {fields: {username: 1, 'profile.avatar_url': 1}})
           }
         }
       }

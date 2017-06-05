@@ -16,6 +16,7 @@ import AdminConsultEditPage from '../imports/client/admin/pages/AdminConsultEdit
 import ConsultsPage from '../imports/client/consults/pages/ConsultsPage'
 import ConsultPage from '../imports/client/consults/pages/ConsultPage'
 import MyProfile from '../imports/client/accounts/pages/MyProfile'
+import ProfilePage from '../imports/client/accounts/pages/ProfilePage'
 
 FlowRouter.wait()
 
@@ -105,6 +106,15 @@ FlowRouter.route('/consult/:urlShorten',{
   action(params){
     mount(MainLayout, {
       content: (<ConsultPage urlShorten={params.urlShorten}/>)
+    })
+  }
+})
+
+FlowRouter.route('/profile/:user_id',{
+  name: "Profile",
+  action(params){
+    mount(MainLayout, {
+      content: (<ProfilePage user_id={params.user_id}/>)
     })
   }
 })

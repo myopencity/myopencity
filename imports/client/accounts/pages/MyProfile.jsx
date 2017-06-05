@@ -20,7 +20,7 @@ export default class MyProfile extends TrackerReact(Component){
   render(){
     const user = Meteor.user()
     return(
-       <Grid stackable>
+       <Grid stackable className="wow fadeInUp">
          <Grid.Column width={16} className="center-align">
            <Image src={user.profile.avatar_url} size="medium" shape='circular' className="inline-block" />
            <Header as="h1">Édition de votre profil</Header>
