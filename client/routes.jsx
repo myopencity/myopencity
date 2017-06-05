@@ -15,6 +15,7 @@ import AdminConsultCreationPage from '../imports/client/admin/pages/AdminConsult
 import AdminConsultEditPage from '../imports/client/admin/pages/AdminConsultEditPage'
 import ConsultsPage from '../imports/client/consults/pages/ConsultsPage'
 import ConsultPage from '../imports/client/consults/pages/ConsultPage'
+import MyProfile from '../imports/client/accounts/pages/MyProfile'
 
 FlowRouter.wait()
 
@@ -39,6 +40,15 @@ var adminRoutes = FlowRouter.group({
           type: 'danger',
           style: 'growl-bottom-left',
         })
+        FlowRouter.go('Landing')
+      }
+    }]
+});
+
+var connectedRoutes = FlowRouter.group({
+    name: "connected",
+    triggersEnter: [function(context, redirect){
+      if(!Meteor.userId()){
         FlowRouter.go('Landing')
       }
     }]
@@ -95,6 +105,15 @@ FlowRouter.route('/consult/:urlShorten',{
   action(params){
     mount(MainLayout, {
       content: (<ConsultPage urlShorten={params.urlShorten}/>)
+    })
+  }
+})
+
+connectedRoutes.route('/me/profile', {
+  name: "MyProfile",
+  action(){
+    mount(MainLayout, {
+      content: (<MyProfile />)
     })
   }
 })

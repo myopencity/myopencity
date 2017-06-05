@@ -26,5 +26,12 @@ Meteor.methods({
     }else{
       throw new Meteor.Error('403', "Initial user account already exists")
     }
+  },
+  'user.edit_profile'(profile){
+    if(!this.userId){
+      throw new Meteor.Error('403', "Vous devez vous connecter")
+    }else{
+      Meteor.users.update({_id: this.userId}, {$set: {profile: profile}})
+    }
   }
 })
