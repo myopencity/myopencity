@@ -43,12 +43,16 @@ export class AlternativePresentation extends TrackerReact(Component){
     this.props.onGoBackClick()
   }
 
+  componentDidMount(){
+    window.scrollTo(0, document.getElementById("alternativePresentation" + this.props.alternative._id).offsetTop)
+  }
+
   render(){
     const {load_alternative, user, loading} = this.props
 
     if(!loading){
       return(
-        <Grid stackable centered className="animated fadeInUp">
+        <Grid stackable centered className="animated fadeInUp" id={"alternativePresentation" + load_alternative._id}>
           <Grid.Column width={16} className="center-align">
             <Header as="h2">{load_alternative.title}</Header>
             <Header as="h3">Proposé par {load_alternative.anonymous ?

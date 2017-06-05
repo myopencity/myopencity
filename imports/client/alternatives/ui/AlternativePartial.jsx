@@ -56,7 +56,9 @@ export class AlternativePartial extends TrackerReact(Component){
       return(
         <Feed.Event className="animated fadeInUp">
           <Feed.Label>
-            <Image avatar src={user.profile.avatar_url} />
+            {!alternative.anonymous ?
+              <Image avatar src={user.profile.avatar_url} />
+            : ''}
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>

@@ -22,9 +22,9 @@ export class AlternativesList extends TrackerReact(Component){
 
   select_alternative(selected_alternative){
     this.setState({selected_alternative})
+    window.scrollTo(0, document.getElementById('alternativePresentation' + selected_alternative._id).offsetTop);
     if(this.props.on_displaying_alternative){
       this.props.on_displaying_alternative(true)
-      window.scrollTo(document.getElementById('alternativePresentation' + selected_alternative._id).offsetTop, 0);
     }
   }
 
@@ -43,7 +43,7 @@ export class AlternativesList extends TrackerReact(Component){
       return(
         <Grid stackable centered>
           {selected_alternative ?
-              <AlternativePresentation id={"alternativePresentation" + selected_alternative._id} alternative={selected_alternative} onGoBackClick={() => {this.hide_selected_alternative()}} />
+              <AlternativePresentation alternative={selected_alternative} onGoBackClick={() => {this.hide_selected_alternative()}} />
           :
             <Grid.Column width={16}>
               <Grid stackable>
