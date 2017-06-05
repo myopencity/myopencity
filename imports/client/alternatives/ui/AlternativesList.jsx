@@ -24,6 +24,7 @@ export class AlternativesList extends TrackerReact(Component){
     this.setState({selected_alternative})
     if(this.props.on_displaying_alternative){
       this.props.on_displaying_alternative(true)
+      window.scrollTo(document.getElementById('alternativePresentation' + selected_alternative._id).offsetTop, 0);
     }
   }
 
@@ -42,7 +43,7 @@ export class AlternativesList extends TrackerReact(Component){
       return(
         <Grid stackable centered>
           {selected_alternative ?
-              <AlternativePresentation alternative={selected_alternative} onGoBackClick={() => {this.hide_selected_alternative()}} />
+              <AlternativePresentation id={"alternativePresentation" + selected_alternative._id} alternative={selected_alternative} onGoBackClick={() => {this.hide_selected_alternative()}} />
           :
             <Grid.Column width={16}>
               <Grid stackable>
@@ -68,7 +69,6 @@ export class AlternativesList extends TrackerReact(Component){
 }
 
 export default AlternativesListContainer = createContainer(({ consult_part, page, results_size, search_term }) => {
-  console.log("LIST PAGE", page);
 
   const alternativesPublication = Meteor.subscribe('alternatives.paginated_by_consult_part', {consult_part_id: consult_part._id, page: page, results_size: results_size, search_term: search_term})
   const loading = !alternativesPublication.ready()

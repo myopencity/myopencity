@@ -82,10 +82,10 @@ export class AlternativePresentation extends TrackerReact(Component){
 }
 
 export default AlternativePresentationContainer = createContainer(({ alternative }) => {
-  const alternativesUserPublication = Meteor.subscribe('alternatives.user')
+  const alternativesUserPublication = Meteor.subscribe('alternatives.user', alternative._id)
   const alternativePublication = Meteor.subscribe('alternative', alternative._id)
   const loading = !alternativesUserPublication.ready() || !alternativePublication.ready()
-  const user = Meteor.users.findOne({_id: alternative.user}, {username: 1})
+  const user = Meteor.users.findOne({_id: alternative.user})
   const load_alternative = Alternatives.findOne({_id: alternative._id})
   return {
     loading,
