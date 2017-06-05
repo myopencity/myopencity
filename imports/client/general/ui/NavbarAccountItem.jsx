@@ -1,7 +1,7 @@
 import {Meteor} from 'meteor/meteor'
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Menu, Modal, Dropdown} from 'semantic-ui-react'
+import {Menu, Modal, Dropdown, Image} from 'semantic-ui-react'
 import SigninForm from '/imports/client/accounts/ui/SigninForm'
 
 export default class NavbarAccountItem extends TrackerReact(Component){
@@ -63,8 +63,13 @@ export default class NavbarAccountItem extends TrackerReact(Component){
     const current_user = Meteor.user()
 
     if(current_user){
+      const trigger = (
+        <Menu.Item>
+          <Image floated="left" avatar src={current_user.profile.avatar_url} /> {current_user.username}
+        </Menu.Item>
+      )
       return(
-        <Dropdown item text={current_user.username}>
+        <Dropdown trigger={trigger} icon={null}>
           <Dropdown.Menu>
             <Dropdown.Item>Profil</Dropdown.Item>
             {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?

@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Feed, Icon} from 'semantic-ui-react'
+import {Feed, Icon, Image} from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import moment from 'moment'
 import 'moment/locale/fr'
@@ -51,7 +51,7 @@ export class AlternativePartial extends TrackerReact(Component){
       return(
         <Feed.Event className="animated fadeInUp">
           <Feed.Label>
-            <Icon name="idea" />
+            <Image avatar src={user.profile.avatar_url} />
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>

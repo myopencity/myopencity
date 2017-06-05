@@ -40,7 +40,7 @@ export class AlternativesList extends TrackerReact(Component){
 
     if(!loading){
       return(
-        <Grid stackable>
+        <Grid stackable centered>
           {selected_alternative ?
               <AlternativePresentation alternative={selected_alternative} onGoBackClick={() => {this.hide_selected_alternative()}} />
           :

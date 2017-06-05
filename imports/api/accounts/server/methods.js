@@ -5,7 +5,10 @@ Meteor.methods({
     Accounts.createUser({
       username: username,
       email: email,
-      password: password})
+      password: password,
+      profile: {
+        avatar_url: '/images/avatar-logo.png'
+      }})
   },
   'user.init_creation'({email, password, username}){
     const users = Meteor.users.find().fetch()
@@ -13,7 +16,11 @@ Meteor.methods({
       const user = Accounts.createUser({
         username: username,
         email: email,
-        password: password})
+        password: password,
+        profile: {
+          avatar_url: '/images/avatar-logo.png'
+        }
+      })
 
         Roles.addUsersToRoles(user, 'admin')
     }else{

@@ -48,14 +48,14 @@ export class AlternativePresentation extends TrackerReact(Component){
 
     if(!loading){
       return(
-        <Grid stackable className="animated fadeInUp">
+        <Grid stackable centered className="animated fadeInUp">
           <Grid.Column width={16} className="center-align">
             <Header as="h2">{load_alternative.title}</Header>
-            <Header as="h3">Proposé par {load_alternative.anonyous ?
+            <Header as="h3">Proposé par {load_alternative.anonymous ?
                   "une personne anonyme"
                 :
                   <span>
-                    <Icon name="user"/>
+                    <Image avatar src={user.profile.avatar_url} />
                     {user.username}
                   </span>
               }</Header>
