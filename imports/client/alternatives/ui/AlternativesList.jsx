@@ -22,10 +22,16 @@ export class AlternativesList extends TrackerReact(Component){
 
   select_alternative(selected_alternative){
     this.setState({selected_alternative})
+    if(this.props.on_displaying_alternative){
+      this.props.on_displaying_alternative(true)
+    }
   }
 
   hide_selected_alternative(){
     this.setState({selected_alternative: null})
+    if(this.props.on_displaying_alternative){
+      this.props.on_displaying_alternative(false)
+    }
   }
 
   render(){

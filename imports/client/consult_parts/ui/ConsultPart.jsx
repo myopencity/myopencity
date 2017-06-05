@@ -26,7 +26,8 @@ export class ConsultPart extends TrackerReact(Component){
       hover_vote: false,
       display_alternative_form: false,
       search_alternatives_terms: "",
-      alternatives_page: 0
+      alternatives_page: 0,
+      displaying_alternative: false
     }
   }
 
@@ -87,7 +88,10 @@ export class ConsultPart extends TrackerReact(Component){
   handleAlternativesPageChange(data){
      let selected = data.selected
      this.setState({alternatives_page: selected})
+  }
 
+  toggleDisplayAlternative(displaying){
+    this.setState({displaying_alternative: displaying})
   }
 
   render(){
@@ -97,7 +101,8 @@ export class ConsultPart extends TrackerReact(Component){
       display_alternative_form,
       search_alternatives_terms,
       alternatives_page,
-      alternatives_count
+      alternatives_count,
+      displaying_alternative
     } = this.state
     const consult_part_hover_class = this.state.hover_vote ? "hover" : ""
 
@@ -125,22 +130,29 @@ export class ConsultPart extends TrackerReact(Component){
                 <Grid.Column width={16} className="center-align">
                   <Header as="h3">Alternatives proposées</Header>
                 </Grid.Column>
-                <Grid.Column width={16}>
+                <Grid.Column width={16} className="center-align">
                   <AlternativesList
                     consult_part={consult_part}
                     results_size={10}
                     page={alternatives_page}
                     search_term={search_alternatives_terms}
+                    on_displaying_alternative={this.toggleDisplayAlternative.bind(this)}
                      />
                 </Grid.Column>
-                <Grid.Column width={16}>
-                  <ReactPaginate previousLabel={"précédent"}
-                       nextLabel={"suivant"}
-                       pageCount={alternatives_count / 10}
-                       pageRangeDisplayed={alternatives_page}
-                       onPageChange={this.handleAlternativesPageChange.bind(this)}
-                       activeClassName={"active"} />
-                </Grid.Column>
+                {!displaying_alternative ?
+                  <Grid.Column width={16} className="center-align">
+                    <ReactPaginate previousLabel={"<<"}
+                      nextLabel={">>"}
+                      pageCount={alternatives_count / 10}
+                      pageRangeDisplayed={alternatives_page}
+                      containerClassName={"pagination"}
+                      pageClassName={"pages pagination"}
+                      nextClassName={'pages pagination'}
+                      previousClassName={'pages pagination'}
+                      onPageChange={this.handleAlternativesPageChange.bind(this)}
+                      activeClassName={"active"} />
+                  </Grid.Column>
+                : ''}
               </Grid>
             </Grid.Column>
           : ''}
@@ -159,7 +171,7 @@ export class ConsultPart extends TrackerReact(Component){
             </Grid.Column>
           : ''}
           <Grid.Column width={16} className="center-align">
-            {consult_part.votes_activated && !display_alternative_form ?
+            {consult_part.votes_activated && !display_alternative_form && !display_alternatives ?
               <div>
                 {consult_part_vote ?
                   <div>
