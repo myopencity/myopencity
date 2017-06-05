@@ -3,6 +3,7 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Grid, Header, Icon, Image, Loader, Button} from 'semantic-ui-react'
 import {Alternatives} from '/imports/api/alternatives/alternatives'
+import AlternativeLikeButton from '/imports/client/alternatives/ui/AlternativeLikeButton'
 
 export class AlternativePresentation extends TrackerReact(Component){
 
@@ -64,8 +65,7 @@ export class AlternativePresentation extends TrackerReact(Component){
           </Grid.Column>
           <Grid.Column width={16} className="center-align">
             <Header as="h3" onClick={(e) => {this.toggle_like(e)}} style={{cursor: 'pointer'}}>
-              <Icon name="thumbs up" style={{color: "blue"}} />
-              {load_alternative.likes} soutiens
+              <AlternativeLikeButton likes={load_alternative.likes} />
             </Header>
           </Grid.Column>
           {this.props.onGoBackClick ?

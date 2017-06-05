@@ -50,6 +50,14 @@ const ConfigurationSchema = new SimpleSchema({
   consult_description_font_size: {
     type: String,
     defaultValue: "1.2em"
+  },
+  alternative_like_icon_color: {
+    type: String,
+    defaultValue: "#3498db"
+  },
+  alternative_likes_term: {
+    type: String,
+    defaultValue: "soutiens"
   }
 })
 
