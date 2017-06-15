@@ -111,11 +111,11 @@ export class ConsultPart extends TrackerReact(Component){
 
       return(
         <Grid stackable className={"consult-part " + consult_part_hover_class}>
-          <Grid.Column width={(display_alternative_form) ? 8 : 16}>
+          <Grid.Column width={(display_alternative_form) ? 5 : 16}>
             <div className="consult-part-content" dangerouslySetInnerHTML={{__html: consult_part.content }}></div>
           </Grid.Column>
           {display_alternative_form ?
-            <Grid.Column width={8} className="wow fadeInLeft">
+            <Grid.Column width={11} className="animated fadeInLeft">
               <div className="center-align marged">
                 <Button onClick={(e) => {this.toggleState('display_alternative_form', e)}}>
                   Annuler la création d'alternative

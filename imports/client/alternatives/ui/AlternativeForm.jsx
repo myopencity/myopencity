@@ -92,7 +92,8 @@ export default class AlternativeForm extends TrackerReact(Component){
                  config={{
                    plugins: 'image',
                    toolbar: false,
-                   menubar: false
+                   menubar: false,
+                   branding: false
                  }}
                  onChange={this.handleContentChange.bind(this)}
                 />
