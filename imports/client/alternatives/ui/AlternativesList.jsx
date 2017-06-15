@@ -22,7 +22,6 @@ export class AlternativesList extends TrackerReact(Component){
 
   select_alternative(selected_alternative){
     this.setState({selected_alternative})
-    window.scrollTo(0, document.getElementById('alternativePresentation' + selected_alternative._id).offsetTop);
     if(this.props.on_displaying_alternative){
       this.props.on_displaying_alternative(true)
     }

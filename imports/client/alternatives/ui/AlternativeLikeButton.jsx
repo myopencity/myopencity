@@ -17,6 +17,10 @@ export default class AlternativeLikeButton extends TrackerReact(Component){
     }
   }
 
+  componentDidMount(){
+    this.setState({likes_counter: this.props.likes})
+  }
+
   componentWillReceiveProps(new_props){
     const {likes_counter} = this.state
     if(new_props.likes > likes_counter){

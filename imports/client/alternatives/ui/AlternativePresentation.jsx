@@ -43,12 +43,8 @@ export class AlternativePresentation extends TrackerReact(Component){
     this.props.onGoBackClick()
   }
 
-  componentDidMount(){
-    window.scrollTo(0, document.getElementById("alternativePresentation" + this.props.alternative._id).offsetTop)
-  }
-
   render(){
-    const {load_alternative, user, loading} = this.props
+    const {alternative, load_alternative, user, loading} = this.props
 
     if(!loading){
       return(
@@ -94,6 +90,7 @@ export default AlternativePresentationContainer = createContainer(({ alternative
   return {
     loading,
     user,
+    alternative,
     load_alternative
   }
 }, AlternativePresentation)
