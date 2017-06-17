@@ -20,6 +20,7 @@ import ProfilePage from '../imports/client/accounts/pages/ProfilePage'
 import ProjectsPage from '/imports/client/projects/pages/ProjectsPage'
 import ProjectPage from '/imports/client/projects/pages/ProjectPage'
 import NewProjectPage from '/imports/client/projects/pages/NewProjectPage'
+import EditProjectPage from '/imports/client/projects/pages/EditProjectPage'
 
 FlowRouter.wait()
 
@@ -140,11 +141,20 @@ FlowRouter.route('/projects',{
   }
 })
 
-FlowRouter.route('/projects/new',{
+connectedRoutes.route('/projects/new',{
   name: "NewProject",
   action(){
     mount(MainLayout, {
       content: (<NewProjectPage/>)
+    })
+  }
+})
+
+connectedRoutes.route('/projects/edit/:shorten_url',{
+  name: "EditProject",
+  action(params){
+    mount(MainLayout, {
+      content: (<EditProjectPage shorten_url={params.shorten_url}/>)
     })
   }
 })

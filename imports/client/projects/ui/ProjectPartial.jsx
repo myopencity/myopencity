@@ -98,12 +98,12 @@ export default class ProjectPartial extends TrackerReact(Component){
           {!hideButtons ?
             <Card.Content className="center-align" extra>
               <Button onClick={(e) => {this.go('Project', {shorten_url: project.shorten_url}, e)}} fluid>Consulter</Button>
-              {project.author == this.userId ?
+              {project.author == Meteor.userId() ?
                 <div>
                   <Button fluid active={display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
                   {display_manage_buttons ?
                     <div>
-                      {/* <Button onClick={(e) => {this.go('AdminProjectEdit', {project_shorten_url: project.shorten_url}, e)}} fluid>Modifier</Button> */}
+                      <Button onClick={(e) => {this.go('EditProject', {shorten_url: project.shorten_url}, e)}} fluid>Modifier</Button>
                       <Button onClick={(e) => {this.toggleEditProject('visible', e)}} fluid>{project.visible ? "Rendre invisible" : "Rendre visible"}</Button>
                       {remove_confirm ?
                         <div className="wow fadeInUp">

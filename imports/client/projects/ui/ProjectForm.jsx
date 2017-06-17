@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import TinyMCE from 'react-tinymce'
-import {Grid, Header, Form, Input, Button, Icon} from 'semantic-ui-react'
+import {Grid, Header, Form, Input, Button, Icon, Loader} from 'semantic-ui-react'
+import {Projects} from '/imports/api/projects/projects'
 
 export class ProjectForm extends TrackerReact(Component){
 
@@ -94,12 +95,16 @@ export class ProjectForm extends TrackerReact(Component){
             <Input value={editing_project.title} type="text" onChange={(e) => {this.handleChange('title', e)}} />
           </Form.Field>
           <Form.Field>
+            <label>URL de l'image du projet</label>
+            <Input value={editing_project.image_url} placeholder="http://" type="text" onChange={(e) => {this.handleChange('image_url', e)}} />
+          </Form.Field>
+          <Form.Field>
             <label>Décrivez votre projet de la manière la plus précise possible</label>
             <TinyMCE
               content={editing_project.content}
               config={{
-                plugins: 'image',
-                toolbar: "undo redo | bold italic | alignleft aligncenter alignright | code",
+                plugins: 'image autoresize media code link colorpicker textcolor imagetools',
+                toolbar: "undo redo | bold italic | alignleft aligncenter alignright | code | formatselect | link | forecolor backcolor | image ",
                 menubar: true,
                 branding: false
               }}
@@ -107,7 +112,7 @@ export class ProjectForm extends TrackerReact(Component){
               />
           </Form.Field>
           <Form.Field>
-            <Button positive onClick={(e) => {this.submit_form(e)}}>{project ? "Éditer" : "Créer"}</Button>
+            <Button positive onClick={(e) => {this.submit_form(e)}}>{project ? "Modifier" : "Créer"}</Button>
           </Form.Field>
         </Form>
       )
@@ -124,6 +129,7 @@ export default ProjectFormContainer = createContainer(({ project }) => {
     const parent_project = Projects.findOne({_id: project.parent})
     return {
       loading,
+      project,
       parent_project
     }
   }else{

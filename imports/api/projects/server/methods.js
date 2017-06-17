@@ -20,8 +20,8 @@ Meteor.methods({
     if(!this.userId){
       throw new Meteor.Error('403', "Vous devez vous connecter")
     }else{
-      const project = Project.findOne({_id: project._id, author: this.userId})
-      if(project){
+      const found_project = Projects.findOne({_id: project._id, author: this.userId})
+      if(found_project){
         project.updated_at = new Date()
         Projects.update({_id: project._id}, {$set: project})
       }else{
@@ -33,7 +33,7 @@ Meteor.methods({
     if(!this.userId){
       throw new Meteor.Error('403', "Vous devez vous connecter")
     }else{
-      const project = Project.findOne({_id: project_id, author: this.userId})
+      const project = Projects.findOne({_id: project_id, author: this.userId})
       if(project){
         Projects.remove({_id: project_id})
       }else{
