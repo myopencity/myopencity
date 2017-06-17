@@ -55,6 +55,9 @@ export class MainLayout extends TrackerReact(Component){
               <Menu.Item name='consultations' onClick={(e) => {this.go('Consults', e)}}>
                 Consultations
               </Menu.Item>
+              <Menu.Item name='propositions' onClick={(e) => {this.go('Projects', e)}}>
+                Propositions
+              </Menu.Item>
             </Sidebar>
             <Sidebar.Pusher>
               <Grid>

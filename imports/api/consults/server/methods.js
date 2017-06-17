@@ -25,6 +25,7 @@ Meteor.methods({
     if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
+      consult.updated_at = new Date()
       const consult_id = consult._id
       Consults.update({_id: consult._id}, {$set: consult})
       _.each(consult_parts, (consult_part) => {

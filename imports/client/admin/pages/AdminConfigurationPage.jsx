@@ -123,6 +123,11 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                   <label>Terme pour les soutiens d'alternatives</label>
                   <Input type="text" value={configuration.alternative_likes_term} onChange={(e) => {this.handleConfigurationChange('alternative_likes_term', e)}} />
                 </Form.Field>
+                <Header as="h3">Propositions</Header>
+                  <Form.Field>
+                    <label>Titre de la page des propositions</label>
+                    <Input type="text" value={configuration.projects_page_header_title} onChange={(e) => {this.handleConfigurationChange('projects_page_header_title', e)}} />
+                  </Form.Field>
                 <Button positive>Modifier la configuration</Button>
               </Form>
             </Container>

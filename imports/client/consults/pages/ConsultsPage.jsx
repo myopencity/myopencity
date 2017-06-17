@@ -23,7 +23,7 @@ export class ConsultsPage extends TrackerReact(Component){
     const consults = this.props.consults
     if(!this.props.loading){
       return(
-        <Grid className="wow fadeInDown" stackable>
+        <Grid className="wow fadeInUp" stackable>
           <Grid.Column width={16} className="center-align">
             <Header as="h1">Consultations en cours</Header>
           </Grid.Column>

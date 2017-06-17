@@ -1,0 +1,20 @@
+.project-header{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .project-header-inner-grid{
+    height: inherit !important;
+    background-color: rgba(0,0,0,0.5);
+  }
+}
+
+.project-description-container{
+  padding: 3em !important;
+  margin-bottom: 2em;
+}
+
+.project-content-container{
+  margin-top: 2em;
+  font-family: 'Roboto' !important;
+}

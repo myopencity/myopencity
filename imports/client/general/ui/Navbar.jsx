@@ -38,8 +38,7 @@ export default class Navbar extends TrackerReact(Component){
                 {Session.get('global_configuration').main_title}
               </Menu.Item>
               <Menu.Item className="navbar-item" name='Consultations' onClick={(e) => {this.go('Consults', e)}}/>
-              <Menu.Item className="navbar-item" name='messages'/>
-              <Menu.Item className="navbar-item" name='amis'/>
+              <Menu.Item className="navbar-item" name='Propositions' onClick={(e) => {this.go('Projects', e)}}/>
               <Menu.Menu position='right'>
                 <NavbarAccountItem />
               </Menu.Menu>

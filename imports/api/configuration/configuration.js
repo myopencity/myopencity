@@ -58,7 +58,31 @@ const ConfigurationSchema = new SimpleSchema({
   alternative_likes_term: {
     type: String,
     defaultValue: "soutiens"
-  }
+  },
+  projects_page_header_title: {
+    type: String,
+    defaultValue: "Projets proposés"
+  },
+  project_header_height: {
+    type: String,
+    defaultValue: 20
+  },
+  project_header_color: {
+    type: String,
+    defaultValue: "#FFFFFF"
+  },
+  project_description_background_color: {
+    type: String,
+    defaultValue: "#ecf0f1"
+  },
+  project_description_color: {
+    type: String,
+    defaultValue: "#000000"
+  },
+  project_description_font_size: {
+    type: String,
+    defaultValue: "1.2em"
+  },
 })
 
 Configuration.attachSchema(ConfigurationSchema);

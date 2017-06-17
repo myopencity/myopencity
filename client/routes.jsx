@@ -17,6 +17,9 @@ import ConsultsPage from '../imports/client/consults/pages/ConsultsPage'
 import ConsultPage from '../imports/client/consults/pages/ConsultPage'
 import MyProfile from '../imports/client/accounts/pages/MyProfile'
 import ProfilePage from '../imports/client/accounts/pages/ProfilePage'
+import ProjectsPage from '/imports/client/projects/pages/ProjectsPage'
+import ProjectPage from '/imports/client/projects/pages/ProjectPage'
+import NewProjectPage from '/imports/client/projects/pages/NewProjectPage'
 
 FlowRouter.wait()
 
@@ -115,6 +118,33 @@ FlowRouter.route('/profile/:user_id',{
   action(params){
     mount(MainLayout, {
       content: (<ProfilePage user_id={params.user_id}/>)
+    })
+  }
+})
+
+FlowRouter.route('/project/:shorten_url',{
+  name: "Project",
+  action(params){
+    mount(MainLayout, {
+      content: (<ProjectPage shorten_url={params.shorten_url}/>)
+    })
+  }
+})
+
+FlowRouter.route('/projects',{
+  name: "Projects",
+  action(){
+    mount(MainLayout, {
+      content: (<ProjectsPage/>)
+    })
+  }
+})
+
+FlowRouter.route('/projects/new',{
+  name: "NewProject",
+  action(){
+    mount(MainLayout, {
+      content: (<NewProjectPage/>)
     })
   }
 })
