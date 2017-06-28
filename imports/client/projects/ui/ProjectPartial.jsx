@@ -33,14 +33,14 @@ export default class ProjectPartial extends TrackerReact(Component){
       if(error){
         console.log(error)
         Bert.alert({
-          title: "Erreur lors de la modification de la projectation",
+          title: "Erreur lors de la modification du projet",
           message: error.reason,
           type: 'danger',
           style: 'growl-bottom-left',
         })
       }else{
         Bert.alert({
-          title: "Projectation modifiée",
+          title: "Projet modifié",
           type: 'success',
           style: 'growl-bottom-left',
         })
@@ -104,7 +104,6 @@ export default class ProjectPartial extends TrackerReact(Component){
                   {display_manage_buttons ?
                     <div>
                       <Button onClick={(e) => {this.go('EditProject', {shorten_url: project.shorten_url}, e)}} fluid>Modifier</Button>
-                      <Button onClick={(e) => {this.toggleEditProject('visible', e)}} fluid>{project.visible ? "Rendre invisible" : "Rendre visible"}</Button>
                       {remove_confirm ?
                         <div className="wow fadeInUp">
                           <p>Vous confirmez ?</p>

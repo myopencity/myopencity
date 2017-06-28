@@ -84,7 +84,7 @@ export class ProjectPage extends TrackerReact(Component){
               <Button size="big" onClick={(e) => {this.toggle_like(e)}} icon={<Icon name="thumbs up" style={{color: project_like ? alternative_like_icon_color : null }} />} content={project.likes + ' soutiens'} />
             </Grid.Column>
             <Container>
-              <Grid.Column width={16} className="project-content-container">
+              <Grid.Column width={16} className="project-content-container marged">
                 <div dangerouslySetInnerHTML={{__html: project.content }} style={{fontFamily: 'Roboto'}} className="project-content"></div>
               </Grid.Column>
             </Container>

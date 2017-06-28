@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
-import {Grid, Header, Container, Message, Button, Input, Breadcrumb, Icon} from 'semantic-ui-react'
+import {Grid, Header, Container, Message, Button, Input, Breadcrumb, Icon, Form} from 'semantic-ui-react'
 import TinyMCE from 'react-tinymce'
 import ProjectForm from '../ui/ProjectForm'
 import ProjectPartial from '/imports/client/projects/ui/ProjectPartial'
@@ -139,15 +139,16 @@ export class NewProjectPage extends TrackerReact(Component){
               <Grid.Column width={16} className="">
                 <Container>
                   <Header as="h1" className="wow fadeInUp">Premièrement, donnez un titre à votre projet</Header>
-                  <Input
-                    fluid
-                    size="huge"
-                    placeholder="ex: Refaire la place du centre-ville"
-                    onBlur={(e) => {this.handleProjectChange('title', e)}}
-                    defaultValue={new_project.title}
-                    className="marged"
-                    />
-                  <Button positive onClick={(e) => {this.changeStep('description', e)}}>Passer à la description</Button>
+                    <Input
+                      fluid
+                      autoFocus
+                      size="huge"
+                      placeholder="ex: Refaire la place du centre-ville"
+                      onBlur={(e) => {this.handleProjectChange('title', e)}}
+                      defaultValue={new_project.title}
+                      className="marged"
+                      />
+                    <Button positive onClick={(e) => {this.changeStep('description', e)}}>Passer à la description</Button>
                 </Container>
               </Grid.Column>
             </Grid>
@@ -159,14 +160,15 @@ export class NewProjectPage extends TrackerReact(Component){
                 <Grid.Column width={16} className="">
                   <Container>
                     <Header as="h1" className="wow fadeInUp">Rédigez une brève description de votre projet (comme un tweet <Icon name="twitter" />)</Header>
-                    <Input
-                      fluid
-                      size="huge"
-                      placeholder="ex: Proposition d'aménagements culturels et sportifs pour le nouveau quartier qui sera construit dans le centre en 2020"
-                      onBlur={(e) => {this.handleProjectChange('description', e)}}
-                      defaultValue={new_project.description}
-                      className="marged"
-                      />
+                      <Input
+                        fluid
+                        size="huge"
+                        autoFocus
+                        placeholder="ex: Proposition d'aménagements culturels et sportifs pour le nouveau quartier qui sera construit dans le centre en 2020"
+                        onBlur={(e) => {this.handleProjectChange('description', e)}}
+                        defaultValue={new_project.description}
+                        className="marged"
+                        />
                     <Button size="tiny" onClick={(e) => {this.changeStep('title', e)}}>Précédent</Button>
                     <Button positive onClick={(e) => {this.changeStep('content', e)}}>Passer au contenu</Button>
                   </Container>
@@ -180,16 +182,17 @@ export class NewProjectPage extends TrackerReact(Component){
               <Grid.Column width={16} className="">
                 <Container>
                   <Header as="h1" className="wow fadeInUp">Expliquez maintenant en détails votre projet</Header>
-                  <TinyMCE
-                    content={new_project.content}
-                    config={{
-                      plugins: 'image autoresize media code link colorpicker textcolor imagetools',
-                      toolbar: "undo redo | bold italic | alignleft aligncenter alignright | code | formatselect | link | forecolor backcolor | image ",
-                      menubar: true,
-                      branding: false
-                    }}
-                    onChange={this.handleContentChange.bind(this)}
-                    />
+                    <TinyMCE
+                      content={new_project.content}
+                      autoFocus
+                      config={{
+                        plugins: 'image autoresize media code link colorpicker textcolor imagetools',
+                        toolbar: "undo redo | bold italic | alignleft aligncenter alignright | code | formatselect | link | forecolor backcolor | image ",
+                        menubar: true,
+                        branding: false
+                      }}
+                      onChange={this.handleContentChange.bind(this)}
+                      />
                   <Button size="tiny" onClick={(e) => {this.changeStep('content', e)}}>Précédent</Button>
                   <Button positive onClick={(e) => {this.changeStep('image', e)}}>Passer à l'image de projet</Button>
                 </Container>
@@ -204,14 +207,15 @@ export class NewProjectPage extends TrackerReact(Component){
                   <Container>
                     <Header as="h1" className="wow fadeInUp">Ajoutez une image d'illustration à votre projet</Header>
                     <p>Entrez l'URL d'une image pour illustrer votre projet et le rendre unique et visible</p>
-                    <Input
-                      fluid
-                      size="huge"
-                      placeholder="http://"
-                      onChange={(e) => {this.handleProjectChange('image_url', e)}}
-                      defaultValue={new_project.image_url}
-                      className="marged"
-                      />
+                      <Input
+                        fluid
+                        autoFocus
+                        size="huge"
+                        placeholder="http://"
+                        onChange={(e) => {this.handleProjectChange('image_url', e)}}
+                        defaultValue={new_project.image_url}
+                        className="marged"
+                        />
                     <Button size="tiny" onClick={(e) => {this.changeStep('content', e)}}>Précédent</Button>
                     <Button positive onClick={(e) => {this.changeStep('anonymous', e)}}>Passer à l'anonymat</Button>
                   </Container>
