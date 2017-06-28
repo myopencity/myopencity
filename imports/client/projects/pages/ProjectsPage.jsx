@@ -33,7 +33,7 @@ export class ProjectsPage extends TrackerReact(Component){
         <Grid stackable>
           <Grid.Column width={16} className="center-align">
             <Header className="wow fadeInUp" as="h1">{projects_page_header_title}</Header>
-            <Button onClick={(e) => {this.go('NewProject', null, e)}}>Proposer un projet</Button>
+            <Button positive size="big" onClick={(e) => {this.go('NewProject', null, e)}}>Proposer un projet</Button>
           </Grid.Column>
           {projects.map((project, index) => {
             return(

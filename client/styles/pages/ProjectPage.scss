@@ -15,6 +15,23 @@
 }
 
 .project-content-container{
-  margin: 2em 0;
   font-family: 'Roboto' !important;
+}
+
+.project-content{
+  margin: 2em 0;
+}
+
+.project-author-container{
+    background-color: #ecf0f1;
+    font-weight: bold;
+}
+
+.project-likes-counter{
+  font-size: 2em;
+}
+
+.project-likes-container{
+  display: table-cell !important;
+  vertical-align: middle;
 }

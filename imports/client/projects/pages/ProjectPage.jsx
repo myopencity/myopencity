@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Projects} from '/imports/api/projects/projects'
-import {Grid, Header, Loader, Container} from 'semantic-ui-react'
+import {Grid, Header, Loader, Container, Image, Icon} from 'semantic-ui-react'
 
 export class ProjectPage extends TrackerReact(Component){
 
@@ -18,8 +18,13 @@ export class ProjectPage extends TrackerReact(Component){
     }
   }
 
+  go(route, params, e){
+    e.preventDefault()
+    FlowRouter.go(route, params)
+  }
+
   render(){
-    const {project, loading} = this.props
+    const {project, author, loading} = this.props
     const {
       project_header_height,
       project_header_color,
@@ -51,9 +56,21 @@ export class ProjectPage extends TrackerReact(Component){
               </Container>
             </Grid.Column>
             : ''}
+            <Grid.Column width={16} className="center-align project-author-container">
+              {project.anonymous ?
+                <p>Ce projet est proposé par <Icon name="spy" size="big"/> un citoyen anonyme</p>
+                :
+                <p>Ce projet est proposé par <span style={{cursor: "pointer"}} onClick={(e) => {this.go('Profile', {user_id: author._id}, e)}}><Image src={author.profile.avatar_url} avatar /> {author.username}</span></p>
+              }
+            </Grid.Column>
+            <Grid.Column width={16} className="center-align project-likes-container">
+              <div className="counter-text">
+                <span className="project-likes-counter">{project.likes}</span> <span>personnes soutiennent ce projet</span>
+              </div>
+            </Grid.Column>
             <Container>
               <Grid.Column width={16} className="project-content-container">
-                <div dangerouslySetInnerHTML={{__html: project.content }} style={{fontFamily: 'Roboto'}}></div>
+                <div dangerouslySetInnerHTML={{__html: project.content }} style={{fontFamily: 'Roboto'}} className="project-content"></div>
               </Grid.Column>
             </Container>
           </Grid>
@@ -66,10 +83,19 @@ export class ProjectPage extends TrackerReact(Component){
 
 export default ProjectPageContainer = createContainer(({ shorten_url }) => {
   const ProjectsPublication = Meteor.subscribe('project', shorten_url)
-  const loading = !ProjectsPublication.ready()
   const project = Projects.findOne({shorten_url: shorten_url})
-  return {
-    loading,
-    project
+  if(project){
+    const AuthorPublication = Meteor.subscribe('project.author', project.author)
+    const loading = !ProjectsPublication.ready() || !AuthorPublication.ready()
+    const author = Meteor.users.findOne({_id: project.author})
+    return {
+      loading,
+      project,
+      author
+    }
+  }else{
+    return {
+      loading: true
+    }
   }
 }, ProjectPage)

@@ -23,6 +23,11 @@ export class AlternativePresentation extends TrackerReact(Component){
     }
   }
 
+  componentDidMount(){
+    const element = document.getElementById('alternativePresentation' + this.props.alternative._id)
+    window.scroll(0, element.offsetTop)
+  }
+
   toggle_like(e){
     e.preventDefault()
     Meteor.call('alternatives.toggle_like', this.props.alternative._id , (error, result) => {
@@ -48,7 +53,7 @@ export class AlternativePresentation extends TrackerReact(Component){
 
     if(!loading){
       return(
-        <Grid stackable centered className="animated fadeInUp" id={"alternativePresentation" + load_alternative._id}>
+        <Grid stackable centered className="animated fadeInUp alternative-presentation" id={"alternativePresentation" + load_alternative._id}>
           <Grid.Column width={16} className="center-align">
             <Header as="h2">{load_alternative.title}</Header>
             <Header as="h3">Proposé par {load_alternative.anonymous ?

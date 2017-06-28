@@ -20,6 +20,10 @@ const ProjectSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: true
   },
+  likes: {
+    type: Number,
+    defaultValue: 0
+  },
   visible: {
     type: Boolean,
     defaultValue: true
