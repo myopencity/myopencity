@@ -18,6 +18,8 @@ export class ConsultPart extends TrackerReact(Component){
   /*
     required props:
       - consult_part: Object
+    facultative props:
+      - hide_vote_button: Boolean
   */
 
   constructor(props){
@@ -95,7 +97,7 @@ export class ConsultPart extends TrackerReact(Component){
   }
 
   render(){
-    const {consult_part, consult_part_vote, alternatives, loading} = this.props
+    const {consult_part, consult_part_vote, alternatives, hide_vote_button, loading} = this.props
     const {
       display_alternatives,
       display_alternative_form,
@@ -176,7 +178,7 @@ export class ConsultPart extends TrackerReact(Component){
             </Grid.Column>
           : ''}
           <Grid.Column width={16} className="center-align">
-            {consult_part.votes_activated && !display_alternative_form && !display_alternatives ?
+            {!hide_vote_button && consult_part.votes_activated && !display_alternative_form && !display_alternatives ?
               <div>
                 {consult_part_vote ?
                   <div>

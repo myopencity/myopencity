@@ -56,7 +56,7 @@ export class ConsultPage extends TrackerReact(Component){
           <Container>
             <Grid.Column width={16} className="parts-container">
               {consult_parts.map((part, index) => {
-                return <ConsultPart consult_part={part} />
+                return <ConsultPart hide_vote_button={!consult.votable} consult_part={part} />
               })}
             </Grid.Column>
         </Container>
