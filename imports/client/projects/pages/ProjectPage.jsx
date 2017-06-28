@@ -67,7 +67,7 @@ export class ProjectPage extends TrackerReact(Component){
             </Grid>
           </Grid.Column>
           {project.description ?
-            <Grid.Column width={16} style={{fontSize: project_description_font_size, backgroundColor: project_description_background_color, color: project_description_color}} className="project-description-container center-align">
+            <Grid.Column width={16} style={{fontSize: project_description_font_size, backgroundColor: project_description_background_color, color: project_description_color}} className="project-description-container center-align not-marged">
               <Container>
                 <p>{project.description}</p>
               </Container>
