@@ -12,7 +12,7 @@ Meteor.publish('projects.me', function(){
 })
 
 Meteor.publish('projects.visible', function(){
-  return Projects.find({visible: true, validated: true})
+  return Projects.find({visible: true, validated: true, blocked: false})
 })
 
 Meteor.publish('project', function(shorten_url){

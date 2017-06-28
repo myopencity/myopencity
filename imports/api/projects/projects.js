@@ -40,6 +40,10 @@ const ProjectSchema = new SimpleSchema({
     type: String,
     unique: true
   },
+  blocked: {
+    type: Boolean,
+    defaultValue: false
+  },
   created_at: {
     type: Date,
     defaultValue: new Date()

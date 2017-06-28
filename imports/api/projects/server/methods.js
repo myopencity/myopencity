@@ -66,5 +66,14 @@ Meteor.methods({
       }
       Projects.update({_id: project._id}, {$set: project})
     }
+  },
+  'projects.toggle_lock'(project_id){
+    if(!Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+      throw new Meteor.Error('403', "Vous devez être administrateur")
+    }else{
+      let project = Projects.findOne({_id: project_id})
+      project.blocked = !project.blocked
+      Projects.update({_id: project._id}, {$set: project})
+    }
   }
 })

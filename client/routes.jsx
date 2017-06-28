@@ -21,6 +21,7 @@ import ProjectsPage from '/imports/client/projects/pages/ProjectsPage'
 import ProjectPage from '/imports/client/projects/pages/ProjectPage'
 import NewProjectPage from '/imports/client/projects/pages/NewProjectPage'
 import EditProjectPage from '/imports/client/projects/pages/EditProjectPage'
+import AdminProjectsPage from '/imports/client/admin/pages/AdminProjectsPage'
 
 FlowRouter.wait()
 
@@ -201,6 +202,15 @@ adminRoutes.route('/consults/:consult_shorten_url/edit',{
   action(params){
     mount(AdminLayout, {
       content: (<AdminConsultEditPage consult_shorten_url={params.consult_shorten_url} />)
+    })
+  }
+})
+
+adminRoutes.route('/projects',{
+  name: "AdminProjects",
+  action(){
+    mount(AdminLayout, {
+      content: (<AdminProjectsPage />)
     })
   }
 })

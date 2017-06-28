@@ -55,6 +55,10 @@ export class AdminLayout extends TrackerReact(Component){
                 <Icon name='comments' />
                 Consultations
               </Menu.Item>
+              <Menu.Item onClick={() => {this.go('AdminProjects')}} name='projects'>
+                <Icon name='lightbulb' />
+                Projets
+              </Menu.Item>
             </Sidebar>
             <Sidebar.Pusher>
               <Grid stackable>
@@ -71,6 +75,10 @@ export class AdminLayout extends TrackerReact(Component){
                       <Menu.Item name='consultations' onClick={() => {this.go('AdminConsults')}}>
                         <Icon name='comments' />
                         Consultations
+                      </Menu.Item>
+                      <Menu.Item name='projects' onClick={() => {this.go('AdminProjects')}}>
+                        <Icon name='lightbulb' />
+                        Projets
                       </Menu.Item>
                     </Menu>
                   </Grid.Column>
