@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Projects} from '/imports/api/projects/projects'
-import {Grid, Header, Loader, Container, Image, Icon} from 'semantic-ui-react'
+import {Grid, Header, Loader, Container, Image, Icon, Button} from 'semantic-ui-react'
+import {ProjectLikes} from '/imports/api/project_likes/project_likes'
 
 export class ProjectPage extends TrackerReact(Component){
 
@@ -23,8 +24,24 @@ export class ProjectPage extends TrackerReact(Component){
     FlowRouter.go(route, params)
   }
 
+  toggle_like(e){
+    e.preventDefault()
+    Meteor.call('project.toggle_like', this.props.project._id, (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors du soutien au projet",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }
+    })
+  }
+
   render(){
-    const {project, author, loading} = this.props
+    const {project, author, loading, project_like} = this.props
+    const {alternative_like_icon_color} = Session.get('global_configuration')
     const {
       project_header_height,
       project_header_color,
@@ -63,10 +80,8 @@ export class ProjectPage extends TrackerReact(Component){
                 <p>Ce projet est proposé par <span style={{cursor: "pointer"}} onClick={(e) => {this.go('Profile', {user_id: author._id}, e)}}><Image src={author.profile.avatar_url} avatar /> {author.username}</span></p>
               }
             </Grid.Column>
-            <Grid.Column width={16} className="center-align project-likes-container">
-              <div className="counter-text">
-                <span className="project-likes-counter">{project.likes}</span> <span>personnes soutiennent ce projet</span>
-              </div>
+            <Grid.Column width={16} className="center-align">
+              <Button size="big" onClick={(e) => {this.toggle_like(e)}} icon={<Icon name="thumbs up" style={{color: project_like ? alternative_like_icon_color : null }} />} content={project.likes + ' soutiens'} />
             </Grid.Column>
             <Container>
               <Grid.Column width={16} className="project-content-container">
@@ -84,14 +99,21 @@ export class ProjectPage extends TrackerReact(Component){
 export default ProjectPageContainer = createContainer(({ shorten_url }) => {
   const ProjectsPublication = Meteor.subscribe('project', shorten_url)
   const project = Projects.findOne({shorten_url: shorten_url})
+  let ProjectLikesPublication = Meteor.subscribe('project_likes.by_project', null)
+  let project_like = null
+  if(project){
+    ProjectLikesPublication = Meteor.subscribe('project_likes.by_project', project._id)
+    project_like = ProjectLikes.findOne({user: Meteor.userId(), project: project._id })
+  }
   if(project){
     const AuthorPublication = Meteor.subscribe('project.author', project.author)
-    const loading = !ProjectsPublication.ready() || !AuthorPublication.ready()
+    const loading = !ProjectsPublication.ready() || !AuthorPublication.ready() || !ProjectLikesPublication.ready()
     const author = Meteor.users.findOne({_id: project.author})
     return {
       loading,
       project,
-      author
+      author,
+      project_like
     }
   }else{
     return {

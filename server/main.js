@@ -16,6 +16,8 @@ import '/imports/api/alternative_likes/server/methods'
 import '/imports/api/alternative_likes/server/publication'
 import '/imports/api/projects/server/methods'
 import '/imports/api/projects/server/publication'
+import '/imports/api/project_likes/server/methods'
+import '/imports/api/project_likes/server/publication'
 
 Meteor.startup(() => {
   // Initialization of global configuration singleton

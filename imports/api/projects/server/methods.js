@@ -1,6 +1,7 @@
 import {Meteor} from 'meteor/meteor'
 import {Projects} from '../projects'
 import _ from 'lodash'
+import {ProjectLikes} from '/imports/api/project_likes/project_likes'
 
 const generate_shorten_url = (title) => {
   return _.random(100,9999) + '-' + _.kebabCase(title)
@@ -47,6 +48,22 @@ Meteor.methods({
     }else{
       let project = Projects.findOne({_id: project_id})
       project.validated = !project.validated
+      Projects.update({_id: project._id}, {$set: project})
+    }
+  },
+  'project.toggle_like'(project_id){
+    if(!this.userId){
+      throw new Meteor.Error('403', "Vous devez vous connecter")
+    }else{
+      let project = Projects.findOne({_id: project_id})
+      const project_like = ProjectLikes.findOne({project: project_id, user: this.userId})
+      if(project_like){
+        ProjectLikes.remove(project_like._id)
+        project.likes--
+      }else{
+        ProjectLikes.insert({project: project_id, user: this.userId})
+        project.likes++
+      }
       Projects.update({_id: project._id}, {$set: project})
     }
   }

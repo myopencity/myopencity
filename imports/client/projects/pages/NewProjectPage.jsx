@@ -16,7 +16,7 @@ export class NewProjectPage extends TrackerReact(Component){
   constructor(props){
     super(props);
     this.state = {
-      step: "description", // presentation / anonymous / title / content / description / image
+      step: "presentation", // presentation / anonymous / title / content / description / image
       new_project: {
         anonymous: true
       }
