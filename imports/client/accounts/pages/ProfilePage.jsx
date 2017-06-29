@@ -22,7 +22,7 @@ export class ProfilePage extends TrackerReact(Component){
 
     if(!loading){
       return(
-        <Grid stackable className="wow fadeInUp">
+        <Grid stackable className="wow fadeInUp marged">
           <Grid.Column width={16} className="center-align">
             <Image src={user.profile.avatar_url} size="medium" shape='circular' className="inline-block" />
             <Header as="h1">{user.username}</Header>
