@@ -74,11 +74,11 @@ export default class ConsultPartial extends TrackerReact(Component){
   }
 
   render(){
-    const consult = this.props.consult
+    const {consult, className} = this.props
 
     if(consult){
       return(
-        <Card className="inline-block">
+        <Card className={"inline-block " + className}>
           <Image src={consult.image_url} />
           <Card.Content>
             <Card.Header>

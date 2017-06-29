@@ -21,6 +21,10 @@ const ConsultsSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: true
   },
+  ended: {
+    type: Boolean,
+    defaultValue: false
+  },
   results_visible: {
     type: Boolean,
     defaultValue: false
