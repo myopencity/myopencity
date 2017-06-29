@@ -28,15 +28,19 @@ export class ConsultsPage extends TrackerReact(Component){
             <Header as="h1">Consultations en cours</Header>
           </Grid.Column>
           <Grid.Column width={16}>
-            <Grid stackable>
-              {consults.map((consult, index) => {
-                return (
-                  <Grid.Column width={4} className="center-align">
-                    <ConsultPartial consult={consult} />
-                  </Grid.Column>
-                )
-              })}
-            </Grid>
+            {consults.length == 0 ?
+              <Header className="center-align" as="h3">Aucune consultation en cours actuellement</Header>
+            :
+              <Grid stackable>
+                {consults.map((consult, index) => {
+                  return (
+                    <Grid.Column width={4} className="center-align">
+                      <ConsultPartial consult={consult} />
+                    </Grid.Column>
+                  )
+                })}
+              </Grid>
+            }
           </Grid.Column>
         </Grid>
       )
