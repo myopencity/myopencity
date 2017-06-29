@@ -53,7 +53,7 @@ export class ProjectsPage extends TrackerReact(Component){
 export default ProjectsPageContainer = createContainer(({ id }) => {
   const projectsPublication = Meteor.subscribe('projects.visible')
   const loading = !projectsPublication.ready()
-  const projects = Projects.find({visible: true, validated: true}).fetch()
+  const projects = Projects.find({visible: true, validated: true}, {sort: {likes: -1}}).fetch()
   return {
     loading,
     projects

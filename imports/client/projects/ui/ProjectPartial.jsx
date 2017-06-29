@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
-import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Card, Image, Button} from 'semantic-ui-react'
+import {Card, Image, Button, Icon} from 'semantic-ui-react'
+import { createContainer } from 'meteor/react-meteor-data'
 import _ from 'lodash'
 
-export default class ProjectPartial extends TrackerReact(Component){
+export class ProjectPartial extends Component{
 
   /*
     required props:
@@ -74,16 +74,22 @@ export default class ProjectPartial extends TrackerReact(Component){
   }
 
   render(){
-    const {project, hideButtons} = this.props
+    const {project, hideButtons, author, loading} = this.props
     const {display_manage_buttons, remove_confirm} = this.state
 
-    if(project){
+    if(!loading){
       return(
-        <Card className="inline-block">
+        <Card className="inline-block project-partial">
           <Image src={project.image_url} />
           <Card.Content>
             <Card.Header>
+              {!project.anonymous ?
+                <span className="author-container" style={{cursor: "pointer"}} onClick={(e) => {this.go('Profile', {user_id: author._id}, e)}}><Image src={author.profile.avatar_url} avatar /> {author.username}<br/></span>
+                : ''}
               {project.title}
+              {project.likes > 0 ?
+                <span className="likes-container"><br/><Icon name="thumbs up"/> {project.likes} soutiens</span>
+                : ''}
             </Card.Header>
             <Card.Description>
               {display_manage_buttons ?
@@ -126,3 +132,13 @@ export default class ProjectPartial extends TrackerReact(Component){
     }
   }
 }
+
+export default ProjectPartialContainer = createContainer(({ project }) => {
+  const AuthorPublication = Meteor.subscribe('project.author', project.author)
+  const loading = !AuthorPublication.ready()
+  const author = Meteor.users.findOne({_id: project.author})
+  return {
+    loading,
+    author
+  }
+}, ProjectPartial)
