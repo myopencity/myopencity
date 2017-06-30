@@ -72,6 +72,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
         <Dropdown trigger={trigger} icon={null}>
           <Dropdown.Menu>
             <Dropdown.Item onClick={(e) => {this.go('MyProfile', e)}}>Profil</Dropdown.Item>
+            <Dropdown.Item onClick={(e) => {this.go('MyProjects', e)}}>Mes propositions</Dropdown.Item>
             {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
               <Dropdown.Item onClick={(e) => {this.go('AdminConsults', e)}}>Admin</Dropdown.Item>
             : ''}

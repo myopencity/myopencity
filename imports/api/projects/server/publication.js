@@ -26,3 +26,7 @@ Meteor.publish('project.by_id', function(project_id){
 Meteor.publish('project.author', function(author_id){
   return Meteor.users.find({_id: author_id})
 })
+
+Meteor.publish('projects.me', function(){
+  return Projects.find({author: this.userId})
+})

@@ -22,6 +22,7 @@ import ProjectPage from '/imports/client/projects/pages/ProjectPage'
 import NewProjectPage from '/imports/client/projects/pages/NewProjectPage'
 import EditProjectPage from '/imports/client/projects/pages/EditProjectPage'
 import AdminProjectsPage from '/imports/client/admin/pages/AdminProjectsPage'
+import MyProjectsPage from '/imports/client/projects/pages/MyProjectsPage'
 
 FlowRouter.wait()
 
@@ -174,6 +175,15 @@ connectedRoutes.route('/me/profile', {
   action(){
     mount(MainLayout, {
       content: (<MyProfile />)
+    })
+  }
+})
+
+connectedRoutes.route('/me/projects', {
+  name: "MyProjects",
+  action(){
+    mount(MainLayout, {
+      content: (<MyProjectsPage />)
     })
   }
 })
