@@ -35,7 +35,7 @@ const ConsultPartsSchema = new SimpleSchema({
     },
     active: {
       type: Boolean,
-      defaultValue: false
+      defaultValue: true
     },
     votes_activated: {
       type: Boolean,

@@ -55,7 +55,7 @@ Meteor.methods({
         let consult_part = ConsultParts.findOne({_id: consult_part_id})
         consult_part.vote_values[index].counter = consult_part.vote_values[index].counter + 1
         ConsultParts.update({_id: consult_part_id}, {$set: {vote_values: consult_part.vote_values}})
-        Meteor.call('consult_part_votes.insert', consult_part_id)
+        Meteor.call('consult_part_votes.insert', {consult_part_id: consult_part_id, consult_id: consult_part.consult})
       }
     }
   }
