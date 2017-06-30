@@ -9,6 +9,9 @@ const ConsultPartVoteSchema = new SimpleSchema({
   consult_part: {
     type: String
   },
+  consult: {
+    type: String
+  },
   created_at: {
     type: Date,
     defaultValue: new Date()
