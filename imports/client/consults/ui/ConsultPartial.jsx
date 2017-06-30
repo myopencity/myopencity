@@ -106,6 +106,7 @@ export default class ConsultPartial extends TrackerReact(Component){
                       <Button onClick={(e) => {this.go('AdminConsultEdit', {consult_shorten_url: consult.url_shorten}, e)}} fluid>Modifier</Button>
                       <Button onClick={(e) => {this.toggleEditConsult('visible', e)}} fluid>{consult.visible ? "Rendre invisible" : "Rendre visible"}</Button>
                       <Button onClick={(e) => {this.toggleEditConsult('votable', e)}} fluid>{consult.votable ? "Stopper les votes" : "Lancer les votes"}</Button>
+                      <Button onClick={(e) => {this.toggleEditConsult('ended', e)}} fluid>{consult.ended ? "Lancer la consultation" : "Stopper la consultation"}</Button>
                       {this.state.remove_confirm ?
                         <div className="wow fadeInUp">
                           <p>Vous confirmez ?</p>

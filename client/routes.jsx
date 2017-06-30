@@ -151,6 +151,15 @@ connectedRoutes.route('/projects/new',{
   }
 })
 
+connectedRoutes.route('/projects/new/:parent_id',{
+  name: "NewChildProject",
+  action(params){
+    mount(MainLayout, {
+      content: (<NewProjectPage parent_id={params.parent_id}/>)
+    })
+  }
+})
+
 connectedRoutes.route('/projects/edit/:shorten_url',{
   name: "EditProject",
   action(params){

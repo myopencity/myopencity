@@ -38,7 +38,7 @@ export class ConsultsPage extends TrackerReact(Component){
           <Grid.Column width={16} className="center-align">
             <Header as="h1">Consultations {!show_ended_consults ? "en cours" : "terminées"}</Header>
             {ended_consults.length > 0 ?
-              <Button size="mini" onClick={(e) => {this.toggleState('show_ended_consults', e)}}>Voir les consultations {!show_ended_consults ? "en cours" : "terminées"}</Button>
+              <Button size="mini" onClick={(e) => {this.toggleState('show_ended_consults', e)}}>Voir les consultations {!show_ended_consults ? "terminées" : "en cours"}</Button>
             : ''}
           </Grid.Column>
           {!show_ended_consults ?

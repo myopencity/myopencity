@@ -51,6 +51,10 @@ const ProjectSchema = new SimpleSchema({
   updated_at: {
     type: Date,
     defaultValue: new Date()
+  },
+  parent: {
+    type: String, // id of parent project
+    optional: true
   }
 })
 
