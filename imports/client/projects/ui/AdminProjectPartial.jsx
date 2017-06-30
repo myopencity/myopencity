@@ -50,6 +50,7 @@ export default class AdminProjectPartial extends TrackerReact(Component){
           <p className="project-title wow fadeInUp" data-wow-delay="0.25s">
             {project.title}
           </p>
+          <p>{project.likes} soutiens</p>
           <Button icon="eye" content="Voir" onClick={(e) => {this.go('Project', {shorten_url: project.shorten_url}, e)}} />
           <Button color='red' icon={project.blocked ? "unlock" : "lock"} content={project.blocked ? "Débloquer" : "Bloquer"} onClick={(e) => {this.toggle_lock(e)}} />
       </div>
