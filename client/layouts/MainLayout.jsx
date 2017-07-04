@@ -26,10 +26,19 @@ export class MainLayout extends TrackerReact(Component){
     this.state.subscription.configuration.stop()
   }
 
+  componentDidMount(){
+    new WOW().init()
+  }
+
   configuration(){
     const configuration = Configuration.findOne({})
     Session.set('global_configuration', configuration)
     return configuration
+  }
+
+  go(route, e){
+    e.preventDefault()
+    FlowRouter.go(route)
   }
 
   render(){
@@ -40,22 +49,19 @@ export class MainLayout extends TrackerReact(Component){
         <div className="main-container">
           <Sidebar.Pushable>
             <Sidebar as={Menu} animation='push' width='thin' visible={Session.get('open_sidebar')} className="main-sidebar" icon='labeled' vertical inverted>
-              <Menu.Item name='home'>
-                <Icon name='home' />
-                Home
+              <Menu.Item name='consultations' onClick={(e) => {this.go('Landing', e)}}>
+                Accueil
               </Menu.Item>
-              <Menu.Item name='gamepad'>
-                <Icon name='gamepad' />
-                Games
+              <Menu.Item name='consultations' onClick={(e) => {this.go('Consults', e)}}>
+                Consultations
               </Menu.Item>
-              <Menu.Item name='camera'>
-                <Icon name='camera' />
-                Channels
+              <Menu.Item name='propositions' onClick={(e) => {this.go('Projects', e)}}>
+                Propositions
               </Menu.Item>
             </Sidebar>
             <Sidebar.Pusher>
               <Grid>
-                <Grid.Column width={16}>
+                <Grid.Column width={16} className="navbar-container">
                   <Navbar />
                 </Grid.Column>
                 <Grid.Column width={16}>

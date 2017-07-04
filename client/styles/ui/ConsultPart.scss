@@ -1,0 +1,12 @@
+@import '../global_variables.scss';
+
+.consult-part{
+
+  &.hover{
+    border: 2px dashed $global_turquoise !important;
+  }
+}
+
+.consult-part-admin-stats{
+  background-color: #ecf0f1;
+}

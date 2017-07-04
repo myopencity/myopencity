@@ -1,0 +1,19 @@
+.pagination {
+    display: inline-block;
+}
+
+.pagination .pages {
+    cursor: pointer;
+    color: black;
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+
+    &.active{
+      background-color: #ddd;
+    }
+
+    &:hover:not(.active) {
+      background-color: #ddd;
+    }
+}

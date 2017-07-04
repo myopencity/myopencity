@@ -1,0 +1,19 @@
+.consult-header{
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  .consult-header-inner-grid{
+    height: inherit !important;
+    background-color: rgba(0,0,0,0.5);
+  }
+}
+
+.consult-description-container{
+  padding: 3em !important;
+  margin-bottom: 2em;
+}
+
+.parts-container{
+  margin-bottom: 5em;
+}

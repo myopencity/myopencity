@@ -1,3 +1,4 @@
+@import './global_variables.scss';
 /*
   This file contains all helpers and global SCSS declarations
 */
@@ -23,8 +24,58 @@
   display: inline-block !important;
 }
 
+.marged{
+  margin: 3em 0 !important;
+}
+
+.not-marged{
+  margin: 0 !important;
+}
+
+.padded-bottom{
+  padding-bottom: 2em !important;
+}
+
+/* -------- COLOR CLASSES */
+.white{
+  color: white !important;
+}
+
+.emerald{
+  color: $global_emerald;
+}
+
+.turquoise{
+  color: $global_turquoise;
+}
+
+.nephritis{
+  color: $global_nephritis;
+}
+
+.pomegranate{
+  color: $global_pomegranate;
+}
+
+.pumpkin{
+  color: $global_pumpkin;
+}
+
+.karot{
+  color: $global_karot;
+}
+
+
 /* -------- MAIN CLASSES */
 .main-container{
   min-height: 100vh;
   height: 100vh;
+}
+
+.ui {
+  font-family: "Roboto" !important;
+}
+
+.ui.button {
+  border-radius: 0 !important;
 }

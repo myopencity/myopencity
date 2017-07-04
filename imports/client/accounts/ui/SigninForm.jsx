@@ -8,6 +8,7 @@ export default class SigninForm extends Component{
       - none
     facultative props:
       - onSignin: Function
+      - onSignupClick: Function
   */
 
   constructor(props){
@@ -19,6 +20,14 @@ export default class SigninForm extends Component{
     let state = this.state
     state[attr] = e.target.value
     this.setState(state)
+  }
+
+  go(route, e){
+    e.preventDefault()
+    FlowRouter.go(route)
+    if(this.props.onSignupClick){
+      this.props.onSignupClick()
+    }
   }
 
   signin(e){
@@ -47,7 +56,7 @@ export default class SigninForm extends Component{
 
   render(){
     return(
-       <Form>
+       <Form onSubmit={(e) => {this.signin(e)}} className="center-align">
          <Form.Field>
            <label>Email</label>
            <Input type="email" onChange={(e) => {this.handleChange('email', e)}} />
@@ -57,6 +66,7 @@ export default class SigninForm extends Component{
            <Input type="password" onChange={(e) => {this.handleChange('password', e)}} />
          </Form.Field>
          <Button positive onClick={(e) => {this.signin(e)}}>Se connecter</Button>
+         <Button onClick={(e) => {this.go('Signup', e)}}>Je n'ai pas encore de compte</Button>
        </Form>
     )
   }
