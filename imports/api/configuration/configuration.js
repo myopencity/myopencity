@@ -65,7 +65,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   project_header_height: {
     type: String,
-    defaultValue: 20
+    defaultValue: '20'
   },
   project_header_color: {
     type: String,
