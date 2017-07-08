@@ -9,3 +9,15 @@
     font-size: 4em !important;
   }
 }
+
+.landing-part{
+  min-height: 90vh;
+
+  p {
+    text-align: justify !important;
+  }
+
+  h1,h2,h3,h4,h5 {
+    text-transform: uppercase !important;
+  }
+}
