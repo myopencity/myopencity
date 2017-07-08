@@ -31,6 +31,10 @@ const ConfigurationSchema = new SimpleSchema({
     type: String,
     defaultValue: "#FFFFFF"
   },
+  landing_consults_background_color: {
+    type: String,
+    defaultValue: '#FFFFFF'
+  },
   consult_header_height: {
     type: String,
     defaultValue: '20'

@@ -21,3 +21,22 @@
     text-transform: uppercase !important;
   }
 }
+
+.landing-consults-part{
+  .ui.header{
+    text-transform: uppercase;
+  }
+
+  .landing-consult-container{
+    display: flex !important;
+    align-items: center !important;
+    color: white !important;
+    font-weight: bold !important;
+
+    .landing-consult-text{
+      background-color: rgba(0,0,0,0.5);
+      padding: 2em 0 ;
+    }
+  }
+  padding: 5em 0 !important;
+}

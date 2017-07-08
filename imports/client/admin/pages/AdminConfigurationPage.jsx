@@ -93,6 +93,10 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                   <label>Couleur de la phrase d'accroche</label>
                   <SketchPicker color={configuration.landing_header_description_color} onChangeComplete={(e) => {this.handleColorChange('landing_header_description_color', e)}} />
                 </Form.Field>
+                <Form.Field>
+                  <label>Couleur de fonds de la partie "consultations du moment"</label>
+                  <SketchPicker color={configuration.landing_consults_background_color} onChangeComplete={(e) => {this.handleColorChange('landing_consults_background_color', e)}} />
+                </Form.Field>
                 <Header as="h3">Consultation</Header>
                 <Form.Field>
                   <label>Hauteur de la bannière de consultation</label>
