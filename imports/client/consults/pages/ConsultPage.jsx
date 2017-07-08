@@ -73,7 +73,7 @@ export default ConsultPageContainer = createContainer(({ urlShorten }) => {
   const consultPartsPublication = Meteor.subscribe('consult_parts.by_consult_url_shorten', urlShorten)
   const loading = !consultPublication.ready() || !consultPartsPublication.ready()
   const consult = Consults.findOne({url_shorten: urlShorten, visible: true})
-  const consult_parts = ConsultParts.find({consult_url_shorten: urlShorten}).fetch()
+  const consult_parts = ConsultParts.find({consult_url_shorten: urlShorten, active: true}).fetch()
   return {
     loading,
     consult,
