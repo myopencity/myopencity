@@ -111,7 +111,7 @@ export class ProjectPartial extends Component{
                     <div>
                       <Button onClick={(e) => {this.go('EditProject', {shorten_url: project.shorten_url}, e)}} fluid>Modifier</Button>
                       {remove_confirm ?
-                        <div className="wow fadeInUp">
+                        <div className="animated fadeInUp">
                           <p>Vous confirmez ?</p>
                           <Button onClick={(e) => {this.toggleState('remove_confirm', e)}}>Annuler</Button>
                           <Button color="red" onClick={(e) => {this.removeProject(e)}}>Supprimer</Button>
