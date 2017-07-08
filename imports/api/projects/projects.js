@@ -55,6 +55,10 @@ const ProjectSchema = new SimpleSchema({
   parent: {
     type: String, // id of parent project
     optional: true
+  },
+  landing_display: {
+    type: Boolean,
+    defaultValue: false
   }
 })
 

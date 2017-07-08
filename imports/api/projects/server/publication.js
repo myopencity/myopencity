@@ -30,3 +30,7 @@ Meteor.publish('project.author', function(author_id){
 Meteor.publish('projects.me', function(){
   return Projects.find({author: this.userId})
 })
+
+Meteor.publish('projects.landing', function(){
+  return Projects.find({landing_display: true})
+})

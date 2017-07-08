@@ -3,6 +3,7 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Container, Loader, Image, Button} from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Consults} from '/imports/api/consults/consults'
+import {Projects} from '/imports/api/projects/projects'
 
 export class LandingPage extends TrackerReact(Component){
 
@@ -29,7 +30,7 @@ export class LandingPage extends TrackerReact(Component){
       landing_consults_background_color
     } = Session.get('global_configuration')
 
-    const {consults, loading} = this.props
+    const {consults, projects, loading} = this.props
 
     if(!loading){
       return(
@@ -79,6 +80,29 @@ export class LandingPage extends TrackerReact(Component){
                 })}
               </Grid.Column>
             : ''}
+            {projects.length > 0 ?
+                <Grid.Column width={16} className="center-align landing-title-container">
+                  <div className="landing-back-title">PROPOSITIONS</div>
+                  <Header as="h2">Les projets proposés du moment</Header>
+                </Grid.Column>
+            : ''}
+            {projects.length > 0 ?
+                <Grid.Column width={16} className="landing-consults-part" style={{backgroundColor: landing_consults_background_color}}>
+                  {projects.map((project, index) => {
+                    return (
+                      <Grid verticalAlign="middle background-img" style={{minHeight: "20em", backgroundImage: "url(" + project.image_url + ")"}} stackable>
+                        <Grid.Column width={16} className="center-align landing-consult-container" >
+                          <Container className="landing-consult-text">
+                            <Header as="h2" style={{color: "white"}}>{project.title}</Header>
+                            <p>{project.description}</p>
+                            <Button onClick={(e) => {this.go('Project', {shorten_url: project.shorten_url}, e)}}>Voir la proposition</Button>
+                          </Container>
+                        </Grid.Column>
+                      </Grid>
+                    )
+                  })}
+                </Grid.Column>
+              : ''}
           </Grid>
         )
     }else{
@@ -89,10 +113,13 @@ export class LandingPage extends TrackerReact(Component){
 
 export default LandingPageContainer = createContainer(() => {
   const landingConsultsPublication = Meteor.subscribe('consults.landing')
-  const loading = !landingConsultsPublication.ready()
-  const consults = Consults.find({}).fetch()
+  const landingProjectsPublication = Meteor.subscribe('projects.landing')
+  const loading = !landingConsultsPublication.ready() || !landingProjectsPublication.ready()
+  const consults = Consults.find({landing_display: true}).fetch()
+  const projects = Projects.find({landing_display: true}).fetch()
   return {
     loading,
-    consults
+    consults,
+    projects
   }
 }, LandingPage)
