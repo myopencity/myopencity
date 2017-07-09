@@ -64,7 +64,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
 
     if(current_user){
       const trigger = (
-        <Menu.Item>
+        <Menu.Item className="navbar-item">
           <Image floated="left" avatar src={current_user.profile.avatar_url} /> {current_user.username}
         </Menu.Item>
       )

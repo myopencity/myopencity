@@ -9,3 +9,58 @@
     font-size: 4em !important;
   }
 }
+
+.landing-part{
+
+  p {
+    text-align: justify !important;
+  }
+
+  h1,h2,h3,h4,h5 {
+    text-transform: uppercase !important;
+  }
+}
+
+.landing-title-container{
+
+  margin: 5em;
+
+  h1,h2,h3,h4,h5 {
+    text-transform: uppercase !important;
+    font-weight: 900 !important;
+  }
+
+  .landing-back-title{
+    position: absolute;
+    top: 40px;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    color: rgba(0,0,0, 0.1);
+    font-size: 7em;
+
+    @media screen and (max-width: 767px) {
+       display: none !important;
+     }
+
+  }
+}
+
+.landing-consults-part{
+  .ui.header{
+    text-transform: uppercase;
+  }
+
+  .landing-consult-container{
+    display: flex !important;
+    align-items: center !important;
+    color: white !important;
+    font-weight: bold !important;
+
+    .landing-consult-text{
+      background-color: rgba(0,0,0,0.5);
+      padding: 2em 0 ;
+    }
+  }
+  padding: 5em 0 !important;
+}

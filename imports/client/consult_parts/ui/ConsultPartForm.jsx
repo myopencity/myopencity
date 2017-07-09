@@ -106,8 +106,8 @@ export default class ConsultPartForm extends TrackerReact(Component){
                <Grid stackable>
                  <Grid.Column width={8}>
                    <Form.Field inline={true} as="div">
-                     <label>Visibilité ({consult_part.visible ? "Actuellement visible" : "Actuellement caché"})</label>
-                     <Checkbox checked={consult_part.visible} onClick={(e) => {this.toggleConsultPart('visible', e)}} toggle/>
+                     <label>Visibilité ({consult_part.active ? "Actuellement visible" : "Actuellement caché"})</label>
+                     <Checkbox checked={consult_part.active} onClick={(e) => {this.toggleConsultPart('active', e)}} toggle/>
                    </Form.Field>
                    <Form.Field inline={true} as="div">
                      <label>Votes ({consult_part.votes_activated ? "Actuellement activé" : "Actuellement désactivé"})</label>

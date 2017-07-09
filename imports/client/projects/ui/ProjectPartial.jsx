@@ -16,6 +16,7 @@ export class ProjectPartial extends Component{
     super(props)
     this.state = {
       display_manage_buttons: false,
+      display_admin_buttons: false,
       remove_confirm: false
     }
   }
@@ -30,6 +31,28 @@ export class ProjectPartial extends Component{
     let project = this.props.project
     project[attr] = !project[attr]
     Meteor.call('projects.update', {project}, (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors de la modification du projet",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }else{
+        Bert.alert({
+          title: "Projet modifié",
+          type: 'success',
+          style: 'growl-bottom-left',
+        })
+      }
+    });
+  }
+
+  toggleAdminProject(attr, e){
+    let project = this.props.project
+    project[attr] = !project[attr]
+    Meteor.call('projects.admin_toggle', {project_id: project._id, attr: attr}, (error, result) => {
       if(error){
         console.log(error)
         Bert.alert({
@@ -75,7 +98,7 @@ export class ProjectPartial extends Component{
 
   render(){
     const {project, hideButtons, author, loading} = this.props
-    const {display_manage_buttons, remove_confirm} = this.state
+    const {display_manage_buttons, display_admin_buttons, remove_confirm} = this.state
 
     if(!loading){
       return(
@@ -111,7 +134,7 @@ export class ProjectPartial extends Component{
                     <div>
                       <Button onClick={(e) => {this.go('EditProject', {shorten_url: project.shorten_url}, e)}} fluid>Modifier</Button>
                       {remove_confirm ?
-                        <div className="wow fadeInUp">
+                        <div className="animated fadeInUp">
                           <p>Vous confirmez ?</p>
                           <Button onClick={(e) => {this.toggleState('remove_confirm', e)}}>Annuler</Button>
                           <Button color="red" onClick={(e) => {this.removeProject(e)}}>Supprimer</Button>
@@ -123,6 +146,16 @@ export class ProjectPartial extends Component{
                     : ''}
                   </div>
                   : ''}
+                {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
+                  <div>
+                    <Button fluid active={display_admin_buttons} onClick={(e) => {this.toggleState('display_admin_buttons', e)}}>Administrer</Button>
+                      {display_admin_buttons ?
+                        <div>
+                          <Button onClick={(e) => {this.toggleAdminProject('landing_display', e)}} fluid>{project.landing_display ? "Ne plus mettre en avant" : "Mettre en avant"}</Button>
+                        </div>
+                        : ''}
+                </div>
+                : ''}
                 </Card.Content>
           : ''}
         </Card>

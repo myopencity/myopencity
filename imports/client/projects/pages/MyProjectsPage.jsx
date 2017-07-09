@@ -28,7 +28,7 @@ export class MyProjectsPage extends TrackerReact(Component){
           <Grid.Column width={16} className="center-align">
             <Header as="h1">Vos projets / propositions</Header>
           </Grid.Column>
-          <Grid.Column width={16}>
+          <Grid.Column width={16} className="marged">
             <Grid stackable centered>
               {projects.map((project, index) => {
                 return (

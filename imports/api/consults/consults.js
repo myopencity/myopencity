@@ -48,6 +48,10 @@ const ConsultsSchema = new SimpleSchema({
   updated_at: {
     type: Date,
     defaultValue: new Date()
+  },
+  landing_display: {
+    type: Boolean,
+    defaultValue: false
   }
 })
 
