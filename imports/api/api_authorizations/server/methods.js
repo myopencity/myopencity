@@ -1,26 +1,26 @@
 import {Meteor} from 'meteor/meteor'
-import {ApiAuthorization} from '../api_authorizations'
+import {ApiAuthorizations} from '../api_authorizations'
 
 Meteor.methods({
   'api_authorizations.insert'(api_authorization){
-    if(!this.userId){
-      throw new Meteor.Error('403', "Vous devez vous connecter")
+    if(!Roles.userIsInRole('admin')){
+      throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
-      ApiAuthorization.insert(api_authorization)
+      ApiAuthorizations.insert(api_authorization)
     }
   },
   'api_authorizations.update'(api_authorization){
     if(!this.userId){
-      throw new Meteor.Error('403', "Vous devez vous connecter")
+      throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
-      ApiAuthorization.update({_id: api_authorization._id}, {$set: api_authorization})
+      ApiAuthorizations.update({_id: api_authorization._id}, {$set: api_authorization})
     }
   },
   'api_authorizations.remove'(api_authorization_id){
     if(!this.userId){
-      throw new Meteor.Error('403', "Vous devez vous connecter")
+      throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
-      ApiAuthorization.remove({_id: api_authorization_id})
+      ApiAuthorizations.remove({_id: api_authorization_id})
     }
   }
 })
