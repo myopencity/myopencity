@@ -16,7 +16,7 @@ export default class AdminApiAuthorizationPartial extends TrackerReact(Component
   constructor(props){
     super(props);
     this.state = {
-
+      removing: false
     }
   }
 
@@ -25,8 +25,37 @@ export default class AdminApiAuthorizationPartial extends TrackerReact(Component
     this.props.onUpdateClick(this.props.api_authorization)
   }
 
+  toggleState(attr, e){
+    let state = this.state
+    state[attr] = !state[attr]
+    this.setState(state)
+  }
+
+  remove(e){
+    e.preventDefault()
+    Meteor.call('api_authorizations.remove', this.props.api_authorization._id , (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors de la suppression de l'autorisation",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }else{
+        Bert.alert({
+          title: "Autorisation supprimée",
+          type: 'success',
+          style: 'growl-bottom-left',
+        })
+      }
+    });
+  }
+
   render(){
     const {api_authorization} = this.props
+    const {removing} = this.state
+    
     return(
       <Table.Row>
         <Table.Cell>
@@ -46,7 +75,15 @@ export default class AdminApiAuthorizationPartial extends TrackerReact(Component
         </Table.Cell>
         <Table.Cell>
           <Button onClick={(e) => {this.onUpdateClick(e)}}>Modifier</Button>
-          <Button color="red">Supprimer</Button>
+          {removing ?
+            <p>
+              Êtes-vous sur ?<br/>
+            <Button onClick={(e) => {this.toggleState('removing', e)}}>Annuler</Button>
+              <Button color="red" onClick={(e) => {this.remove(e)}}>Supprimer</Button>
+            </p>
+          :
+            <Button color="red" onClick={(e) => {this.toggleState('removing', e)}}>Supprimer</Button>
+          }
         </Table.Cell>
       </Table.Row>
     )
