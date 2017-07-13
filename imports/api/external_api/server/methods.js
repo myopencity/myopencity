@@ -2,6 +2,7 @@ import {ApiAuthorizations} from '/imports/api/api_authorizations/api_authorizati
 import {Consults} from '/imports/api/consults/consults'
 import { HTTP } from 'meteor/http'
 import {ExternalOpencities} from '/imports/api/external_opencities/external_opencities'
+import _ from 'lodash'
 
 // API Endpoints
 const Api = new Restivus({
@@ -19,7 +20,7 @@ Api.addRoute('consults', {authRequired: false}, {
     const {private_key, count} = this.bodyParams
     const auth = is_authorized(private_key)
     if(auth && auth.can_get_consults){
-      const consults = Consults.find({ended: false, visible: true}).fetch()
+      const consults = Consults.find({ended: false, visible: true, external_id: {$exists: false}}).fetch()
       return {
         consults: consults
       }
@@ -46,7 +47,7 @@ Meteor.methods({
       }}, (error, result) => {
         // const json_result = JSON.parse(result)
         const consults = JSON.parse(result.content).consults
-        consults.map((consult) => {
+        _.each(consults, (consult) => {
           console.log("CONSULT TITLE", consult.title);
           let new_consult = {}
           const {_id, title, description, created_at, updated_at, end_vote_date, image_url, url_shorten} = consult
