@@ -14,13 +14,14 @@ Api.addRoute('consults', {authRequired: false}, {
   post: function(){
     const {private_key, count} = this.bodyParams
     const auth = is_authorized(private_key)
-    if(auth){
+    if(auth && auth.can_get_consults){
       const consults = Consults.find({visible: true}).fetch()
       return {
         consults: consults
       }
     }else{
       return {
+        status: "error",
         message: "not authorized"
       }
     }

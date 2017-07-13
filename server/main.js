@@ -19,6 +19,8 @@ import '/imports/api/projects/server/publication'
 import '/imports/api/project_likes/server/methods'
 import '/imports/api/project_likes/server/publication'
 import '/imports/api/external_api/server/methods'
+import '/imports/api/api_authorizations/server/methods'
+import '/imports/api/api_authorizations/server/publication'
 
 Meteor.startup(() => {
   // Initialization of global configuration singleton
