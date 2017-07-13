@@ -18,6 +18,11 @@ import '/imports/api/projects/server/methods'
 import '/imports/api/projects/server/publication'
 import '/imports/api/project_likes/server/methods'
 import '/imports/api/project_likes/server/publication'
+import '/imports/api/external_api/server/methods'
+import '/imports/api/api_authorizations/server/methods'
+import '/imports/api/api_authorizations/server/publication'
+import '/imports/api/external_opencities/server/methods'
+import '/imports/api/external_opencities/server/publication'
 
 Meteor.startup(() => {
   // Initialization of global configuration singleton
@@ -26,6 +31,5 @@ Meteor.startup(() => {
     console.log("SERVER : Created global configuration singleton")
     Configuration.insert({})
   }
-
 
 });

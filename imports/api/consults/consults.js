@@ -52,6 +52,14 @@ const ConsultsSchema = new SimpleSchema({
   landing_display: {
     type: Boolean,
     defaultValue: false
+  },
+  external_url: {
+    type: String,
+    optional: true
+  },
+  external_id: {
+    type: String,
+    optional: true
   }
 })
 

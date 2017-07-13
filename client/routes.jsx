@@ -24,6 +24,8 @@ import EditProjectPage from '/imports/client/projects/pages/EditProjectPage'
 import AdminProjectsPage from '/imports/client/admin/pages/AdminProjectsPage'
 import MyProjectsPage from '/imports/client/projects/pages/MyProjectsPage'
 import AdminConsultStatsPage from '/imports/client/admin/pages/AdminConsultStatsPage'
+import AdminApiAuthorizationsPage from '/imports/client/admin/pages/AdminApiAuthorizationsPage'
+import AdminExternalOpencitiesPage from '/imports/client/admin/pages/AdminExternalOpencitiesPage'
 
 FlowRouter.wait()
 
@@ -240,6 +242,24 @@ adminRoutes.route('/consult/:shorten_url/stats',{
   action(params){
     mount(AdminLayout, {
       content: (<AdminConsultStatsPage shorten_url={params.shorten_url} />)
+    })
+  }
+})
+
+adminRoutes.route('/api_authorizations',{
+  name: "AdminApiAuthorizations",
+  action(){
+    mount(AdminLayout, {
+      content: (<AdminApiAuthorizationsPage />)
+    })
+  }
+})
+
+adminRoutes.route('/external_opencities',{
+  name: "AdminExternalOpencities",
+  action(){
+    mount(AdminLayout, {
+      content: (<AdminExternalOpencitiesPage />)
     })
   }
 })
