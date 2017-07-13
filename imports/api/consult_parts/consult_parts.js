@@ -65,6 +65,14 @@ const ConsultPartsSchema = new SimpleSchema({
       type: String,
       defaultValue: 'bar',
       allowedValues: ['bar', 'line', 'radar', 'pie', 'doughnut']
+    },
+    external_id: {
+      type: String,
+      optional: true
+    },
+    external_url: {
+      type: String,
+      optional: true
     }
 })
 

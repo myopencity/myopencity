@@ -60,6 +60,10 @@ const ConsultsSchema = new SimpleSchema({
   external_id: {
     type: String,
     optional: true
+  },
+  external_site_name: {
+    type: String,
+    optional: true
   }
 })
 
