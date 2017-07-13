@@ -34,13 +34,34 @@ Api.addRoute('consults', {authRequired: false}, {
 
 // External API calls
 Meteor.methods({
-  'api_call.get_consults'(external_opencity_id){
+  'api_call.get_external_consults'(){
+    const external_opencities = ExternalOpencities.find({}).fetch()
 
-    const result = HTTP.post('http://localhost:3000/api/consults', {data: {
-      private_key: "Ptnu3hybMV2WHfZnULVs"
-    }}, (error, result) => {
-      console.log("result", result);
+    _.each(external_opencities, (extern_opencity, index) => {
+      console.log("----------extern key", extern_opencity.private_key);
 
+      const kept_consults = []
+      const result = HTTP.post(extern_opencity.url + '/api/consults', {data: {
+        private_key: extern_opencity.private_key
+      }}, (error, result) => {
+        // const json_result = JSON.parse(result)
+        const consults = JSON.parse(result.content).consults
+        consults.map((consult) => {
+          console.log("CONSULT TITLE", consult.title);
+          let new_consult = {}
+          const {_id, title, description, created_at, updated_at, end_vote_date, image_url, url_shorten} = consult
+          new_consult = {
+            title, description, created_at, updated_at, end_vote_date, image_url, url_shorten,
+            external_id: _id,
+            external_url: extern_opencity.url + "/consult/" + url_shorten,
+            external_site_name: extern_opencity.name,
+            author: this.userId
+          }
+          console.log("NEW CONSULT", new_consult);
+          Consults.insert(new_consult)
+        })
+
+      })
     })
   }
 })

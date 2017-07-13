@@ -38,6 +38,28 @@ export class AdminExternalOpencitiesPage extends Component{
     this.setState({editing_external_opencity: extern_opencity, display_form: true})
   }
 
+  getExternalConsults(e){
+    e.preventDefault()
+    Meteor.call('api_call.get_external_consults', (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors de la récupération des consultations externes",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }else{
+        Bert.alert({
+          title: "Consultations externes récupérées",
+          message: "Pensez à les rendre visibles dans la partie d'administration des consultations",
+          type: 'success',
+          style: 'growl-bottom-left',
+        })
+      }
+    });
+  }
+
   render(){
     const {external_opencities, loading} = this.props
     const {display_form, editing_external_opencity} = this.state
@@ -48,6 +70,7 @@ export class AdminExternalOpencitiesPage extends Component{
           <Grid.Column width={16} className="center-align">
             <Header as="h3">Gestion des autorisations d'API</Header>
             <Button onClick={(e) => {this.toggleState('display_form', e)}} positive={!display_form}>{display_form ? "Annuler" : "Ajouter une autorisation"}</Button>
+            <Button onClick={(e) => {this.getExternalConsults(e)}}>Récupérer les consultations externes</Button>
           </Grid.Column>
           <Container>
             {display_form ?
