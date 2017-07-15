@@ -3,6 +3,10 @@ import {Mongo} from 'meteor/mongo'
 export const Configuration = new Mongo.Collection('configuration')
 
 const ConfigurationSchema = new SimpleSchema({
+  initial_configuration: {
+    type: Boolean,
+    defaultValue: true
+  },
   navbar_color: {
     type: String,
     defaultValue: "#1abc9c"
@@ -13,7 +17,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   landing_main_title: {
     type: String,
-    defaultValue: ""
+    defaultValue: "Votre espace"
   },
   landing_main_title_color: {
     type: String,
@@ -37,7 +41,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   consult_header_height: {
     type: String,
-    defaultValue: '20'
+    defaultValue: '20em'
   },
   consult_header_color: {
     type: String,
@@ -69,7 +73,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   project_header_height: {
     type: String,
-    defaultValue: '20'
+    defaultValue: '20em'
   },
   project_header_color: {
     type: String,
@@ -86,7 +90,7 @@ const ConfigurationSchema = new SimpleSchema({
   project_description_font_size: {
     type: String,
     defaultValue: "1.2em"
-  },
+  }
 })
 
 Configuration.attachSchema(ConfigurationSchema);

@@ -56,13 +56,13 @@ export class ConsultPage extends TrackerReact(Component){
               </Container>
             </Grid.Column>
             : ''}
-          <Container>
             <Grid.Column width={16} className="parts-container">
+              <Container>
               {consult_parts.map((part, index) => {
                 return <ConsultPart hide_vote_button={!consult.votable} consult_part={part} />
               })}
+            </Container>
             </Grid.Column>
-        </Container>
         </Grid>
       )
     }else{

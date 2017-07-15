@@ -77,7 +77,7 @@ export class AdminExternalOpencitiesPage extends Component{
               <AdminExternalOpencityForm external_opencity={editing_external_opencity} onFormSubmitted={this.onFormSubmitted.bind(this)} />
             :
               <Grid.Column width={16}>
-                <Table celled striped>
+                <Table stackable celled striped>
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell>Nom</Table.HeaderCell>

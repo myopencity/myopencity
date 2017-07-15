@@ -54,7 +54,7 @@ export class AdminApiAuthorizationsPage extends Component{
               <AdminApiAuthorizationForm authorization={editing_authorization} onFormSubmitted={this.onFormSubmitted.bind(this)} />
             :
               <Grid.Column width={16}>
-                <Table celled striped>
+                <Table stackable celled striped>
                   <Table.Header>
                     <Table.Row>
                       <Table.HeaderCell>Nom</Table.HeaderCell>

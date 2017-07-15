@@ -21,7 +21,7 @@ export class AdminLayout extends TrackerReact(Component){
   }
 
   componentWillMount(){
-    Session.set('open_sidebar', false)
+    Session.set('open_sidebar', true)
   }
 
   componentDidMount(){
@@ -35,7 +35,13 @@ export class AdminLayout extends TrackerReact(Component){
   }
 
   go(route){
+    Session.set('open_sidebar', false)
     FlowRouter.go(route)
+  }
+
+  toggleSidebar(e){
+    e.preventDefault()
+    Session.set('open_sidebar', !Session.get('open_sidebar'))
   }
 
 
@@ -73,33 +79,7 @@ export class AdminLayout extends TrackerReact(Component){
                 <Grid.Column width={16} className="navbar-container">
                   <Navbar />
                 </Grid.Column>
-                {window.innerWidth > 768 ?
-                  <Grid.Column width={2}>
-                    <Menu vertical>
-                      <Menu.Item name='configuration' onClick={() => {this.go('AdminConfiguration')}}>
-                        <Icon name='cogs' />
-                        Configuration
-                      </Menu.Item>
-                      <Menu.Item name='consultations' onClick={() => {this.go('AdminConsults')}}>
-                        <Icon name='comments' />
-                        Consultations
-                      </Menu.Item>
-                      <Menu.Item name='projects' onClick={() => {this.go('AdminProjects')}}>
-                        <Icon name='lightbulb' />
-                        Projets
-                      </Menu.Item>
-                      <Menu.Item onClick={() => {this.go('AdminApiAuthorizations')}} name='api_authorizations'>
-                        <Icon name='key' />
-                        Autorisations API
-                      </Menu.Item>
-                      <Menu.Item onClick={() => {this.go('AdminExternalOpencities')}} name='external_opencities'>
-                        <Icon name='exchange' />
-                        Opencities connectés
-                      </Menu.Item>
-                    </Menu>
-                  </Grid.Column>
-                : ''}
-                <Grid.Column width={window.innerWidth > 768 ? 14 : 16}>
+                <Grid.Column width={16}>
                   <main>
                     {this.props.content}
                   </main>
@@ -107,6 +87,7 @@ export class AdminLayout extends TrackerReact(Component){
               </Grid>
             </Sidebar.Pusher>
           </Sidebar.Pushable>
+          <Button style={{backgroundColor: configuration.navbar_color, color: configuration.navbar_color}} onClick={(e) => {this.toggleSidebar(e)}} className="open-sidebar-button" rounded icon="content" size="big"></Button>
         </div>
       )
     }else{

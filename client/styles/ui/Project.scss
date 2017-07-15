@@ -16,3 +16,9 @@
     font-size: 0.7em;
   }
 }
+
+.project-content{
+  @media screen and (min-width: 200px) and (max-width: 640px) {
+    padding: 0 1em;
+  }
+}

@@ -10,3 +10,9 @@
 .consult-part-admin-stats{
   background-color: #ecf0f1;
 }
+
+.consult-part-content{
+  @media screen and (max-width: 768px) {
+    padding: 0 1em;
+  }
+}
