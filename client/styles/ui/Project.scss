@@ -18,7 +18,13 @@
 }
 
 .project-content{
+
   @media screen and (min-width: 200px) and (max-width: 640px) {
     padding: 0 1em;
+  }
+
+  img {
+    max-width: 100% !important;
+    height: auto !important;
   }
 }
