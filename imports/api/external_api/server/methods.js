@@ -22,7 +22,7 @@ Api.addRoute('consults', {authRequired: false}, {
     const {private_key, count} = this.bodyParams
     const auth = is_authorized(private_key)
     if(auth && auth.can_get_consults){
-      const consults = Consults.find({ended: false, visible: true, external_id: {$exists: false}}).fetch()
+      const consults = Consults.find({ended: false, visible: true, api_recoverable: true, external_id: {$exists: false}}).fetch()
       const consults_ids = consults.map((consult) => {return consult._id})
       const consult_parts = ConsultParts.find({consult: {$in: consults_ids}}).fetch()
       return {
@@ -45,41 +45,50 @@ Api.addRoute('consult_part_votes/new', {authRequired: false}, {
     if(auth && auth.can_post_votes){
       const consult_part = ConsultParts.findOne({_id: consult_part_id, external_url: {$exists: false}})
       if(consult_part){
-        // Check existing remote vote
-        const consult_part_vote = ConsultPartVotes.findOne({consult_part: consult_part_id, user: user_id})
-        if(consult_part_vote){
-          return {
-            status: "error",
-            message: "cannot vote multiple times on same consult part"
-          }
-        }else{
-          console.log("vote_value", vote_value)
-          console.log("CONSULT VOTE VALUES", consult_part.vote_values);
-
-
-          const vote_value_index = _.findIndex(consult_part.vote_values, (o) => {return o.vote_value == vote_value})
-          console.log("vote_value_index", vote_value_index);
-
-          if(vote_value_index > -1){
-            consult_part.vote_values[vote_value_index].counter++
-
-            ConsultParts.update({_id: consult_part_id}, {$set: {vote_values: consult_part.vote_values}})
-            let new_consult_part_vote = {
-              user: user_id,
-              consult_part: consult_part_id,
-              consult: consult_part.consult,
-              extern_url: auth.url
-            }
-            ConsultPartVotes.insert(new_consult_part_vote)
-            return {
-              status: "success",
-              message: "the vote has been added on remote opencity"
-            }
-          }else{
+        // Check if consult is api_votable
+        const consult = Consults.findOne({_id: consult_part.consult})
+        if(consult.api_votable){
+          // Check existing remote vote
+          const consult_part_vote = ConsultPartVotes.findOne({consult_part: consult_part_id, user: user_id})
+          if(consult_part_vote){
             return {
               status: "error",
-              message: "the vote value is not on remote consult anymore"
+              message: "cannot vote multiple times on same consult part"
             }
+          }else{
+            console.log("vote_value", vote_value)
+            console.log("CONSULT VOTE VALUES", consult_part.vote_values);
+
+
+            const vote_value_index = _.findIndex(consult_part.vote_values, (o) => {return o.vote_value == vote_value})
+            console.log("vote_value_index", vote_value_index);
+
+            if(vote_value_index > -1){
+              consult_part.vote_values[vote_value_index].counter++
+
+              ConsultParts.update({_id: consult_part_id}, {$set: {vote_values: consult_part.vote_values}})
+              let new_consult_part_vote = {
+                user: user_id,
+                consult_part: consult_part_id,
+                consult: consult_part.consult,
+                extern_url: auth.url
+              }
+              ConsultPartVotes.insert(new_consult_part_vote)
+              return {
+                status: "success",
+                message: "the vote has been added on remote opencity"
+              }
+            }else{
+              return {
+                status: "error",
+                message: "the vote value is not on remote consult anymore"
+              }
+            }
+          }
+        }else{
+          return {
+            status: "error",
+            message: "The remote consult is not open to API votes"
           }
         }
       }else{

@@ -64,6 +64,14 @@ const ConsultsSchema = new SimpleSchema({
   external_site_name: {
     type: String,
     optional: true
+  },
+  api_recoverable: {
+    type: Boolean,
+    defaultValue: true
+  },
+  api_votable: {
+    type: Boolean,
+    defaultValue: true
   }
 })
 
