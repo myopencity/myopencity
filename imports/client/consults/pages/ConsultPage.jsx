@@ -43,6 +43,9 @@ export class ConsultPage extends TrackerReact(Component){
             <Grid verticalAlign="middle" className="consult-header-inner-grid">
               <Grid.Column width={16} className="center-align">
                 <Header className="wow fadeInUp" data-wow-delay="1s" as="h1" style={{color: consult_header_color}}>{consult.title}</Header>
+                {consult.external_site_name ?
+                  <Header as="h3" className="wow fadeInDown" data-wow-delay="1.25s" style={{color: consult_header_color, margin: "0"}}>Consultation provenant de <a href={consult.external_url} target="_blank">{consult.external_site_name}</a></Header>
+                : ''}
               </Grid.Column>
             </Grid>
           </Grid.Column>

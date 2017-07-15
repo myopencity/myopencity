@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Grid, Header, Form, Button, Input, TextArea, Menu, Segment} from 'semantic-ui-react'
+import {Grid, Header, Form, Button, Input, TextArea, Menu, Segment, Checkbox, Popup, Icon} from 'semantic-ui-react'
 import ConsultPartial from '/imports/client/consults/ui/ConsultPartial'
 import ConsultPartForm from '/imports/client/consult_parts/ui/ConsultPartForm'
 
@@ -14,7 +14,10 @@ export default class ConsultForm extends TrackerReact(Component){
   constructor(props){
     super(props);
     this.state = {
-      consult: {},
+      consult: {
+        api_votable: true,
+        api_recoverable: true
+      },
       step: 'global', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
       editing_part: null,
       editing_part_index: null,
@@ -162,6 +165,12 @@ export default class ConsultForm extends TrackerReact(Component){
     this.setState(state)
   }
 
+  toggleConsult(attr, e){
+    let {consult} = this.state
+    consult[attr] = !consult[attr]
+    this.setState({consult})
+  }
+
   render(){
     const {consult, editing_part, consult_parts, display_part_form, step} = this.state
 
@@ -182,7 +191,7 @@ export default class ConsultForm extends TrackerReact(Component){
           </Menu>
         </Grid.Column>
         <Grid.Column width={16}>
-            {this.state.step == 'global' ?
+            {step == 'global' ?
               <Form onSubmit={(e) => {this.changeStep('design', e)}} className="wow fadeInUp">
                 <Form.Field>
                   <label>Titre de la consultation</label>
@@ -197,7 +206,7 @@ export default class ConsultForm extends TrackerReact(Component){
                 </Form.Field>
               </Form>
             : ''}
-            {this.state.step == 'design' ?
+            {step == 'design' ?
               <Grid stackable className="wow fadeInUp">
                 <Grid.Column width={16}>
                   <Form onSubmit={(e) => {this.changeStep('parts', e)}}>
@@ -216,7 +225,7 @@ export default class ConsultForm extends TrackerReact(Component){
                 </Grid.Column>
               </Grid>
             : ''}
-            {this.state.step == 'parts' ?
+            {step == 'parts' ?
               <Grid stackable className="wow fadeInUp">
                 <Grid.Column width={16} className="center-align">
                   <Button positive={!display_part_form} onClick={(e) => {this.togglePartForm(e)}}>
@@ -247,6 +256,32 @@ export default class ConsultForm extends TrackerReact(Component){
                 : ''}
               </Grid>
             : ''}
+            {step == 'settings' ?
+              <Grid.Column width={16}>
+                <Form>
+                  <Header as="h3">Configuration de l'API</Header>
+                  <Form.Field>
+                    <label>Récupérable par API (actuellement {consult.api_recoverable ? "récupérable" : "non récupérable"})
+                      <Popup
+                        trigger={<Icon size="small" name="help" circular inverted />}
+                        content="Les opencities autorisés par l'API pourront récupérer cette consultation pour la faire voter sur leur propre site"
+                      />
+                    </label>
+                    <Checkbox checked={consult.api_recoverable} onClick={(e) => {this.toggleConsult('api_recoverable', e)}} toggle />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Votable par API (actuellement {consult.api_votable ? "votable par api" : "non votable par api"})
+                      <Popup
+                        trigger={<Icon size="small" name="help" circular inverted />}
+                        content="Les opencities autorisés par l'API pourront envoyer les votes effectués sur leur site, qui seront pris en compte sur le votre"
+                      />
+                    </label>
+                    <Checkbox checked={consult.api_votable} onClick={(e) => {this.toggleConsult('api_votable', e)}} toggle />
+                  </Form.Field>
+                </Form>
+              </Grid.Column>
+            : ''}
+
         </Grid.Column>
       </Grid>
     )

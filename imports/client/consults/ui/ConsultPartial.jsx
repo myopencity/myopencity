@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Card, Image, Button} from 'semantic-ui-react'
+import {Card, Image, Button, Icon} from 'semantic-ui-react'
 import _ from 'lodash'
 
 export default class ConsultPartial extends TrackerReact(Component){
@@ -83,6 +83,9 @@ export default class ConsultPartial extends TrackerReact(Component){
           <Card.Content>
             <Card.Header>
               {consult.title}
+              {consult.external_url ?
+                <span className="external-label"><br/><Icon name="sitemap"/> {consult.external_site_name}</span>
+              : ''}
             </Card.Header>
             <Card.Description>
               {this.state.display_manage_buttons ?
