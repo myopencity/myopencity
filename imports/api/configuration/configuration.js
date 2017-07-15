@@ -37,7 +37,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   consult_header_height: {
     type: String,
-    defaultValue: '20'
+    defaultValue: '20em'
   },
   consult_header_color: {
     type: String,
@@ -69,7 +69,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   project_header_height: {
     type: String,
-    defaultValue: '20'
+    defaultValue: '20em'
   },
   project_header_color: {
     type: String,

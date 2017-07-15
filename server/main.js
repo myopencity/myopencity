@@ -30,6 +30,7 @@ Meteor.startup(() => {
   if(!configuration){
     console.log("SERVER : Created global configuration singleton")
     Configuration.insert({})
+    FlowRouter.go('InitialPresentation')
   }
 
 });
