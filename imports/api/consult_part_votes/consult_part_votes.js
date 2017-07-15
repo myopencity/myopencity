@@ -15,6 +15,10 @@ const ConsultPartVoteSchema = new SimpleSchema({
   created_at: {
     type: Date,
     defaultValue: new Date()
+  },
+  extern_url: {
+    type: String,
+    optional: true
   }
 })
 

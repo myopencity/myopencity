@@ -59,6 +59,14 @@ export class AdminLayout extends TrackerReact(Component){
                 <Icon name='lightbulb' />
                 Projets
               </Menu.Item>
+              <Menu.Item onClick={() => {this.go('AdminApiAuthorizations')}} name='api_authorizations'>
+                <Icon name='key' />
+                Autorisations API
+              </Menu.Item>
+              <Menu.Item onClick={() => {this.go('AdminExternalOpencities')}} name='external_opencities'>
+                <Icon name='exchange' />
+                Opencities connectés
+              </Menu.Item>
             </Sidebar>
             <Sidebar.Pusher>
               <Grid stackable>
@@ -79,6 +87,14 @@ export class AdminLayout extends TrackerReact(Component){
                       <Menu.Item name='projects' onClick={() => {this.go('AdminProjects')}}>
                         <Icon name='lightbulb' />
                         Projets
+                      </Menu.Item>
+                      <Menu.Item onClick={() => {this.go('AdminApiAuthorizations')}} name='api_authorizations'>
+                        <Icon name='key' />
+                        Autorisations API
+                      </Menu.Item>
+                      <Menu.Item onClick={() => {this.go('AdminExternalOpencities')}} name='external_opencities'>
+                        <Icon name='exchange' />
+                        Opencities connectés
                       </Menu.Item>
                     </Menu>
                   </Grid.Column>

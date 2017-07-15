@@ -7,10 +7,6 @@ Meteor.publish('projects.all', function(){
   }
 })
 
-Meteor.publish('projects.me', function(){
-  return Projects.find({author: this.userId})
-})
-
 Meteor.publish('projects.visible', function(){
   return Projects.find({visible: true, validated: true, blocked: false})
 })

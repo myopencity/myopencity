@@ -56,6 +56,11 @@ Meteor.methods({
         consult_part.vote_values[index].counter = consult_part.vote_values[index].counter + 1
         ConsultParts.update({_id: consult_part_id}, {$set: {vote_values: consult_part.vote_values}})
         Meteor.call('consult_part_votes.insert', {consult_part_id: consult_part_id, consult_id: consult_part.consult})
+        // Call extern opencity API if it's an external consult part
+        if(consult_part.external_id){
+          console.log("EXTERN VOTE API CALL")
+          Meteor.call('api_call.new_consult_part_vote', {external_id: consult_part.external_id, external_url: consult_part.external_url, vote_value: consult_part.vote_values[index].vote_value, user_id: this.userId })
+        }
       }
     }
   }
