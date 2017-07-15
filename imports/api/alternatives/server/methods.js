@@ -12,6 +12,7 @@ Meteor.methods({
       if(consult_part.alternatives_activated){
         alternative.user = this.userId
         alternative.consult_part = consult_part_id
+        alternative.consult = consult_part.consult
         Alternatives.insert(alternative)
       }else{
         throw new Meteor.Error('403', "Les alternatives sont désactivées sur cette partie")

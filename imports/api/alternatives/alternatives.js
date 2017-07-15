@@ -19,6 +19,9 @@ const AlternativeSchema = new SimpleSchema({
     consult_part: {
       type: String
     },
+    consult: {
+      type: String
+    },
     likes: {
       type: Number,
       defaultValue: 0
