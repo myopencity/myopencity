@@ -21,7 +21,7 @@ export class AdminLayout extends TrackerReact(Component){
   }
 
   componentWillMount(){
-    Session.set('open_sidebar', false)
+    Session.set('open_sidebar', true)
   }
 
   componentDidMount(){
