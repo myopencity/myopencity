@@ -12,7 +12,9 @@ export default class InitialConfigPage extends TrackerReact(Component){
   constructor(props){
     super(props);
     this.state = {
-      config: {},
+      config: {
+        initial_configuration: false
+      },
       step: 'account', // 'account' / 'city' / 'punchline' / 'color'
       user: {}
     }

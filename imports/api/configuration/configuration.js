@@ -3,6 +3,10 @@ import {Mongo} from 'meteor/mongo'
 export const Configuration = new Mongo.Collection('configuration')
 
 const ConfigurationSchema = new SimpleSchema({
+  initial_configuration: {
+    type: Boolean,
+    defaultValue: true
+  },
   navbar_color: {
     type: String,
     defaultValue: "#1abc9c"
@@ -86,7 +90,7 @@ const ConfigurationSchema = new SimpleSchema({
   project_description_font_size: {
     type: String,
     defaultValue: "1.2em"
-  },
+  }
 })
 
 Configuration.attachSchema(ConfigurationSchema);
