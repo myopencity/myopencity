@@ -35,7 +35,13 @@ export class AdminLayout extends TrackerReact(Component){
   }
 
   go(route){
+    Session.set('open_sidebar', false)
     FlowRouter.go(route)
+  }
+
+  toggleSidebar(e){
+    e.preventDefault()
+    Session.set('open_sidebar', !Session.get('open_sidebar'))
   }
 
 
@@ -107,6 +113,7 @@ export class AdminLayout extends TrackerReact(Component){
               </Grid>
             </Sidebar.Pusher>
           </Sidebar.Pushable>
+          <Button onClick={(e) => {this.toggleSidebar(e)}}className="open-sidebar-button" rounded icon="content" size="big"></Button>
         </div>
       )
     }else{

@@ -89,11 +89,11 @@ export class ProjectPage extends TrackerReact(Component){
               <Button size="big" onClick={(e) => {this.toggle_like(e)}} icon={<Icon name="thumbs up" style={{color: project_like ? alternative_like_icon_color : null }} />} content={project.likes + ' soutiens'} />
               <Button size="big" onClick={(e) => {this.go('NewChildProject', {parent_id: project._id}, e)}} icon={<Icon name="sitemap"/>} content="Créer un projet alternatif" />
             </Grid.Column>
-            <Container>
               <Grid.Column width={16} className="project-content-container marged">
-                <div dangerouslySetInnerHTML={{__html: project.content }} style={{fontFamily: 'Roboto'}} className="project-content"></div>
+                <Container>
+                  <div dangerouslySetInnerHTML={{__html: project.content }} style={{fontFamily: 'Roboto'}} className="project-content"></div>
+                </Container>
               </Grid.Column>
-            </Container>
           </Grid>
         )
     }else{
