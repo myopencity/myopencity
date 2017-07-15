@@ -50,8 +50,8 @@ Meteor.methods({
         private_key: extern_opencity.private_key
       }}, (error, result) => {
         // const json_result = JSON.parse(result)
-        const {consults, consult_parts} = JSON.parse(result.content)
-        console.log("------------------- CONSULT PARTS", consult_parts);
+        const consults = JSON.parse(result.content).consults
+        const consult_parts = JSON.parse(result.content).consult_parts
 
         _.each(consults, (consult) => {
           console.log("CONSULT TITLE", consult.title);
@@ -66,14 +66,15 @@ Meteor.methods({
           }
           console.log("NEW CONSULT", new_consult);
           const new_consult_id = Consults.insert(new_consult)
-          const linked_parts = _.find(consult_parts, (o) => {return o.consult == consult._id})
+          const linked_parts = _.filter(consult_parts, function(o){return o.consult == consult._id})
+
           _.each(linked_parts, (part) => {
             console.log("LINKED PART", part);
-
             part.external_id = part._id
             part.external_url = extern_opencity.url
             delete part._id
             part.consult = new_consult_id
+
             ConsultParts.insert(part)
           })
         })
