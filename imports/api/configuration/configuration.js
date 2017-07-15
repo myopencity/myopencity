@@ -17,7 +17,7 @@ const ConfigurationSchema = new SimpleSchema({
   },
   landing_main_title: {
     type: String,
-    defaultValue: ""
+    defaultValue: "Votre espace"
   },
   landing_main_title_color: {
     type: String,

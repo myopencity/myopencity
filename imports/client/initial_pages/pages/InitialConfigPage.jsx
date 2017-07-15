@@ -59,7 +59,9 @@ export default class InitialConfigPage extends TrackerReact(Component){
 
   submit_configuration(e){
     e.preventDefault()
-    Meteor.call('configuration.update', this.state.config, (error, result) => {
+    let {config} = this.state
+    config.landing_main_title = config.main_title
+    Meteor.call('configuration.update', config, (error, result) => {
       if(error){
         Bert.alert({
           title: "Erreur lors de la configuration",
@@ -68,7 +70,7 @@ export default class InitialConfigPage extends TrackerReact(Component){
           style: 'growl-bottom-left',
         })
       }else{
-        FlowRouter.go('Landing')
+        FlowRouter.redirect('/')
       }
     })
   }
