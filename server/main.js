@@ -1,7 +1,9 @@
 import { Meteor } from 'meteor/meteor'
 import {Configuration} from '/imports/api/configuration/configuration'
+import {ExternalApisConfiguration} from '/imports/api/external_apis_configuration/external_apis_configuration'
 import '/imports/api/configuration/server/methods'
 import '/imports/api/configuration/server/publication'
+import '/imports/api/external_apis_configuration/server/methods'
 import '/imports/api/accounts/server/methods'
 import '/imports/api/accounts/server/publication'
 import '/imports/api/consults/server/methods'
@@ -29,7 +31,11 @@ Meteor.startup(() => {
   const configuration = Configuration.findOne({})
   if(!configuration){
     console.log("SERVER : Created global configuration singleton")
-    Configuration.insert({}) 
+    Configuration.insert({})
   }
-
-});
+  const external_configuration = ExternalApisConfiguration.findOne({})
+  if(!external_configuration){
+    console.log("SERVER : Created external apis configuration singleton")
+    ExternalApisConfiguration.insert({})
+  }
+})
