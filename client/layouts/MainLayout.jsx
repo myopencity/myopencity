@@ -42,6 +42,7 @@ export class MainLayout extends TrackerReact(Component){
   go(route, e){
     e.preventDefault()
     FlowRouter.go(route)
+    Session.set('open_sidebar', false)
   }
 
   logout(e){
@@ -81,7 +82,7 @@ export class MainLayout extends TrackerReact(Component){
                   </Menu.Item>
                 </span>
               :
-                <Menu.Item name='sign_in' onClick={(e) => {this.go('SignIn', e)}}>
+                <Menu.Item name='sign_in' onClick={(e) => {this.go('Signin', e)}}>
                   Connexion
                 </Menu.Item>
               }

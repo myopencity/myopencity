@@ -7,6 +7,7 @@ import {MainLayout} from './layouts/MainLayout'
 import {BlankLayout} from './layouts/BlankLayout'
 import {AdminLayout} from './layouts/AdminLayout'
 import SignupPage from '../imports/client/accounts/pages/SignupPage'
+import SigninPage from '../imports/client/accounts/pages/SigninPage'
 import InitialPresentationPage from '../imports/client/initial_pages/pages/InitialPresentationPage'
 import InitialConfigPage from '../imports/client/initial_pages/pages/InitialConfigPage'
 import AdminConfigurationPage from '../imports/client/admin/pages/AdminConfigurationPage'
@@ -97,6 +98,15 @@ FlowRouter.route('/signup',{
   action(){
     mount(MainLayout, {
       content: (<SignupPage />)
+    })
+  }
+})
+
+FlowRouter.route('/signin',{
+  name: "Signin",
+  action(){
+    mount(MainLayout, {
+      content: (<SigninPage />)
     })
   }
 })
