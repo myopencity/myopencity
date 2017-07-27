@@ -4,6 +4,7 @@ import {ExternalApisConfiguration} from '/imports/api/external_apis_configuratio
 import '/imports/api/configuration/server/methods'
 import '/imports/api/configuration/server/publication'
 import '/imports/api/external_apis_configuration/server/methods'
+import '/imports/api/external_apis_configuration/server/publication'
 import '/imports/api/accounts/server/methods'
 import '/imports/api/accounts/server/publication'
 import '/imports/api/consults/server/methods'
