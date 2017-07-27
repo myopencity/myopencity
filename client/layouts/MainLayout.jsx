@@ -42,6 +42,12 @@ export class MainLayout extends TrackerReact(Component){
   go(route, e){
     e.preventDefault()
     FlowRouter.go(route)
+    Session.set('open_sidebar', false)
+  }
+
+  logout(e){
+    e.preventDefault()
+    Meteor.logout()
   }
 
   render(){
@@ -61,6 +67,25 @@ export class MainLayout extends TrackerReact(Component){
               <Menu.Item name='propositions' onClick={(e) => {this.go('Projects', e)}}>
                 Propositions
               </Menu.Item>
+              {Meteor.userId() ?
+                <span>
+                  {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+                    <Menu.Item floated="bottom" name='admin' onClick={(e) => {this.go('AdminConsults', e)}}>
+                      Admin
+                    </Menu.Item>
+                  : ''}
+                  <Menu.Item floated="bottom" name='profile' onClick={(e) => {this.go('MyProfile', e)}}>
+                    Profil
+                  </Menu.Item>
+                  <Menu.Item floated="bottom" name='profile' onClick={(e) => {this.logout(e)}}>
+                    Déconnexion
+                  </Menu.Item>
+                </span>
+              :
+                <Menu.Item name='sign_in' onClick={(e) => {this.go('Signin', e)}}>
+                  Connexion
+                </Menu.Item>
+              }
             </Sidebar>
             <Sidebar.Pusher>
               <Grid>
