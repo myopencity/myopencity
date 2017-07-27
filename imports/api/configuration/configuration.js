@@ -94,6 +94,14 @@ const ConfigurationSchema = new SimpleSchema({
   amazon_connected: {
     type: Boolean,
     defaultValue: false
+  },
+  google_connected: {
+    type: Boolean,
+    defaultValue: false
+  }, 
+  facebook_connected: {
+    type: Boolean,
+    defaultValue: false
   }
 })
 

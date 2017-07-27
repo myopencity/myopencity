@@ -10,6 +10,22 @@ const ExternalApisConfigurationSchema = new SimpleSchema({
   amazon_public_key: {
     type: String,
     optional: true
+  },
+  google_private_key: {
+    type: String,
+    optional: true
+  },
+  google_public_key: {
+    type: String,
+    optional: true
+  },
+  facebook_private_key: {
+    type: String,
+    optional: true
+  },
+  facebook_public_key: {
+    type: String,
+    optional: true
   }
 })
 
