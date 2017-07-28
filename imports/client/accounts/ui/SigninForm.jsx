@@ -59,6 +59,13 @@ export default class SigninForm extends Component{
     Meteor.loginWithFacebook({requestPermissions: ['public_profile', 'email']}, (error) => {
       if(error){
         console.log("Error during facebook login", error)
+      }else{
+        const return_route = Session.get('return_route')
+        if(return_route){
+          FlowRouter.go(return_route)
+        }else{
+          FlowRouter.go('Consults')
+        }
       }
     })
   }
@@ -68,6 +75,13 @@ export default class SigninForm extends Component{
     Meteor.loginWithGoogle({}, (error) => {
       if(error){
         console.log("Error during google login", error)
+      }else{
+        const return_route = Session.get('return_route')
+        if(return_route){
+          FlowRouter.go(return_route)
+        }else{
+          FlowRouter.go('Consults')
+        }
       }
     })
   }
@@ -98,4 +112,4 @@ export default class SigninForm extends Component{
        </Form>
     )
   }
-} 
+}
