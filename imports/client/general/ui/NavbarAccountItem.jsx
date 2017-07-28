@@ -85,7 +85,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
         <div>
           <Menu.Item className="navbar-item" onClick={(e) => {this.toggleState('open_modal', e)}} name="Connexion"/>
           <Modal className="wow fadeInUp" open={this.state.open_modal} onClose={(e) => {this.toggleState('open_modal', e)}}>
-            <Modal.Header>Connexion</Modal.Header>
+            <Modal.Header className="center-align" as="h1">Connexion</Modal.Header>
             <Modal.Content>
               <Modal.Description>
                 <SigninForm onSignin={this.onSignin.bind(this)} onSignupClick={this.onSignupClick.bind(this)} />
