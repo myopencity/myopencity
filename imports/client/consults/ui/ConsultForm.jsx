@@ -171,8 +171,37 @@ export default class ConsultForm extends TrackerReact(Component){
     this.setState({consult})
   }
 
+  handlePictureImport(e){
+      e.preventDefault()
+      this.setState({loading_consult_image: true})
+      var metaContext = {}
+      var uploader = new Slingshot.Upload("ConsultImage", metaContext)
+      uploader.send(e.target.files[0], (error, downloadUrl) => {
+        if (error) {
+          // Log service detailed response
+          console.error('Error uploading', error)
+          this.setState({loading_consult_image: false})
+          Bert.alert({
+            title: "Une erreur est survenue durant l'envoi de l'image à Amazon",
+            message: error.reason,
+            type: 'danger',
+            style: 'growl-bottom-left',
+          })
+        }
+        else {
+          // we use $set because the user can change their avatar so it overwrites the url :)
+          const {consult} = this.state
+          consult.image_url = downloadUrl
+          this.setState({consult, loading_consult_image: false})
+        }
+        // you will need this in the event the user hit the update button because it will remove the avatar url
+      })
+
+  }
+
   render(){
-    const {consult, editing_part, consult_parts, display_part_form, step} = this.state
+    const {consult, editing_part, consult_parts, display_part_form, step, loading_consult_image} = this.state
+    const {amazon_connected} = Session.get('global_configuration')
 
     return(
       <Grid stackable>
@@ -214,6 +243,14 @@ export default class ConsultForm extends TrackerReact(Component){
                       <label>URL de l'image de votre consultation</label>
                       <Input type="text" placeholder="http://...." value={consult.image_url} onChange={(e) => {this.handleConsultChange('image_url', e)}} />
                     </Form.Field>
+                    {amazon_connected ?
+                        <Form.Field>
+                          <label>Envoyer une image depuis votre ordinateur</label>
+                          <Input loading={loading_consult_image} onChange={(e) => {this.handlePictureImport(e)}} type="file" />
+                        </Form.Field>
+                    :
+                        <p>Envie d'envoyer des images depuis votre ordinateur ? Vous devez <a href="/admin/external_apis">configurer Amazon S3</a></p>
+                    }
                     <Form.Field>
                       <Button size="big">Passer au contenu</Button>
                     </Form.Field>

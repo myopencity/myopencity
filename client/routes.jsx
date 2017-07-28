@@ -27,6 +27,7 @@ import MyProjectsPage from '/imports/client/projects/pages/MyProjectsPage'
 import AdminConsultStatsPage from '/imports/client/admin/pages/AdminConsultStatsPage'
 import AdminApiAuthorizationsPage from '/imports/client/admin/pages/AdminApiAuthorizationsPage'
 import AdminExternalOpencitiesPage from '/imports/client/admin/pages/AdminExternalOpencitiesPage'
+import AdminExternalApisPage from '/imports/client/admin/pages/AdminExternalApisPage'
 
 FlowRouter.wait()
 
@@ -270,6 +271,15 @@ adminRoutes.route('/external_opencities',{
   action(){
     mount(AdminLayout, {
       content: (<AdminExternalOpencitiesPage />)
+    })
+  }
+})
+
+adminRoutes.route('/external_apis',{
+  name: "AdminExternalApis",
+  action(){
+    mount(AdminLayout, {
+      content: (<AdminExternalApisPage />)
     })
   }
 })
