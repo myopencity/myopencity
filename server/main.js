@@ -52,6 +52,15 @@ Meteor.startup(() => {
             avatar_url: user.services.facebook.picture ? user.services.facebook.picture : '/images/avatar-logo.png'
           }
           return user
+      }else if (user.services.google) {
+          console.log("user google", user.services.google);
+          user.username = user.services.google.given_name
+          user.emails = [{address: user.services.google.email}]
+          // Handle avatar_url
+          user.profile = {
+            avatar_url: user.services.google.picture ? user.services.google.picture : '/images/avatar-logo.png'
+          }
+          return user
       }else{
         return user
       }

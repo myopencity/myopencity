@@ -63,8 +63,17 @@ export default class SigninForm extends Component{
     })
   }
 
+  connect_google(e){
+    e.preventDefault()
+    Meteor.loginWithGoogle({}, (error) => {
+      if(error){
+        console.log("Error during google login", error)
+      }
+    })
+  }
+
   render(){
-    const {facebook_connected} = Session.get('global_configuration')
+    const {facebook_connected, google_connected} = Session.get('global_configuration')
     return(
        <Form onSubmit={(e) => {this.signin(e)}} className="center-align">
          <Form.Field>
@@ -77,6 +86,9 @@ export default class SigninForm extends Component{
          </Form.Field>
          {facebook_connected ?
             <Button color="blue" icon="facebook" content="Se connecter avec Facebook" onClick={(e) => {this.connect_facebook(e)}}/>
+         : ''}
+         {google_connected ?
+            <Button color="red" icon="google" content="Se connecter avec Google" onClick={(e) => {this.connect_google(e)}}/>
          : ''}
          <Button positive onClick={(e) => {this.signin(e)}}>Se connecter</Button>
          <Button onClick={(e) => {this.go('Signup', e)}}>Je n'ai pas encore de compte</Button>

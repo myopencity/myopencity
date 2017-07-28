@@ -20,6 +20,15 @@ Meteor.methods({
       ExternalApisConfiguration.update({}, {$set: {google_public_key, google_private_key}})
       if(google_public_key, google_private_key){
         Configuration.update({}, {$set: {google_connected: true}})
+        ServiceConfiguration.configurations.upsert({
+          service: "google"
+        }, {
+          $set: {
+            clientId: google_public_key,
+            loginStyle: "popup",
+            secret: google_private_key
+          }
+        })
       }
     }
   },
@@ -38,7 +47,7 @@ Meteor.methods({
             loginStyle: "popup",
             secret: facebook_private_key
           }
-        });
+        })
       }
     }
   }
