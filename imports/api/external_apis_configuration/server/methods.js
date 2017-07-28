@@ -35,6 +35,31 @@ Meteor.methods({
 
             return url
           }
+        }) 
+        Slingshot.createDirective("ConsultDocument", Slingshot.S3Storage, {
+          bucket: "myopencity",
+          acl: "public-read",
+          AWSAccessKeyId: amazon_public_key,
+          AWSSecretAccessKey: amazon_private_key,
+          region: 'eu-central-1',
+
+          authorize: function (file, metaContext) {
+            if(!this.userId){
+              throw new Meteor.Error('403', "Vous devez vous connecter")
+            }else{
+              return true
+            }
+          },
+
+          key: function (file, metaContext) {
+            // User's image url with ._id attached:
+            console.log("metacontext", metaContext);
+            const fileNameDecompo = _.split(file.name, '.')
+            const url = "documents/" + this.userId + "/" + Date.now() + "-" + _.kebabCase(fileNameDecompo[0]) + '.' + fileNameDecompo[fileNameDecompo.length - 1]
+            console.log("URL", url);
+
+            return url
+          }
         })
       }
     }
