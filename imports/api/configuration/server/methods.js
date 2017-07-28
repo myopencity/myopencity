@@ -6,6 +6,8 @@ Meteor.methods({
     if(!Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin')){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
+      console.log("config call", config);
+
       config.initial_configuration = false
       Configuration.update({}, {$set: config})
     }

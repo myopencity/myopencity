@@ -90,6 +90,18 @@ const ConfigurationSchema = new SimpleSchema({
   project_description_font_size: {
     type: String,
     defaultValue: "1.2em"
+  },
+  amazon_connected: {
+    type: Boolean,
+    defaultValue: false
+  },
+  google_connected: {
+    type: Boolean,
+    defaultValue: false
+  }, 
+  facebook_connected: {
+    type: Boolean,
+    defaultValue: false
   }
 })
 

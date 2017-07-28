@@ -1,7 +1,10 @@
 import { Meteor } from 'meteor/meteor'
 import {Configuration} from '/imports/api/configuration/configuration'
+import {ExternalApisConfiguration} from '/imports/api/external_apis_configuration/external_apis_configuration'
 import '/imports/api/configuration/server/methods'
 import '/imports/api/configuration/server/publication'
+import '/imports/api/external_apis_configuration/server/methods'
+import '/imports/api/external_apis_configuration/server/publication'
 import '/imports/api/accounts/server/methods'
 import '/imports/api/accounts/server/publication'
 import '/imports/api/consults/server/methods'
@@ -29,7 +32,42 @@ Meteor.startup(() => {
   const configuration = Configuration.findOne({})
   if(!configuration){
     console.log("SERVER : Created global configuration singleton")
-    Configuration.insert({}) 
+    Configuration.insert({})
+  }
+  const external_configuration = ExternalApisConfiguration.findOne({})
+  if(!external_configuration){
+    console.log("SERVER : Created external apis configuration singleton")
+    ExternalApisConfiguration.insert({})
   }
 
-});
+  // Handling external services login
+  Accounts.onCreateUser(function (options, user) {
+
+      if (user.services.facebook) {
+          console.log("user facebook", user.services.facebook);
+          user.username = user.services.facebook.name
+          user.emails = [{address: user.services.facebook.email}]
+          // Handle avatar_url
+          user.profile = {
+            avatar_url: user.services.facebook.picture ? user.services.facebook.picture : '/images/avatar-logo.png'
+          }
+          return user
+      }else if (user.services.google) {
+          console.log("user google", user.services.google);
+          user.username = user.services.google.given_name
+          user.emails = [{address: user.services.google.email}]
+          // Handle avatar_url
+          user.profile = {
+            avatar_url: user.services.google.picture ? user.services.google.picture : '/images/avatar-logo.png'
+          }
+          return user
+      }else{
+        console.log("USER", user);
+
+        user.profile = {
+          avatar_url: '/images/avatar-logo.png'
+        }
+        return user
+      }
+  })
+})
