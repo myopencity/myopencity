@@ -39,4 +39,21 @@ Meteor.startup(() => {
     console.log("SERVER : Created external apis configuration singleton")
     ExternalApisConfiguration.insert({})
   }
+
+  // Handling external services login
+  Accounts.onCreateUser(function (options, user) {
+
+      if (user.services.facebook) {
+          console.log("user facebook", user.services.facebook);
+          user.username = user.services.facebook.name
+          user.emails = [{address: user.services.facebook.email}]
+          // Handle avatar_url
+          user.profile = {
+            avatar_url: user.services.facebook.picture ? user.services.facebook.picture : '/images/avatar-logo.png'
+          }
+          return user
+      }else{
+        return user
+      }
+  })
 })

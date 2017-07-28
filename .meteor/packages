@@ -37,3 +37,6 @@ session
 reywood:publish-composite
 nimble:restivus
 http
+accounts-facebook
+accounts-google
+service-configuration

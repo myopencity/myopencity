@@ -30,6 +30,15 @@ Meteor.methods({
       ExternalApisConfiguration.update({}, {$set: {facebook_public_key, facebook_private_key}})
       if(facebook_public_key, facebook_private_key){
         Configuration.update({}, {$set: {facebook_connected: true}})
+        ServiceConfiguration.configurations.upsert({
+          service: "facebook"
+        }, {
+          $set: {
+            appId: facebook_public_key,
+            loginStyle: "popup",
+            secret: facebook_private_key
+          }
+        });
       }
     }
   }

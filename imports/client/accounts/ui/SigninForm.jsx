@@ -54,7 +54,17 @@ export default class SigninForm extends Component{
     })
   }
 
+  connect_facebook(e){
+    e.preventDefault()
+    Meteor.loginWithFacebook({requestPermissions: ['public_profile', 'email']}, (error) => {
+      if(error){
+        console.log("Error during facebook login", error)
+      }
+    })
+  }
+
   render(){
+    const {facebook_connected} = Session.get('global_configuration')
     return(
        <Form onSubmit={(e) => {this.signin(e)}} className="center-align">
          <Form.Field>
@@ -65,6 +75,9 @@ export default class SigninForm extends Component{
            <label>Mot de passe</label>
            <Input type="password" onChange={(e) => {this.handleChange('password', e)}} />
          </Form.Field>
+         {facebook_connected ?
+            <Button color="blue" icon="facebook" content="Se connecter avec Facebook" onClick={(e) => {this.connect_facebook(e)}}/>
+         : ''}
          <Button positive onClick={(e) => {this.signin(e)}}>Se connecter</Button>
          <Button onClick={(e) => {this.go('Signup', e)}}>Je n'ai pas encore de compte</Button>
        </Form>
