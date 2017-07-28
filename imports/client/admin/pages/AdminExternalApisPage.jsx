@@ -28,6 +28,28 @@ export class AdminExternalApisPage extends TrackerReact(Component){
     this.setState({external_apis_configuration})
   }
 
+  reset_api_configuration(service, e){
+    e.preventDefault()
+    Meteor.call('external_apis_configuration.reset_' + service, (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors de la réinitialisation du service " + service,
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }else{
+        Bert.alert({
+          title: "Service " + service + " réinitialisé",
+          message: "Les fonctionnalités associées ont été désactivées",
+          type: 'success',
+          style: 'growl-bottom-left',
+        })
+      }
+    });
+  }
+
   submit_external_services(e){
     e.preventDefault()
     const {amazon_public_key, amazon_private_key, google_public_key, google_private_key, facebook_public_key, facebook_private_key} = this.state.external_apis_configuration
@@ -36,7 +58,7 @@ export class AdminExternalApisPage extends TrackerReact(Component){
         if(error){
           console.log(error)
           Bert.alert({
-            title: "Erreur lors de la configuration des apis extérieures",
+            title: "Erreur lors de la configuration des apis Amazon",
             message: error.reason,
             type: 'danger',
             style: 'growl-bottom-left',
@@ -56,7 +78,7 @@ export class AdminExternalApisPage extends TrackerReact(Component){
         if(error){
           console.log(error)
           Bert.alert({
-            title: "Erreur lors de la configuration des apis extérieures",
+            title: "Erreur lors de la configuration des apis Google",
             message: error.reason,
             type: 'danger',
             style: 'growl-bottom-left',
@@ -76,7 +98,7 @@ export class AdminExternalApisPage extends TrackerReact(Component){
         if(error){
           console.log(error)
           Bert.alert({
-            title: "Erreur lors de la configuration des apis extérieures",
+            title: "Erreur lors de la configuration des apis Facebook",
             message: error.reason,
             type: 'danger',
             style: 'growl-bottom-left',
@@ -96,6 +118,7 @@ export class AdminExternalApisPage extends TrackerReact(Component){
   render(){
     const {loading} = this.props
     const {external_apis_configuration} = this.state
+    const {facebook_connected, google_connected, amazon_connected} = Session.get('global_configuration')
 
     if(!loading){
       return(
@@ -119,6 +142,9 @@ export class AdminExternalApisPage extends TrackerReact(Component){
                             <Input placeholder="**********" label="Clé privée" value={external_apis_configuration.google_private_key} type="text" onChange={(e) => {this.handleExternalConfigChange('google_private_key', e)}} />
                             <Input placeholder="**********" label="Clé publique" value={external_apis_configuration.google_public_key} type="text" onChange={(e) => {this.handleExternalConfigChange('google_public_key', e)}} />
                           </Form.Group>
+                          {google_connected ?
+                            <Button color="red" inline onClick={(e) => {this.reset_api_configuration('google', e)}}>Réinitialiser</Button>
+                          : ''}
                         </Item.Description>
                       </Item.Content>
                     </Item>
@@ -133,6 +159,9 @@ export class AdminExternalApisPage extends TrackerReact(Component){
                             <Input placeholder="**********" label="Clé privée" value={external_apis_configuration.facebook_private_key} type="text" onChange={(e) => {this.handleExternalConfigChange('facebook_private_key', e)}} />
                             <Input placeholder="**********" label="Clé publique" value={external_apis_configuration.facebook_public_key} type="text" onChange={(e) => {this.handleExternalConfigChange('facebook_public_key', e)}} />
                           </Form.Group>
+                          {facebook_connected ?
+                            <Button color="red" onClick={(e) => {this.reset_api_configuration('facebook', e)}}>Réinitialiser</Button>
+                          : ''}
                         </Item.Description>
                       </Item.Content>
                     </Item>
@@ -146,6 +175,9 @@ export class AdminExternalApisPage extends TrackerReact(Component){
                             <Input placeholder="**********" label="Clé privée" value={external_apis_configuration.amazon_private_key} type="text" onChange={(e) => {this.handleExternalConfigChange('amazon_private_key', e)}} />
                             <Input placeholder="**********" label="Clé publique" value={external_apis_configuration.amazon_public_key} type="text" onChange={(e) => {this.handleExternalConfigChange('amazon_public_key', e)}} />
                           </Form.Group>
+                          {amazon_connected ?
+                            <Button color="red" onClick={(e) => {this.reset_api_configuration('amazon', e)}}>Réinitialiser</Button>
+                          : ''}
                         </Item.Description>
                       </Item.Content>
                     </Item>

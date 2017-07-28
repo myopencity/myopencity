@@ -76,5 +76,29 @@ Meteor.methods({
         })
       }
     }
+  },
+  'external_apis_configuration.reset_facebook'(){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
+      throw new Meteor.Error('403', "Vous n'êtes pas administrateur")
+    }else{
+      ExternalApisConfiguration.update({}, {$unset: {facebook_public_key: 1, facebook_private_key: 1}})
+      Configuration.update({}, {$set: {facebook_connected: false}})
+    }
+  },
+  'external_apis_configuration.reset_google'(){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
+      throw new Meteor.Error('403', "Vous n'êtes pas administrateur")
+    }else{
+      ExternalApisConfiguration.update({}, {$unset: {google_public_key: 1, google_private_key: 1}})
+      Configuration.update({}, {$set: {google_connected: false}})
+    }
+  },
+  'external_apis_configuration.reset_amazon'(){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
+      throw new Meteor.Error('403', "Vous n'êtes pas administrateur")
+    }else{
+      ExternalApisConfiguration.update({}, {$unset: {amazon_public_key: 1, amazon_private_key: 1}})
+      Configuration.update({}, {$set: {amazon_connected: false}})
+    }
   }
 })
