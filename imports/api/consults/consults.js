@@ -72,6 +72,10 @@ const ConsultsSchema = new SimpleSchema({
   api_votable: {
     type: Boolean,
     defaultValue: true
+  },
+  alternatives_validation: {
+    type: Boolean,
+    defaultValue: false
   }
 })
 

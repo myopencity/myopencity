@@ -69,6 +69,10 @@ export class AdminLayout extends TrackerReact(Component){
                 <Icon name='lightbulb' />
                 Projets
               </Menu.Item>
+              <Menu.Item onClick={() => {this.go('AdminAlternativesValidation')}} name='projects'>
+                <Icon name='check circle' />
+                Alternatives
+              </Menu.Item>
               <Menu.Item onClick={() => {this.go('AdminApiAuthorizations')}} name='api_authorizations'>
                 <Icon name='key' />
                 Autorisations API

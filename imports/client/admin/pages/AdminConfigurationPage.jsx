@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Form, Input, Loader, Container, Button} from 'semantic-ui-react'
 import { SketchPicker } from 'react-color'
+import TinyMCE from 'react-tinymce'
 
 export default class AdminConfigurationPage extends TrackerReact(Component){
 
@@ -54,6 +55,12 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
     })
   }
 
+  handleLandingExplainChange(e){
+    let {configuration} = this.state
+    configuration.landing_explain_text = e.target.getContent()
+    this.setState({configuration})
+  }
+
   render(){
     const {configuration} = this.state
 
@@ -96,6 +103,17 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                 <Form.Field>
                   <label>Couleur de fonds de la partie "consultations du moment"</label>
                   <SketchPicker color={configuration.landing_consults_background_color} onChangeComplete={(e) => {this.handleColorChange('landing_consults_background_color', e)}} />
+                </Form.Field>
+                <Form.Field>
+                  <label>Texte d'explication de la page d'accueil</label>
+                  <TinyMCE
+                    content={configuration.landing_explain_text}
+                    config={{
+                      plugins: 'image autoresize',
+                      toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | formatselect'
+                    }}
+                    onChange={this.handleLandingExplainChange.bind(this)}
+                    />
                 </Form.Field>
                 <Header as="h3">Consultation</Header>
                 <Form.Field>

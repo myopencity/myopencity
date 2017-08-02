@@ -27,7 +27,8 @@ export class LandingPage extends TrackerReact(Component){
       landing_header_description_color,
       landing_main_title,
       landing_header_description,
-      landing_consults_background_color
+      landing_consults_background_color,
+      landing_explain_text
     } = Session.get('global_configuration')
 
     const {consults, projects, loading} = this.props
@@ -50,9 +51,8 @@ export class LandingPage extends TrackerReact(Component){
                 <Header as="h2">Qu'est-ce que c'est ?</Header>
               </Grid.Column>
               <Grid.Column width={16}>
-                <Header as="h3">{main_title} est une plateforme de démocratie en ligne</Header>
                 <Container>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Non nemo porro impedit adipisci maxime, minus commodi beatae, cum atque delectus similique, totam! Illo perferendis, voluptate quo culpa, tenetur, facere soluta neque cum voluptatibus consequatur suscipit harum quos sit officiis quae. Explicabo sequi accusamus, eaque praesentium asperiores quibusdam fugit optio ullam, eos. Blanditiis illo eius optio veniam pariatur laboriosam consequatur, tempore porro iure! Vel eligendi totam eum laboriosam neque harum molestias. Ea maxime voluptatem, possimus similique quibusdam, sit nemo culpa mollitia nulla quam unde atque pariatur? Nostrum autem quasi, consequuntur, possimus suscipit nihil blanditiis vitae quia dolore cum sunt iusto perspiciatis doloribus labore, illum neque totam tenetur voluptates voluptas maxime? Repudiandae consequuntur qui dolore laboriosam, voluptatem ex labore assumenda, tempora libero cumque tenetur, animi debitis corrupti ut quis saepe magni sunt illo nam odio aliquid quo explicabo deserunt. Error beatae debitis distinctio, itaque sint corporis aperiam enim est veniam, maxime quam, unde, dolores saepe sunt? Temporibus vitae placeat officiis neque excepturi quibusdam nihil accusamus doloremque provident at, libero vero id eligendi nemo, ipsam minus recusandae quod earum porro. Cum quos molestiae, dolorum aliquid, rerum magnam, expedita maxime quia aliquam nam sed corporis fuga omnis minus quis dolore rem. Et, tempore est.</p>
+                  <div dangerouslySetInnerHTML={{__html: landing_explain_text }}></div>
                 </Container>
               </Grid.Column>
             </Grid>

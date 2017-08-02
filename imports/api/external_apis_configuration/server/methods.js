@@ -35,6 +35,31 @@ Meteor.methods({
 
             return url
           }
+        }) 
+        Slingshot.createDirective("ConsultDocument", Slingshot.S3Storage, {
+          bucket: "myopencity",
+          acl: "public-read",
+          AWSAccessKeyId: amazon_public_key,
+          AWSSecretAccessKey: amazon_private_key,
+          region: 'eu-central-1',
+
+          authorize: function (file, metaContext) {
+            if(!this.userId){
+              throw new Meteor.Error('403', "Vous devez vous connecter")
+            }else{
+              return true
+            }
+          },
+
+          key: function (file, metaContext) {
+            // User's image url with ._id attached:
+            console.log("metacontext", metaContext);
+            const fileNameDecompo = _.split(file.name, '.')
+            const url = "documents/" + this.userId + "/" + Date.now() + "-" + _.kebabCase(fileNameDecompo[0]) + '.' + fileNameDecompo[fileNameDecompo.length - 1]
+            console.log("URL", url);
+
+            return url
+          }
         })
       }
     }
@@ -75,6 +100,30 @@ Meteor.methods({
           }
         })
       }
+    }
+  },
+  'external_apis_configuration.reset_facebook'(){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
+      throw new Meteor.Error('403', "Vous n'êtes pas administrateur")
+    }else{
+      ExternalApisConfiguration.update({}, {$unset: {facebook_public_key: 1, facebook_private_key: 1}})
+      Configuration.update({}, {$set: {facebook_connected: false}})
+    }
+  },
+  'external_apis_configuration.reset_google'(){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
+      throw new Meteor.Error('403', "Vous n'êtes pas administrateur")
+    }else{
+      ExternalApisConfiguration.update({}, {$unset: {google_public_key: 1, google_private_key: 1}})
+      Configuration.update({}, {$set: {google_connected: false}})
+    }
+  },
+  'external_apis_configuration.reset_amazon'(){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
+      throw new Meteor.Error('403', "Vous n'êtes pas administrateur")
+    }else{
+      ExternalApisConfiguration.update({}, {$unset: {amazon_public_key: 1, amazon_private_key: 1}})
+      Configuration.update({}, {$set: {amazon_connected: false}})
     }
   }
 })

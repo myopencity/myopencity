@@ -43,6 +43,26 @@ export class AlternativePresentation extends TrackerReact(Component){
     });
   }
 
+  toggle_validated(e){
+    Meteor.call('alternatives.toggle_validity', this.props.alternative._id, (error, result) => {
+      if(error){
+        console.log(error)
+        Bert.alert({
+          title: "Erreur lors de la modification de validité de l'alternative",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }else{
+        Bert.alert({
+          title: "Validité de l'alternative modifiée",
+          type: 'success',
+          style: 'growl-bottom-left',
+        })
+      }
+    });
+  }
+
   go_back(e){
     e.preventDefault()
     this.props.onGoBackClick()
@@ -76,6 +96,11 @@ export class AlternativePresentation extends TrackerReact(Component){
           {this.props.onGoBackClick ?
             <Grid.Column width={16} className="center-align">
               <Button onClick={(e) => {this.go_back(e)}}>{this.props.goBackLabel ? this.props.goBackLabel : "Ne plus afficher l'alternative"}</Button>
+            </Grid.Column>
+          : ''}
+          {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+            <Grid.Column width={16} className="center-align">
+              <Button onClick={(e) => {this.toggle_validated(e)}}>{alternative.validated ? "Invalider l'alternative" : "Valider l'alternative"}</Button>
             </Grid.Column>
           : ''}
         </Grid>

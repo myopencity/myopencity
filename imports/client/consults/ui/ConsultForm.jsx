@@ -16,7 +16,8 @@ export default class ConsultForm extends TrackerReact(Component){
     this.state = {
       consult: {
         api_votable: true,
-        api_recoverable: true
+        api_recoverable: true,
+        alternatives_validation: false
       },
       step: 'global', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
       editing_part: null,
@@ -314,6 +315,15 @@ export default class ConsultForm extends TrackerReact(Component){
                       />
                     </label>
                     <Checkbox checked={consult.api_votable} onClick={(e) => {this.toggleConsult('api_votable', e)}} toggle />
+                  </Form.Field>
+                  <Form.Field>
+                    <label>Validation manuelle des alternatives ({consult.alternatives_validation ? "Validation manuelle activée" : "Validation automatique"})
+                      <Popup
+                        trigger={<Icon size="small" name="help" circular inverted />}
+                        content="En activant la validation manuelle des alternatives, chaque alternative devra être validée par vos soins avant d'être visible sur la consultation"
+                      />
+                    </label>
+                    <Checkbox checked={consult.alternatives_validation} onClick={(e) => {this.toggleConsult('alternatives_validation', e)}} toggle />
                   </Form.Field>
                 </Form>
               </Grid.Column>

@@ -36,3 +36,11 @@ Meteor.publishComposite('alternatives.user', function(alternative_id){
 Meteor.publish('alternative', function(alternative_id){
   return Alternatives.find({_id: alternative_id, validated: true})
 })
+
+Meteor.publish('alternatives.unvalidated', function(){
+  if(!Roles.userIsInRole(this.userId, 'admin')){
+    throw new Meteor.Error('403', "Vous devez être administrateur")
+  }else{
+    return Alternatives.find({validated: false})
+  }
+});
