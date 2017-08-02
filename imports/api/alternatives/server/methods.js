@@ -2,6 +2,7 @@ import {Meteor} from 'meteor/meteor'
 import {Alternatives} from '../alternatives'
 import {ConsultParts} from '/imports/api/consult_parts/consult_parts'
 import {AlternativeLikes} from '/imports/api/alternative_likes/alternative_likes'
+import {Consults} from '/imports/api/consults/consults'
 
 Meteor.methods({
   'alternatives.insert'({alternative, consult_part_id}){
@@ -9,10 +10,14 @@ Meteor.methods({
       throw new Meteor.Error('403', "Vous devez vous connecter")
     }else{
       const consult_part = ConsultParts.findOne({_id: consult_part_id})
+      const consult = Consults.findOne({_id: consult_part.consult})
       if(consult_part.alternatives_activated){
         alternative.user = this.userId
         alternative.consult_part = consult_part_id
         alternative.consult = consult_part.consult
+        if(consult.alternatives_validation){
+          alternative.validated = false
+        }
         Alternatives.insert(alternative)
       }else{
         throw new Meteor.Error('403', "Les alternatives sont désactivées sur cette partie")
@@ -59,6 +64,15 @@ Meteor.methods({
         alternative.likes--
         Meteor.call('alternatives.update', alternative)
       }
+    }
+  },
+  'alternatives.toggle_validity'(alternative_id){
+    if(!Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+      throw new Meteor.Error('403', "Vous devez être administrateur")
+    }else{
+      let alternative = Alternatives.findOne({_id: alternative_id})
+      alternative.validated = !alternative.validated
+      Alternatives.update({_id: alternative_id}, {$set: alternative})
     }
   }
 })
