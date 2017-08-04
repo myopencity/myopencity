@@ -2,6 +2,15 @@ import {Mongo} from 'meteor/mongo'
 
 export const Consults = new Mongo.Collection('consults')
 
+const FilesSchema = new SimpleSchema({
+  title: {
+    type: String
+  },
+  url: {
+    type: String
+  }
+})
+
 const ConsultsSchema = new SimpleSchema({
   title: {
     type: String
@@ -76,6 +85,10 @@ const ConsultsSchema = new SimpleSchema({
   alternatives_validation: {
     type: Boolean,
     defaultValue: false
+  },
+  attached_files: {
+    type: [FilesSchema],
+    defaultValue: []
   }
 })
 
