@@ -291,7 +291,7 @@ export default class InitialConfigPage extends TrackerReact(Component){
                         {external_services.length > 0 ?
                           <Button positive onClick={(e) => {this.submit_external_services(e)}}>Configurer les services</Button>
                         : ''}
-                        <Button size="small">Passer</Button>
+                        <Button size="small" onClick={(e) => {this.go('Landing', e)}}>Passer</Button>
                       </Grid.Column>
 
                     </Grid>

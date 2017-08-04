@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
-import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Feed, Icon, Image} from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import moment from 'moment'
 import 'moment/locale/fr'
 
-export class AlternativePartial extends TrackerReact(Component){
+export class AlternativePartial extends Component{
 
   /*
     required props:
