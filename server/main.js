@@ -28,6 +28,10 @@ import '/imports/api/external_opencities/server/methods'
 import '/imports/api/external_opencities/server/publication'
 
 Meteor.startup(() => {
+
+  // Migrations
+  Migrations.migrateTo('latest')
+
   // Initialization of global configuration singleton
   const configuration = Configuration.findOne({})
   if(!configuration){
