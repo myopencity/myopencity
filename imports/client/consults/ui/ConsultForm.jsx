@@ -17,14 +17,16 @@ export default class ConsultForm extends TrackerReact(Component){
       consult: {
         api_votable: true,
         api_recoverable: true,
-        alternatives_validation: false
+        alternatives_validation: false,
+        attached_files: []
       },
       step: 'global', // 'global' / 'design' / 'parts' / 'documents' / 'settings'
       editing_part: null,
       editing_part_index: null,
       consult_parts: [],
       display_part_form: false,
-      removing_consult_parts: []
+      removing_consult_parts: [],
+      adding_file_name: ''
     }
   }
 
@@ -42,9 +44,22 @@ export default class ConsultForm extends TrackerReact(Component){
     }
   }
 
+  handleChange(attr, e){
+    let state = this.state
+    state[attr] = e.target.value
+    this.setState(state)
+  }
+
   handleConsultChange(attr, e){
     let {consult} = this.state
     consult[attr] = e.target.value
+    this.setState({consult})
+  }
+
+  remove_attached_file(index, e){
+    e.preventDefault()
+    let {consult} = this.state
+    consult.attached_files.splice(index, 1)
     this.setState({consult})
   }
 
@@ -197,11 +212,41 @@ export default class ConsultForm extends TrackerReact(Component){
         }
         // you will need this in the event the user hit the update button because it will remove the avatar url
       })
+  }
 
+  handleFileImport(e){
+    e.preventDefault()
+    this.setState({loading_consult_file: true})
+    var metaContext = {}
+    var uploader = new Slingshot.Upload("ConsultFile", metaContext)
+    uploader.send(e.target.files[0], (error, downloadUrl) => {
+      if (error) {
+        // Log service detailed response
+        console.error('Error uploading', error)
+        this.setState({loading_consult_file: false})
+        Bert.alert({
+          title: "Une erreur est survenue durant l'envoi du document à Amazon",
+          message: error.reason,
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+      }
+      else {
+        // we use $set because the user can change their avatar so it overwrites the url :)
+        const {consult, adding_file_name} = this.state
+        const new_file = {
+          title: adding_file_name,
+          url: downloadUrl
+        }
+        consult.attached_files.push(new_file)
+        this.setState({consult, loading_consult_file: false, adding_file_name: ''})
+      }
+      // you will need this in the event the user hit the update button because it will remove the avatar url
+    })
   }
 
   render(){
-    const {consult, editing_part, consult_parts, display_part_form, step, loading_consult_image} = this.state
+    const {consult, editing_part, consult_parts, display_part_form, step, loading_consult_image, loading_consult_file, adding_file_name} = this.state
     const {amazon_connected} = Session.get('global_configuration')
 
     return(
@@ -293,6 +338,43 @@ export default class ConsultForm extends TrackerReact(Component){
                   </Grid.Column>
                 : ''}
               </Grid>
+            : ''}
+            {step == 'documents' ?
+              <Grid.Column width={16}>
+                {amazon_connected ?
+                  <Form>
+                    <Form.Field>
+                      <label>Donnez un titre à votre document</label>
+                      <Input onChange={(e) => {this.handleChange('adding_file_name', e)}} type="text" value={adding_file_name} />
+                    </Form.Field>
+                    <Form.Field>
+                      <label>Envoyer un document depuis votre ordinateur {!adding_file_name ? "(Merci d'entrer un nom de document)" : ""}</label>
+                      <Input disabled={!adding_file_name} loading={loading_consult_file} onChange={(e) => {this.handleFileImport(e)}} type="file" />
+                    </Form.Field>
+                  </Form>
+                :
+                    <p>Envie d'envoyer de lier des documents à vos consultations ? Vous devez <a href="/admin/external_apis">configurer Amazon S3</a></p>
+                }
+                {consult.attached_files.length > 0 ?
+                  <Grid stackable>
+                    <Grid.Column width={16} style={{marginTop: '2em'}}>
+                      <Header as="h4">Documents attachés à votre consultation</Header>
+                    </Grid.Column>
+                    {consult.attached_files.map((attached_file, index) => {
+                      return (
+                        <Grid.Column width={16} className="">
+                          <Segment>
+                            <Icon name="file"/>
+                            <Header as="h4">{attached_file.title}</Header>
+                            <Button color="red" icon="remove" text="Supprimer" onClick={(e) => {this.remove_attached_file(index, e)}} />
+                          </Segment>
+                        </Grid.Column>
+                      )
+                    })}
+
+                  </Grid>
+                : ''}
+              </Grid.Column>
             : ''}
             {step == 'settings' ?
               <Grid.Column width={16}>

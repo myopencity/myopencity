@@ -9,7 +9,7 @@ Slingshot.fileRestrictions("ConsultImage", {
   maxSize: null
 })
 
-Slingshot.fileRestrictions("ConsultDocument", {
+Slingshot.fileRestrictions("ConsultFile", {
   allowedFileTypes: ["image/png", "image/jpeg", "image/jpg", "application/pdf", "application/vnd.ms-powerpoint", "application/vnd.ms-excel", "application/x-rar-compressed"],
   maxSize: null
 })
@@ -42,7 +42,7 @@ if(external_apis_conf){
       }
     })
 
-    Slingshot.createDirective("ConsultDocument", Slingshot.S3Storage, {
+    Slingshot.createDirective("ConsultFile", Slingshot.S3Storage, {
       bucket: "myopencity",
       acl: "public-read",
       AWSAccessKeyId: external_apis_conf.amazon_public_key,
@@ -61,7 +61,7 @@ if(external_apis_conf){
         // User's image url with ._id attached:
         console.log("metacontext", metaContext);
         const fileNameDecompo = _.split(file.name, '.')
-        const url = "documents/" + this.userId + "/" + Date.now() + "-" + _.kebabCase(fileNameDecompo[0]) + '.' + fileNameDecompo[fileNameDecompo.length - 1]
+        const url = "files/" + this.userId + "/" + Date.now() + "-" + _.kebabCase(fileNameDecompo[0]) + '.' + fileNameDecompo[fileNameDecompo.length - 1]
         console.log("URL", url);
 
         return url
