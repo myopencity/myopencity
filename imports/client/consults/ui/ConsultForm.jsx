@@ -217,7 +217,7 @@ export default class ConsultForm extends TrackerReact(Component){
   handleFileImport(e){
     e.preventDefault()
     this.setState({loading_consult_file: true})
-    var metaContext = {}
+    var metaContext = {title: this.state.adding_file_name}
     var uploader = new Slingshot.Upload("ConsultFile", metaContext)
     uploader.send(e.target.files[0], (error, downloadUrl) => {
       if (error) {

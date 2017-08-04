@@ -61,7 +61,8 @@ if(external_apis_conf){
         // User's image url with ._id attached:
         console.log("metacontext", metaContext);
         const fileNameDecompo = _.split(file.name, '.')
-        const url = "files/" + this.userId + "/" + Date.now() + "-" + _.kebabCase(fileNameDecompo[0]) + '.' + fileNameDecompo[fileNameDecompo.length - 1]
+
+        const url = "files/" + this.userId + "/" + Date.now() + "-" + _.kebabCase(metaContext.title) + '.' + fileNameDecompo[fileNameDecompo.length - 1]
         console.log("URL", url);
 
         return url
