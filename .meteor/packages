@@ -42,3 +42,4 @@ accounts-google
 service-configuration
 edgee:slingshot
 force-ssl
+percolate:migrations
