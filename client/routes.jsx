@@ -29,6 +29,7 @@ import AdminApiAuthorizationsPage from '/imports/client/admin/pages/AdminApiAuth
 import AdminExternalOpencitiesPage from '/imports/client/admin/pages/AdminExternalOpencitiesPage'
 import AdminExternalApisPage from '/imports/client/admin/pages/AdminExternalApisPage'
 import AdminAlternativesValidationPage from '/imports/client/admin/pages/AdminAlternativesValidationPage'
+import AdminUsersPage from '/imports/client/admin/pages/AdminUsersPage'
 
 FlowRouter.wait()
 
@@ -293,3 +294,12 @@ adminRoutes.route('/alternatives',{
     })
   }
 })
+
+adminRoutes.route('/users',{
+  name: "AdminUsers",
+  action(){
+    mount(AdminLayout, {
+      content: (<AdminUsersPage />)
+    })
+  }
+}) 

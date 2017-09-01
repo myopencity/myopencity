@@ -57,6 +57,10 @@ export class AdminLayout extends TrackerReact(Component){
                 <Icon name='cogs' />
                 Configuration
               </Menu.Item>
+              <Menu.Item onClick={() => {this.go('AdminUsers')}} name='users'>
+                <Icon name='users' />
+                Utilisateurs
+              </Menu.Item>
               <Menu.Item onClick={() => {this.go('AdminExternalApis')}} name='google'>
                 <Icon name='google' />
                 Services externes
