@@ -68,5 +68,12 @@ Meteor.methods({
         Roles.addUsersToRoles(user_id, 'moderator')
       }
     }
-  }
+  },
+  'users.count'(){
+    if(!Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+      throw new Meteor.Error('403', "Vous devez être administrateur ou modérateur")
+    }else{
+      return Meteor.users.find({_id: {$ne: this.userId}}).count()
+    }
+  }, 
 })

@@ -38,7 +38,26 @@ Tracker.autorun((computation) => {
    FlowRouter.initialize();
    computation.stop()
  }
-});
+})
+
+var moderatorRoutes = FlowRouter.group({
+    prefix: "/moderator",
+    name: "moderator",
+    triggersEnter: [function(context, redirect){
+      if(!Meteor.userId()){
+        FlowRouter.go('Landing')
+      }
+      if(!Roles.userIsInRole(Meteor.user(), ['admin', 'moderator'])){
+        Bert.alert({
+          title: "Vous n'êtes pas modérateur",
+          message: "Essayez encore ;)",
+          type: 'danger',
+          style: 'growl-bottom-left',
+        })
+        FlowRouter.go('Landing')
+      }
+    }]
+})
 
 var adminRoutes = FlowRouter.group({
     prefix: "/admin",
@@ -214,7 +233,7 @@ adminRoutes.route('/configuration',{
   }
 })
 
-adminRoutes.route('/consults',{
+moderatorRoutes.route('/consults',{
   name: "AdminConsults",
   action(){
     mount(AdminLayout, {
@@ -223,7 +242,7 @@ adminRoutes.route('/consults',{
   }
 })
 
-adminRoutes.route('/consults/new',{
+moderatorRoutes.route('/consults/new',{
   name: "AdminConsultCreation",
   action(){
     mount(AdminLayout, {
@@ -232,7 +251,7 @@ adminRoutes.route('/consults/new',{
   }
 })
 
-adminRoutes.route('/consults/:consult_shorten_url/edit',{
+moderatorRoutes.route('/consults/:consult_shorten_url/edit',{
   name: "AdminConsultEdit",
   action(params){
     mount(AdminLayout, {
@@ -241,7 +260,7 @@ adminRoutes.route('/consults/:consult_shorten_url/edit',{
   }
 })
 
-adminRoutes.route('/projects',{
+moderatorRoutes.route('/projects',{
   name: "AdminProjects",
   action(){
     mount(AdminLayout, {
@@ -250,7 +269,7 @@ adminRoutes.route('/projects',{
   }
 })
 
-adminRoutes.route('/consult/:shorten_url/stats',{
+moderatorRoutes.route('/consult/:shorten_url/stats',{
   name: "AdminConsultStats",
   action(params){
     mount(AdminLayout, {
@@ -286,7 +305,7 @@ adminRoutes.route('/external_apis',{
   }
 })
 
-adminRoutes.route('/alternatives',{
+moderatorRoutes.route('/alternatives',{
   name: "AdminAlternativesValidation",
   action(){
     mount(AdminLayout, {
@@ -295,11 +314,11 @@ adminRoutes.route('/alternatives',{
   }
 })
 
-adminRoutes.route('/users',{
+moderatorRoutes.route('/users',{
   name: "AdminUsers",
   action(){
     mount(AdminLayout, {
       content: (<AdminUsersPage />)
     })
   }
-}) 
+})

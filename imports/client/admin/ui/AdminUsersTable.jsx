@@ -30,6 +30,7 @@ export class AdminUsersTable extends TrackerReact(Component){
         <Table celled striped>
           <Table.Header>
             <Table.Row>
+              <Table.HeaderCell>Nom d'utilisateur</Table.HeaderCell>
               <Table.HeaderCell>Email</Table.HeaderCell>
               <Table.HeaderCell>Créé le</Table.HeaderCell>
               <Table.HeaderCell>Actions</Table.HeaderCell>

@@ -64,6 +64,7 @@ export default class AdminUserRow extends TrackerReact(Component){
     const moderator = Roles.userIsInRole(user._id, 'moderator')
     return(
       <Table.Row>
+        <Table.Cell>{user.username}</Table.Cell>
         <Table.Cell>{user.emails[0].address}</Table.Cell>
         <Table.Cell>{moment(user.createdAt).format('DD.MM.YYYY - HH:mm')}</Table.Cell>
         <Table.Cell>
