@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Grid, Header, Form, Input, Loader, Container, Button} from 'semantic-ui-react'
+import {Grid, Header, Form, Input, Loader, Container, Button, Checkbox} from 'semantic-ui-react'
 import { SketchPicker } from 'react-color'
 import TinyMCE from 'react-tinymce'
 
@@ -20,6 +20,12 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
 
   componentWillMount(){
     this.state.configuration = Session.get('global_configuration')
+  }
+
+  toggleConfiguration(attr, e){
+    let {configuration} = this.state
+    configuration[attr] = !configuration[attr]
+    this.setState({configuration})
   }
 
   handleConfigurationChange(attr, e){
@@ -146,10 +152,27 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                   <Input type="text" value={configuration.alternative_likes_term} onChange={(e) => {this.handleConfigurationChange('alternative_likes_term', e)}} />
                 </Form.Field>
                 <Header as="h3">Propositions</Header>
-                  <Form.Field>
-                    <label>Titre de la page des propositions</label>
-                    <Input type="text" value={configuration.projects_page_header_title} onChange={(e) => {this.handleConfigurationChange('projects_page_header_title', e)}} />
-                  </Form.Field>
+                <Form.Field>
+                  <label>Titre de la page des propositions</label>
+                  <Input type="text" value={configuration.projects_page_header_title} onChange={(e) => {this.handleConfigurationChange('projects_page_header_title', e)}} />
+                </Form.Field>
+                <Header as="h3">Configuration de l'anonymat</Header>
+                <Form.Field>
+                  <label>Choix de l'anonymat des alternatives (actuellement {configuration.alternatives_anonymous_choice ? "actif" : "désactivé"})</label> 
+                  <Checkbox checked={configuration.alternatives_anonymous_choice} onClick={(e) => {this.toggleConfiguration('alternatives_anonymous_choice', e)}} toggle />
+                </Form.Field>
+                <Form.Field>
+                  <label>Valeur par défaut de l'anonymat des alternatives (actuellement {configuration.alternatives_anonymous_default ? "anonyme" : "non anonyme"} par défaut)</label>
+                  <Checkbox checked={configuration.alternatives_anonymous_default} onClick={(e) => {this.toggleConfiguration('alternatives_anonymous_default', e)}} toggle />
+                </Form.Field>
+                <Form.Field>
+                  <label>Choix de l'anonymat des propositions (actuellement {configuration.projects_anonymous_choice ? "actif" : "désactivé"})</label>
+                  <Checkbox checked={configuration.projects_anonymous_choice} onClick={(e) => {this.toggleConfiguration('projects_anonymous_choice', e)}} toggle />
+                </Form.Field>
+                <Form.Field>
+                  <label>Valeur par défaut de l'anonymat des alternatives (actuellement {configuration.projects_anonymous_default ? "anonyme" : "non anonyme"} par défaut)</label>
+                  <Checkbox checked={configuration.projects_anonymous_default} onClick={(e) => {this.toggleConfiguration('projects_anonymous_default', e)}} toggle />
+                </Form.Field>
                 <Button positive>Modifier la configuration</Button>
               </Form>
             </Container>

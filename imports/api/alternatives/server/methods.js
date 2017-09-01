@@ -3,6 +3,7 @@ import {Alternatives} from '../alternatives'
 import {ConsultParts} from '/imports/api/consult_parts/consult_parts'
 import {AlternativeLikes} from '/imports/api/alternative_likes/alternative_likes'
 import {Consults} from '/imports/api/consults/consults'
+import {Configuration} from '/imports/api/configuration/configuration'
 
 Meteor.methods({
   'alternatives.insert'({alternative, consult_part_id}){
@@ -11,6 +12,10 @@ Meteor.methods({
     }else{
       const consult_part = ConsultParts.findOne({_id: consult_part_id})
       const consult = Consults.findOne({_id: consult_part.consult})
+      const configuration = Configuration.findOne({})
+      if(!configuration.alternatives_anonymous_choice){
+        alternative.anonymous = configuration.alternatives_anonymous_default
+      } 
       if(consult_part.alternatives_activated){
         alternative.user = this.userId
         alternative.consult_part = consult_part_id
@@ -42,9 +47,6 @@ Meteor.methods({
         throw new Meteor.Error('403', "Vous n'êtes pas le propriétaire de cette alternative")
       }
     }
-  },
-  'alternatives.count_by_part'(consult_part_id){
-    return Alternatives.find({consult_part: consult_part_id, validated: true}).count()
   },
   'alternatives.toggle_like'(alternative_id){
     if(!this.userId){

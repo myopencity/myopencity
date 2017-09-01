@@ -35,7 +35,7 @@ export class LandingPage extends TrackerReact(Component){
 
     if(!loading){
       return(
-        <Grid stackable centered>
+        <Grid stackable centered className="landing-page">
           <Grid.Column width={16}>
             <Grid className="landing-header" style={{backgroundImage: "url(" + landing_header_background_url + ")"}} verticalAlign="middle">
               <Grid.Column width={16}>

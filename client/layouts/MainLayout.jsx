@@ -69,7 +69,7 @@ export class MainLayout extends TrackerReact(Component){
               </Menu.Item>
               {Meteor.userId() ?
                 <span>
-                  {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+                  {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
                     <Menu.Item floated="bottom" name='admin' onClick={(e) => {this.go('AdminConsults', e)}}>
                       Admin
                     </Menu.Item>

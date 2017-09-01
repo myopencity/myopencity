@@ -53,14 +53,22 @@ export class AdminLayout extends TrackerReact(Component){
         <div className="main-container">
           <Sidebar.Pushable>
             <Sidebar as={Menu} animation='push' width='thin' visible={Session.get('open_sidebar')} className="main-sidebar" icon='labeled' vertical inverted>
-              <Menu.Item onClick={() => {this.go('AdminConfiguration')}} name='cogs'>
-                <Icon name='cogs' />
-                Configuration
+              {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+                <Menu.Item onClick={() => {this.go('AdminConfiguration')}} name='cogs'>
+                  <Icon name='cogs' />
+                  Configuration
+                </Menu.Item>
+              : ''}
+              <Menu.Item onClick={() => {this.go('AdminUsers')}} name='users'>
+                <Icon name='users' />
+                Utilisateurs
               </Menu.Item>
-              <Menu.Item onClick={() => {this.go('AdminExternalApis')}} name='google'>
-                <Icon name='google' />
-                Services externes
-              </Menu.Item>
+              {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+                <Menu.Item onClick={() => {this.go('AdminExternalApis')}} name='google'>
+                  <Icon name='google' />
+                  Services externes
+                </Menu.Item>
+              : ''}
               <Menu.Item onClick={() => {this.go('AdminConsults')}} name='comments'>
                 <Icon name='comments' />
                 Consultations
@@ -73,14 +81,18 @@ export class AdminLayout extends TrackerReact(Component){
                 <Icon name='check circle' />
                 Alternatives
               </Menu.Item>
-              <Menu.Item onClick={() => {this.go('AdminApiAuthorizations')}} name='api_authorizations'>
-                <Icon name='key' />
-                Autorisations API
-              </Menu.Item>
-              <Menu.Item onClick={() => {this.go('AdminExternalOpencities')}} name='external_opencities'>
-                <Icon name='exchange' />
-                Opencities connectés
-              </Menu.Item>
+              {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+                <Menu.Item onClick={() => {this.go('AdminApiAuthorizations')}} name='api_authorizations'>
+                  <Icon name='key' />
+                  Autorisations API
+                </Menu.Item>
+              : ''}
+              {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+                <Menu.Item onClick={() => {this.go('AdminExternalOpencities')}} name='external_opencities'>
+                  <Icon name='exchange' />
+                  Opencities connectés
+                </Menu.Item>
+              : ''}
             </Sidebar>
             <Sidebar.Pusher>
               <Grid stackable>

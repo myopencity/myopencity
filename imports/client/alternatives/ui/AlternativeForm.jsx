@@ -19,7 +19,7 @@ export default class AlternativeForm extends TrackerReact(Component){
     super(props);
     this.state = {
       alternative: {
-        anonymous: true
+        anonymous: Session.get('global_configuration').alternatives_anonymous_default
       }
     }
   }
@@ -73,6 +73,7 @@ export default class AlternativeForm extends TrackerReact(Component){
   render(){
 
     const {alternative} = this.state
+    const {alternatives_anonymous_choice} = Session.get('global_configuration')
 
     return(
        <Grid stackable>
@@ -99,9 +100,11 @@ export default class AlternativeForm extends TrackerReact(Component){
                 />
              </Form.Field>
              <Form.Field>
-               <Button onClick={(e) => {this.toggleAlternative('anonymous', e)}} icon="spy" content={alternative.anonymous ?
-                  "Votre nom ne sera pas affiché"
-               : 'Votre nom sera affiché'} />
+               {alternatives_anonymous_choice ?
+                 <Button onClick={(e) => {this.toggleAlternative('anonymous', e)}} icon="spy" content={alternative.anonymous ?
+                     "Votre nom ne sera pas affiché"
+                     : 'Votre nom sera affiché'} />
+               : ''} 
                <Button disabled={!this.isValid()} positive onClick={(e) => {this.submit_form(e)}}>{this.props.alternative ? "Modifier l'alternative" : "Proposer l'alternative"}</Button>
              </Form.Field>
            </Form>

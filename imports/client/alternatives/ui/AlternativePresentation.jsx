@@ -98,7 +98,7 @@ export class AlternativePresentation extends TrackerReact(Component){
               <Button onClick={(e) => {this.go_back(e)}}>{this.props.goBackLabel ? this.props.goBackLabel : "Ne plus afficher l'alternative"}</Button>
             </Grid.Column>
           : ''}
-          {Roles.userIsInRole(Meteor.userId(), 'admin') ?
+          {Roles.userIsInRole(Meteor.userId(), ['admin','moderator']) ?
             <Grid.Column width={16} className="center-align">
               <Button onClick={(e) => {this.toggle_validated(e)}}>{alternative.validated ? "Invalider l'alternative" : "Valider l'alternative"}</Button>
             </Grid.Column>

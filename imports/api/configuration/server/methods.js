@@ -3,7 +3,7 @@ import {Configuration} from '../configuration'
 
 Meteor.methods({
   'configuration.update'(config){
-    if(!Meteor.userId() || !Roles.userIsInRole(Meteor.userId(), 'admin')){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
       console.log("config call", config);

@@ -75,7 +75,6 @@
 /* -------- MAIN CLASSES */
 .main-container{
   min-height: 100vh;
-  height: 100vh;
 }
 
 .ui {
@@ -94,4 +93,8 @@
   i.icon {
     color: white;
   }
+}
+
+.pusher, .pushable {
+  min-height: 100vh !important;
 }

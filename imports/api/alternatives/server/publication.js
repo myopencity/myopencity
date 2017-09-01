@@ -9,6 +9,10 @@ Meteor.publish('alternatives.all', function(){
   }
 })
 
+Meteor.publish('alternatives.by_consult_part',function(consult_part_id){
+  return Alternatives.find({validated: true, consult_part: consult_part_id})
+})
+
 Meteor.publish('alternatives.paginated_by_consult_part',function({consult_part_id, page, results_size, search_term}){
   const skip_entities = page*results_size
   return Alternatives.find({validated: true, consult_part: consult_part_id, content: {$regex: search_term}}, {limit: results_size, skip: skip_entities, sort: {likes: -1}})
@@ -38,7 +42,7 @@ Meteor.publish('alternative', function(alternative_id){
 })
 
 Meteor.publish('alternatives.unvalidated', function(){
-  if(!Roles.userIsInRole(this.userId, 'admin')){
+  if(!Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
     throw new Meteor.Error('403', "Vous devez être administrateur")
   }else{
     return Alternatives.find({validated: false})

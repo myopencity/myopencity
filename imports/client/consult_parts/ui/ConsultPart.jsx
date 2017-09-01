@@ -41,7 +41,6 @@ export class ConsultPart extends TrackerReact(Component){
     this.setState({hover_vote: false})
   }
 
-
   toggleState(attr, e){
     let state = this.state
     state[attr] = !state[attr]
@@ -81,12 +80,6 @@ export class ConsultPart extends TrackerReact(Component){
     const alternativesPublication = Meteor.subscribe('alternatives.paginated_by_consult_part', {consult_part_id: consult_part._id, page: 0, results_size: 10})
   }
 
-  componentWillReceiveProps(new_props){
-    const count = Meteor.call('alternatives.count_by_part', new_props.consult_part._id, (error, result) => {
-      this.setState({alternatives_count: result})
-    })
-  }
-
   handleAlternativesPageChange(data){
      let selected = data.selected
      this.setState({alternatives_page: selected})
@@ -97,13 +90,12 @@ export class ConsultPart extends TrackerReact(Component){
   }
 
   render(){
-    const {consult_part, consult_part_vote, alternatives, hide_vote_button, loading} = this.props
+    const {consult_part, consult_part_vote, alternatives, hide_vote_button, alternatives_count, loading} = this.props
     const {
       display_alternatives,
       display_alternative_form,
       search_alternatives_terms,
       alternatives_page,
-      alternatives_count,
       displaying_alternative
     } = this.state
     const consult_part_hover_class = this.state.hover_vote ? "hover" : ""
@@ -201,10 +193,13 @@ export class ConsultPart extends TrackerReact(Component){
 
 export default ConsultPartContainer = createContainer(({ consult_part }) => {
   const consultPartVotePublication = Meteor.subscribe('consult_part_votes.my_vote_by_part', consult_part._id)
-  const loading = !consultPartVotePublication.ready()
+  const alternativesPublication = Meteor.subscribe('alternatives.by_consult_part', consult_part._id)
+  const loading = !consultPartVotePublication.ready() || !alternativesPublication.ready()
+  const alternatives_count = Alternatives.find({consult_part: consult_part._id, validated: true}).count()
   const consult_part_vote = ConsultPartVotes.findOne({user: Meteor.userId(), consult_part: consult_part._id})
   return {
     loading,
-    consult_part_vote
+    consult_part_vote,
+    alternatives_count
   }
 }, ConsultPart)

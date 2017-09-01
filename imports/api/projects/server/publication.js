@@ -12,7 +12,11 @@ Meteor.publish('projects.visible', function(){
 })
 
 Meteor.publish('project', function(shorten_url){
-  return Projects.find({shorten_url: shorten_url, validated: true})
+  if(Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+    return Projects.find({shorten_url: shorten_url})
+  }else{
+    return Projects.find({shorten_url: shorten_url, validated: true, blocked: false})
+  }
 })
 
 Meteor.publish('project.by_id', function(project_id){

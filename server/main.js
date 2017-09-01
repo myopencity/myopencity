@@ -44,6 +44,15 @@ Meteor.startup(() => {
     ExternalApisConfiguration.insert({})
   }
 
+  // Handle blocked user
+  Accounts.validateLoginAttempt(function(attempt) {
+    if(attempt.user.blocked) {
+      attempt.allowed = false
+      throw new Meteor.Error(500, "Votre compte a été désactivé, contactez un administrateur")
+    } 
+    return true
+  })
+
   // Handling external services login
   Accounts.onCreateUser(function (options, user) {
 

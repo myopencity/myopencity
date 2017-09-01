@@ -21,7 +21,7 @@ export class NewProjectPage extends TrackerReact(Component){
     this.state = {
       step: "presentation", // presentation / anonymous / title / content / description / image
       new_project: {
-        anonymous: true
+        anonymous: Session.get('global_configuration').projects_anonymous_default
       }
     }
   }
@@ -83,11 +83,13 @@ export class NewProjectPage extends TrackerReact(Component){
     let {new_project} = this.state
     new_project.content = this.props.parent_project.content
     this.setState({new_project})
+    tinymce.EditorManager.get("tinyMCEEditor").setContent(new_project.content)
   }
 
   render(){
     const {step, new_project} = this.state
     const {loading, parent_project} = this.props
+    const {projects_anonymous_choice} = Session.get('global_configuration')
 
     if(!loading){
       return(
@@ -102,8 +104,12 @@ export class NewProjectPage extends TrackerReact(Component){
                 <Breadcrumb.Section link active={step == 'content'} onClick={(e) => {this.changeStep('content', e)}}>Contenu</Breadcrumb.Section>
                 <Breadcrumb.Divider icon='right angle' />
                 <Breadcrumb.Section link active={step == 'image'} onClick={(e) => {this.changeStep('image', e)}}>Image du projet</Breadcrumb.Section>
-                <Breadcrumb.Divider icon='right angle' />
-                <Breadcrumb.Section link active={step == 'anonymous'} onClick={(e) => {this.changeStep('anonymous', e)}}>Anonymat</Breadcrumb.Section>
+                  {projects_anonymous_choice ?
+                    <span>
+                      <Breadcrumb.Divider icon='right angle' />
+                      <Breadcrumb.Section link active={step == 'anonymous'} onClick={(e) => {this.changeStep('anonymous', e)}}>Anonymat</Breadcrumb.Section>
+                    </span>
+                  : ''}
                 <Breadcrumb.Divider icon='right angle' />
                 <Breadcrumb.Section link active={step == 'validation'} onClick={(e) => {this.changeStep('validation', e)}}>Validation</Breadcrumb.Section>
               </Breadcrumb>
@@ -205,6 +211,7 @@ export class NewProjectPage extends TrackerReact(Component){
                                 <Button onClick={(e) => {this.copyParentContent(e)}}>Copier le contenu du projet initial</Button>
                               : ''}
                               <TinyMCE
+                                id="tinyMCEEditor"
                                 content={new_project.content}
                                 autoFocus
                                 config={{
@@ -239,7 +246,11 @@ export class NewProjectPage extends TrackerReact(Component){
                                   className="marged"
                                   />
                                 <Button size="tiny" onClick={(e) => {this.changeStep('content', e)}}>Précédent</Button>
-                                <Button positive onClick={(e) => {this.changeStep('anonymous', e)}}>Passer à l'anonymat</Button>
+                                  {projects_anonymous_choice ?
+                                    <Button positive onClick={(e) => {this.changeStep('anonymous', e)}}>Passer à l'anonymat</Button>
+                                  :
+                                    <Button positive onClick={(e) => {this.changeStep('validation', e)}}>Passer à la validation</Button>
+                                  }
                               </Container>
                             </Grid.Column>
                             <Grid.Column width={16} className="center-align">
