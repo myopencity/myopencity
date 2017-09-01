@@ -43,9 +43,6 @@ Meteor.methods({
       }
     }
   },
-  'alternatives.count_by_part'(consult_part_id){
-    return Alternatives.find({consult_part: consult_part_id, validated: true}).count()
-  },
   'alternatives.toggle_like'(alternative_id){
     if(!this.userId){
       throw new Meteor.Error('403', "Vous devez vous connecter pour soutenir une alternative")

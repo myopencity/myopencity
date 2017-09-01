@@ -10,7 +10,10 @@ export class AlternativesList extends TrackerReact(Component){
 
   /*
     required props:
-      - none
+      - consult_part: Object
+      - page: Number
+      - results_size: Number
+      - search_term: String
   */
 
   constructor(props){
@@ -35,10 +38,9 @@ export class AlternativesList extends TrackerReact(Component){
   }
 
   render(){
-    const {alternatives, loading} = this.props
+    const {alternatives} = this.props
     const {selected_alternative} = this.state
 
-    if(!loading){
       return(
         <Grid stackable centered>
           {selected_alternative ?
@@ -61,19 +63,13 @@ export class AlternativesList extends TrackerReact(Component){
 
         </Grid>
       )
-    }else{
-      return <Loader className="inline-block">Chargement des alternatives</Loader>
-    }
   }
 }
 
 export default AlternativesListContainer = createContainer(({ consult_part, page, results_size, search_term }) => {
-
-  const alternativesPublication = Meteor.subscribe('alternatives.paginated_by_consult_part', {consult_part_id: consult_part._id, page: page, results_size: results_size, search_term: search_term})
-  const loading = !alternativesPublication.ready()
-  const alternatives = Alternatives.find({}).fetch()
+  const skip_entities = page * results_size
+  const alternatives = Alternatives.find({validated: true, consult_part: consult_part._id, content: {$regex: search_term}}, {limit: results_size, skip: skip_entities, sort: {likes: -1}}).fetch()
   return {
-    loading,
     alternatives
   }
 }, AlternativesList)
