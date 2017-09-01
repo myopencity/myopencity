@@ -83,6 +83,7 @@ export class NewProjectPage extends TrackerReact(Component){
     let {new_project} = this.state
     new_project.content = this.props.parent_project.content
     this.setState({new_project})
+    tinymce.EditorManager.get("tinyMCEEditor").setContent(new_project.content)
   }
 
   render(){
@@ -210,6 +211,7 @@ export class NewProjectPage extends TrackerReact(Component){
                                 <Button onClick={(e) => {this.copyParentContent(e)}}>Copier le contenu du projet initial</Button>
                               : ''}
                               <TinyMCE
+                                id="tinyMCEEditor"
                                 content={new_project.content}
                                 autoFocus
                                 config={{
