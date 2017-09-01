@@ -38,7 +38,7 @@ Meteor.publish('alternative', function(alternative_id){
 })
 
 Meteor.publish('alternatives.unvalidated', function(){
-  if(!Roles.userIsInRole(this.userId, 'admin')){
+  if(!Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
     throw new Meteor.Error('403', "Vous devez être administrateur")
   }else{
     return Alternatives.find({validated: false})
