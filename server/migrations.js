@@ -1,5 +1,29 @@
 import {Meteor} from 'meteor/meteor'
 import {Consults} from '/imports/api/consults/consults'
+import {Configuration} from '/imports/api/configuration/configuration'
+
+Migrations.add({
+  version: 3,
+  name: "MIGRATION 3 : Add configuration anonymous fields",
+  up() {
+    Configuration.find({alternatives_anonymous_choice: {$exists: false}}).forEach(configuration => {
+      Configuration.update(configuration._id, {$set: {
+        projects_anonymous_choice: true,
+        projects_anonymous_default: false,
+        alternatives_anonymous_choice: true,
+        alternatives_anonymous_default: false
+      }})
+    }) 
+  },
+  down() {
+    Configuration.update({}, {$unset: {
+      projects_anonymous_choice: true,
+      projects_anonymous_default: true,
+      alternatives_anonymous_choice: true,
+      alternatives_anonymous_default: true
+    }}, {multi: true})
+  }
+})
 
 Migrations.add({
   version: 2,
@@ -10,7 +34,7 @@ Migrations.add({
     })
   },
   down() {
-    Meteor.users.update({}, {$unset: {blocked: true}}, {multi: true}) 
+    Meteor.users.update({}, {$unset: {blocked: true}}, {multi: true})
   }
 })
 

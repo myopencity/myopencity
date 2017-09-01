@@ -42,7 +42,7 @@ const ConfigurationSchema = new SimpleSchema({
   landing_explain_text: {
     type: String,
     defaultValue: "<h1>Myopencity est une plateforme de démocratie en ligne</h1><p>Sur Myopencity, les administrations (mairies / quartiers / départements...) peuvent consulter rapidement les citoyens, et chaque citoyen peut participer aux projets locaux du territoire, et proposer ses propres idées.</p>"
-  }, 
+  },
   consult_header_height: {
     type: String,
     defaultValue: '20em'
@@ -106,7 +106,23 @@ const ConfigurationSchema = new SimpleSchema({
   facebook_connected: {
     type: Boolean,
     defaultValue: false
-  }
+  },
+  projects_anonymous_choice: {
+    type: Boolean,
+    defaultValue: true
+  },
+  projects_anonymous_default: {
+    type: Boolean,
+    defaultValue: false
+  },
+  alternatives_anonymous_choice: {
+    type: Boolean,
+    defaultValue: true
+  },
+  alternatives_anonymous_default: {
+    type: Boolean,
+    defaultValue: false
+  } 
 })
 
 Configuration.attachSchema(ConfigurationSchema);
