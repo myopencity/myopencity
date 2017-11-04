@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Container} from 'semantic-ui-react'
-import SigninForm from '../ui/SigninForm'
+import SigninForm from '/imports/components/accounts/SigninForm'
 
 export default class SigninPage extends TrackerReact(Component){
 

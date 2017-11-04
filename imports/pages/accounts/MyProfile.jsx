@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Image, Form, Input, Button, Header, Container} from 'semantic-ui-react'
-import EditProfileForm from '/imports/client/accounts/ui/EditProfileForm'
+import EditProfileForm from '/imports/components/accounts/EditProfileForm'
 
 export default class MyProfile extends TrackerReact(Component){
 
