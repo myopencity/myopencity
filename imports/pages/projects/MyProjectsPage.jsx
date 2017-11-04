@@ -47,10 +47,11 @@ export class MyProjectsPage extends TrackerReact(Component){
   }
 }
 
-export default MyProjectsPageContainer = createContainer(({ id }) => {
-  const ProjectsPublication = Meteor.subscribe('projects.me')
-  const loading = !ProjectsPublication.ready()
-  const projects = Projects.find({author: Meteor.userId()}).fetch()
+export default MyProjectsPageContainer = createContainer(() => {
+  const user_id = Meteor.isClient ? Meteor.userId() : this.userId
+  const ProjectsPublication = Meteor.isClient && Meteor.subscribe('projects.me')
+  const loading = Meteor.isClient && !ProjectsPublication.ready()
+  const projects = Projects.find({author: user_id}).fetch()
   return {
     loading,
     projects
