@@ -19,7 +19,7 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
   }
 
   componentWillMount(){
-    this.state.configuration = Session.get('global_configuration')
+    this.state.configuration = Meteor.isClient && Session.get('global_configuration')
   }
 
   toggleConfiguration(attr, e){
@@ -158,7 +158,7 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
                 </Form.Field>
                 <Header as="h3">Configuration de l'anonymat</Header>
                 <Form.Field>
-                  <label>Choix de l'anonymat des alternatives (actuellement {configuration.alternatives_anonymous_choice ? "actif" : "désactivé"})</label> 
+                  <label>Choix de l'anonymat des alternatives (actuellement {configuration.alternatives_anonymous_choice ? "actif" : "désactivé"})</label>
                   <Checkbox checked={configuration.alternatives_anonymous_choice} onClick={(e) => {this.toggleConfiguration('alternatives_anonymous_choice', e)}} toggle />
                 </Form.Field>
                 <Form.Field>

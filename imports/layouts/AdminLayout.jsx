@@ -11,6 +11,7 @@ import Navbar from '/imports/components/navigation/Navbar'
 
 // routes
 import Public from '/imports/components/routes/Public'
+import Admin from '/imports/components/routes/Admin'
 
 // Collection
 import {Configuration} from '/imports/api/configuration/configuration'
@@ -63,7 +64,7 @@ export class MainLayout extends Component {
           <main>
             <Navbar {...this.props}/>
             <Switch>
-              <Public component={ Landing }  exact path="/" { ...this.props } />
+              <Admin component={ AdminConfigurationPage }  exact path="/admin/configuration" { ...this.props } />
               <Public component={ NotFound } path="*"  { ...this.props } />
             </Switch>
           </main>
