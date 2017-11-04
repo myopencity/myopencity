@@ -5,6 +5,7 @@ import { createContainer } from 'meteor/react-meteor-data'
 import {Consults} from '/imports/api/consults/consults'
 import {Projects} from '/imports/api/projects/projects'
 import {Configuration} from '/imports/api/configuration/configuration'
+import {Link} from 'react-router-dom'
 
 export class Landing extends TrackerReact(Component){
 
@@ -13,11 +14,6 @@ export class Landing extends TrackerReact(Component){
     this.state = {
 
     }
-  }
-
-  go(route, params, e){
-    e.preventDefault()
-    FlowRouter.go(route, params)
   }
 
   render(){
@@ -73,7 +69,9 @@ export class Landing extends TrackerReact(Component){
                         <Container className="landing-consult-text">
                           <Header as="h2" style={{color: "white"}}>{consult.title}</Header>
                           <p>{consult.description}</p>
-                          <Button onClick={(e) => {this.go('Consult', {urlShorten: consult.url_shorten}, e)}}>Voir la consultation</Button>
+                          <Link to={"/consults/" + consult.url_shorten}>
+                            <Button>Voir la consultation</Button>
+                          </Link>
                         </Container>
                       </Grid.Column>
                     </Grid>
@@ -96,7 +94,9 @@ export class Landing extends TrackerReact(Component){
                           <Container className="landing-consult-text">
                             <Header as="h2" style={{color: "white"}}>{project.title}</Header>
                             <p>{project.description}</p>
-                            <Button onClick={(e) => {this.go('Project', {shorten_url: project.shorten_url}, e)}}>Voir la proposition</Button>
+                            <Link to={"/projects/" + project.shorten_url}>
+                              <Button>Voir la proposition</Button>
+                            </Link>
                           </Container>
                         </Grid.Column>
                       </Grid>

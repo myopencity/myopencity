@@ -3,8 +3,9 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Menu, Modal, Dropdown, Image} from 'semantic-ui-react'
 import SigninForm from '/imports/components/accounts/SigninForm'
+import {Link, withRouter} from 'react-router-dom'
 
-export default class NavbarAccountItem extends TrackerReact(Component){
+class NavbarAccountItem extends TrackerReact(Component){
 
   /*
     required props:
@@ -19,7 +20,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
   }
 
   onSignin(user_id){
-    FlowRouter.go('Landing')
+    this.props.history.push('/')
   }
 
   logout(){
@@ -32,7 +33,7 @@ export default class NavbarAccountItem extends TrackerReact(Component){
           style: 'growl-bottom-left',
         })
       }else{
-        FlowRouter.go('Landing')
+        this.props.history.push('/')
         Bert.alert({
           title: "Au revoir",
           message: "Vous avez été déconnecté",
@@ -41,11 +42,6 @@ export default class NavbarAccountItem extends TrackerReact(Component){
         })
       }
     })
-  }
-
-  go(route, e){
-    e.preventDefault()
-    FlowRouter.go(route)
   }
 
   toggleState(attr, e){
@@ -71,10 +67,16 @@ export default class NavbarAccountItem extends TrackerReact(Component){
       return(
         <Dropdown trigger={trigger} icon={null}>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={(e) => {this.go('MyProfile', e)}}>Profil</Dropdown.Item>
-            <Dropdown.Item onClick={(e) => {this.go('MyProjects', e)}}>Mes propositions</Dropdown.Item>
+            <Link to="/me/profile">
+              <Dropdown.Item>Profil</Dropdown.Item>
+            </Link>
+            <Link to="/me/projects">
+              <Dropdown.Item>Mes propositions</Dropdown.Item>
+            </Link>
             {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
-              <Dropdown.Item onClick={(e) => {this.go('AdminConsults', e)}}>Admin</Dropdown.Item>
+              <Link to="/admin/consults">
+                <Dropdown.Item>Admin</Dropdown.Item>
+              </Link>
             : ''}
             <Dropdown.Item onClick={this.logout.bind(this)}>Déconnexion</Dropdown.Item>
           </Dropdown.Menu>
@@ -97,3 +99,5 @@ export default class NavbarAccountItem extends TrackerReact(Component){
     }
   }
 }
+
+export default withRouter(NavbarAccountItem)

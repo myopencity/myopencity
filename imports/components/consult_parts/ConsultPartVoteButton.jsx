@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Button, Modal} from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
 
-export default class ConsultPartVoteButton extends TrackerReact(Component){
+class ConsultPartVoteButton extends TrackerReact(Component){
 
   /*
     required props:
@@ -47,8 +48,8 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
 
   toggleVoteModal(e){
     if(!Meteor.userId()){
-      Session.set('return_route', FlowRouter.current().path)
-      FlowRouter.go('Signup')
+      Session.set('return_route', this.props.history.location.pathname)
+      this.props.history.push('/sign_up')
     }else{
       this.toggleState('open_modal', e)
     }
@@ -92,3 +93,5 @@ export default class ConsultPartVoteButton extends TrackerReact(Component){
     )
   }
 }
+
+export default withRouter(ConsultPartVoteButton)

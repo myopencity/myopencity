@@ -6,6 +6,7 @@ import TinyMCE from 'react-tinymce'
 import ProjectForm from '/imports/components/projects/ProjectForm'
 import ProjectPartial from '/imports/components/projects/ProjectPartial'
 import {Projects} from '/imports/api/projects/projects'
+import {withRouter} from 'react-router-dom'
 
 export class NewProjectPage extends TrackerReact(Component){
 
@@ -51,7 +52,7 @@ export class NewProjectPage extends TrackerReact(Component){
           type: 'success',
           style: 'growl-bottom-left',
         })
-        FlowRouter.go('Projects')
+        this.props.history.push('/projects')
       }
     })
   }
@@ -322,4 +323,4 @@ export default NewProjectPageContainer = createContainer(({match}) => {
     loading,
     parent_project
   }
-}, NewProjectPage)
+}, withRouter(NewProjectPage))

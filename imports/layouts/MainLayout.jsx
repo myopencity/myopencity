@@ -114,7 +114,7 @@ export class MainLayout extends TrackerReact(Component) {
                       <Public component={ SignupPage }  exact path="/sign_up"       { ...this.props } />
                       <Public component={ SigninPage }  exact path="/sign_in"       { ...this.props } />
                       <Public component={ ConsultsPage }  exact path="/consults"       { ...this.props } />
-                      <Public component={ ConsultPage }  exact path="/consult/:urlShorten"       { ...this.props } />
+                      <Public component={ ConsultPage }  exact path="/consults/:urlShorten"       { ...this.props } />
                       <Public component={ ProfilePage }  exact path="/profile/:user_id"       { ...this.props } />
                       <Public component={ ProjectsPage }  exact path="/projects"       { ...this.props } />
                       <Public component={ NewProjectPage }  exact path="/projects/new"       { ...this.props } />

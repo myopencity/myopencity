@@ -3,6 +3,7 @@ import {Form, Input, Button, Divider} from 'semantic-ui-react'
 import {Meteor} from 'meteor/meteor'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Configuration} from '/imports/api/configuration/configuration'
+import {Link, withRouter} from 'react-router-dom'
 
 export class SignupForm extends Component{
 
@@ -40,9 +41,9 @@ export class SignupForm extends Component{
         Meteor.loginWithPassword(email, password)
         const return_route = Session.get('return_route')
         if(return_route){
-          FlowRouter.go(return_route)
+          this.props.history.push(return_route)
         }else{
-          FlowRouter.go('Consults')
+          this.props.history.push('/consults')
         }
         Bert.alert({
           title: "Votre compte a bien été créé",
@@ -61,9 +62,9 @@ export class SignupForm extends Component{
       }else{
         const return_route = Session.get('return_route')
         if(return_route){
-          FlowRouter.go(return_route)
+          this.props.history.push(return_route)
         }else{
-          FlowRouter.go('Consults')
+          this.props.history.push('/consults')
         }
       }
     })
@@ -77,9 +78,9 @@ export class SignupForm extends Component{
       }else{
         const return_route = Session.get('return_route')
         if(return_route){
-          FlowRouter.go(return_route)
+          this.props.history.push(return_route)
         }else{
-          FlowRouter.go('Consults')
+          this.props.history.push('/consults')
         }
       }
     })
@@ -140,4 +141,4 @@ export default SignupFormContainer = createContainer(() => {
     loading,
     global_configuration
   }
-}, SignupForm)
+}, withRouter(SignupForm))

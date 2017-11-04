@@ -19,10 +19,6 @@ export class ConsultsPage extends TrackerReact(Component){
     }
   }
 
-  go(route, e){
-    FlowRouter.go(route)
-  }
-
   toggleState(attr, e){
     let state = this.state
     state[attr] = !state[attr]

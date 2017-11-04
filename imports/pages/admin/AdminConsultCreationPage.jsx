@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import ConsultForm from '/imports/components/consults/ConsultForm'
 import {Grid, Header, Input, Button, Container} from 'semantic-ui-react'
+import {withRouter} from 'react-router-dom'
 
-export default class AdminConsultCreationPage extends TrackerReact(Component){
+class AdminConsultCreationPage extends TrackerReact(Component){
 
   /*
     required props:
@@ -18,7 +19,7 @@ export default class AdminConsultCreationPage extends TrackerReact(Component){
   }
 
   go_consults_page(){
-    FlowRouter.go('AdminConsults')
+    this.props.history.push('/admin/consults')
   }
 
   render(){
@@ -36,3 +37,5 @@ export default class AdminConsultCreationPage extends TrackerReact(Component){
     )
   }
 }
+
+export default withRouter(AdminConsultCreationPage)

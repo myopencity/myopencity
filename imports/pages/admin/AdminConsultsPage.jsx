@@ -3,7 +3,8 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Button, Loader, Container} from 'semantic-ui-react'
 import ConsultPartial from '/imports/components/consults/ConsultPartial'
 import {Consults} from '/imports/api/consults/consults'
-import { createContainer } from 'meteor/react-meteor-data';
+import { createContainer } from 'meteor/react-meteor-data'
+import {Link} from 'react-router-dom'
 
 export class AdminConsultsPage extends TrackerReact(Component){
 
@@ -21,9 +22,6 @@ export class AdminConsultsPage extends TrackerReact(Component){
 
   }
 
-  go(route){
-    FlowRouter.go(route)
-  }
 
   render(){
     const {consults, loading} = this.props
@@ -35,7 +33,9 @@ export class AdminConsultsPage extends TrackerReact(Component){
           </Grid.Column>
           <Grid.Column width={16}>
             <Container>
-              <Button positive onClick={(e) => {this.go('AdminConsultCreation')}}>Créer une nouvelle consultation</Button>
+              <Link to="/admin/consults/new">
+                <Button positive>Créer une nouvelle consultation</Button>
+              </Link>
               <Grid stackable>
                 {consults.map((consult, index) => {
                   return (

@@ -17,9 +17,6 @@ export default class AdminProjectPartial extends TrackerReact(Component){
     }
   }
 
-  go(route, params, e){
-    FlowRouter.go(route, params)
-  }
 
   toggle_lock(e){
     e.preventDefault()
@@ -51,7 +48,9 @@ export default class AdminProjectPartial extends TrackerReact(Component){
             {project.title}
           </p>
           <p>{project.likes} soutiens</p>
-          <Button icon="eye" content="Voir" onClick={(e) => {this.go('Project', {shorten_url: project.shorten_url}, e)}} />
+          <Link to={"/projects/" + project.shorten_url}>
+            <Button icon="eye" content="Voir" />
+          </Link>
           <Button color='red' icon={project.blocked ? "unlock" : "lock"} content={project.blocked ? "Débloquer" : "Bloquer"} onClick={(e) => {this.toggle_lock(e)}} />
       </div>
     )

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Card, Image, Button, Icon} from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import _ from 'lodash'
+import {Link, withRouter} from 'react-router-dom'
 
 export class ProjectPartial extends Component{
 
@@ -71,10 +72,6 @@ export class ProjectPartial extends Component{
     });
   }
 
-  go(route, params, e){
-    e.preventDefault()
-    FlowRouter.go(route, params)
-  }
 
   removeProject(e){
     Meteor.call('projects.remove', this.props.project._id, (error, result) => {
@@ -108,7 +105,9 @@ export class ProjectPartial extends Component{
           <Card.Content>
             <Card.Header>
               {!project.anonymous ?
-                <span className="author-container" style={{cursor: "pointer"}} onClick={(e) => {this.go('Profile', {user_id: author._id}, e)}}><Image src={author.profile.avatar_url} avatar /> {author.username}<br/></span>
+                <Link to={"/profile/" + author._id}>
+                  <span className="author-container" style={{cursor: "pointer"}}><Image src={author.profile.avatar_url} avatar /> {author.username}<br/></span>
+                </Link>
                 : ''}
               {project.title}
               {project.likes > 0 ?
@@ -127,13 +126,17 @@ export class ProjectPartial extends Component{
           </Card.Content>
           {!hideButtons ?
             <Card.Content className="center-align" extra>
-              <Button onClick={(e) => {this.go('Project', {shorten_url: project.shorten_url}, e)}} fluid>Consulter</Button>
+              <Link to={"/projects/" + project.shorten_url}>
+                <Button fluid>Consulter</Button>
+              </Link>
               {project.author == user_id ?
                 <div>
                   <Button fluid active={display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
                   {display_manage_buttons ?
                     <div>
-                      <Button onClick={(e) => {this.go('EditProject', {shorten_url: project.shorten_url}, e)}} fluid>Modifier</Button>
+                      <Link to={"/projects/" + project.shorten_url + "/edit"}>
+                        <Button fluid>Modifier</Button>
+                      </Link>
                       {remove_confirm ?
                         <div className="animated fadeInUp">
                           <p>Vous confirmez ?</p>
@@ -177,4 +180,4 @@ export default ProjectPartialContainer = createContainer(({ project }) => {
     author,
     user_id
   }
-}, ProjectPartial)
+}, withRouter(ProjectPartial))

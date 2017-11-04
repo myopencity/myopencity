@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data'
 import {Projects} from '/imports/api/projects/projects'
 import {Grid, Header, Loader, Container, Image, Icon, Button} from 'semantic-ui-react'
 import {ProjectLikes} from '/imports/api/project_likes/project_likes'
+import {Link} from 'react-router-dom'
 
 export class ProjectPage extends TrackerReact(Component){
 
@@ -17,11 +18,6 @@ export class ProjectPage extends TrackerReact(Component){
     this.state = {
 
     }
-  }
-
-  go(route, params, e){
-    e.preventDefault()
-    FlowRouter.go(route, params)
   }
 
   toggle_like(e){
@@ -77,17 +73,19 @@ export class ProjectPage extends TrackerReact(Component){
               {project.anonymous ?
                 <p>Ce projet est proposé par <Icon name="spy" size="big"/> un citoyen anonyme</p>
                 :
-                <p>Ce projet est proposé par <span style={{cursor: "pointer"}} onClick={(e) => {this.go('Profile', {user_id: author._id}, e)}}><Image src={author.profile.avatar_url} avatar /> {author.username}</span></p>
+                <p>Ce projet est proposé par <Link to={"/profile/" + author._id} style={{cursor: "pointer"}}><Image src={author.profile.avatar_url} avatar /> {author.username}</Link></p>
               }
             </Grid.Column>
             {parent_project ?
               <Grid.Column width={16} className="center-align project-author-container">
-                <p><Icon name="sitemap"/> Ce projet est alternatif au projet <span style={{cursor: 'pointer'}} onClick={(e) => {this.go('Project', {shorten_url: parent_project.shorten_url}, e)}}>"{parent_project.title}"</span></p>
+                <p><Icon name="sitemap"/> Ce projet est alternatif au projet <Link to={"/projects/" + parent_project.shorten_url} style={{cursor: 'pointer'}}>"{parent_project.title}"</Link></p>
               </Grid.Column>
             : ''}
             <Grid.Column width={16} className="center-align">
               <Button size="big" onClick={(e) => {this.toggle_like(e)}} icon={<Icon name="thumbs up" style={{color: project_like ? alternative_like_icon_color : null }} />} content={project.likes + ' soutiens'} />
-              <Button size="big" onClick={(e) => {this.go('NewChildProject', {parent_id: project._id}, e)}} icon={<Icon name="sitemap"/>} content="Créer un projet alternatif" />
+              <Link to={"/projects/new/" + project._id}>
+                <Button size="big" icon={<Icon name="sitemap"/>} content="Créer un projet alternatif" />
+              </Link>
             </Grid.Column>
               <Grid.Column width={16} className="project-content-container marged">
                 <Container>

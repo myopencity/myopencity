@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Feed, Icon, Image} from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import moment from 'moment'
+import {Link} from 'react-router-dom'
 import 'moment/locale/fr'
 
 export class AlternativePartial extends Component{
@@ -41,10 +42,6 @@ export class AlternativePartial extends Component{
     this.props.onTitleClick(this.props.alternative)
   }
 
-  go(route, params, e){
-    e.preventDefault()
-    FlowRouter.go(route, params)
-  }
 
   render(){
     const {user, loading, alternative} = this.props
@@ -61,7 +58,13 @@ export class AlternativePartial extends Component{
           </Feed.Label>
           <Feed.Content>
             <Feed.Summary>
-              {alternative.anonymous ? <Feed.User>Quelqu'un</Feed.User> : <Feed.User onClick={(e) => {this.go('Profile', {user_id: user._id}, e)}}>{user.username}</Feed.User>} a proposé l'alternative <a onClick={(e) => {this.onTitleClick(e)}}>{alternative.title}</a>
+              {alternative.anonymous ?
+                <Feed.User>Quelqu'un </Feed.User>
+              :
+              <Link to={"/profile/" + user._id}>
+                <Feed.User>{user.username} </Feed.User>
+              </Link>}
+              <span> a proposé l'alternative</span> <a onClick={(e) => {this.onTitleClick(e)}}>{alternative.title}</a>
                 <Feed.Date>{moment().to(moment(alternative.created_at))}</Feed.Date>
               </Feed.Summary>
               <Feed.Meta>

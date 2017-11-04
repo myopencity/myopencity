@@ -1,8 +1,9 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Input, Form, Container, Button, Icon, Image, Item} from 'semantic-ui-react'
+import {withRouter, Link} from 'react-router-dom'
 
-export default class InitialConfigPage extends TrackerReact(Component){
+class InitialConfigPage extends TrackerReact(Component){
 
   /*
     required props:
@@ -56,11 +57,6 @@ export default class InitialConfigPage extends TrackerReact(Component){
       external_services.splice(index, 1)
     }
     this.setState({external_services})
-  }
-
-  go(route, e){
-    e.preventDefault()
-    FlowRouter.go(route)
   }
 
   create_user(e){
@@ -164,7 +160,7 @@ export default class InitialConfigPage extends TrackerReact(Component){
         }
       })
     }
-    FlowRouter.redirect('/')
+    this.props.history.push('/')
   }
 
   render(){
@@ -291,7 +287,9 @@ export default class InitialConfigPage extends TrackerReact(Component){
                         {external_services.length > 0 ?
                           <Button positive onClick={(e) => {this.submit_external_services(e)}}>Configurer les services</Button>
                         : ''}
-                        <Button size="small" onClick={(e) => {this.go('Landing', e)}}>Passer</Button>
+                        <Link to="/">
+                          <Button size="small">Passer</Button>
+                        </Link>
                       </Grid.Column>
 
                     </Grid>
@@ -309,7 +307,9 @@ export default class InitialConfigPage extends TrackerReact(Component){
                       <Input focus type="text" fluid className="wow fadeInUp" focus={true} placeholder="Clé publique Amazon S3" data-wow-delay="3s" size="huge" onChange={(e) => {this.handleExternalConfigChange('amazon_public_key', e)}}/>
                       <Input type="text" fluid className="wow fadeInUp" focus={true} placeholder="Clé privée Amazon S3" data-wow-delay="3.25s" size="huge" onChange={(e) => {this.handleExternalConfigChange('amazon_private_key', e)}}/>
                       <Button onClick={(e) => {this.submit_amazon_configuration(e)}} positive>Configurer Amazon S3</Button>
-                      <Button size="small" onClick={(e) => {this.go('Landing', e)}}>Passer</Button>
+                      <Link to="/">
+                        <Button size="small">Passer</Button>
+                      </Link>
                     </Form>
                   </Grid.Column>
                   : ''}
@@ -320,3 +320,5 @@ export default class InitialConfigPage extends TrackerReact(Component){
     )
   }
 }
+
+export default withRouter(InitialConfigPage)

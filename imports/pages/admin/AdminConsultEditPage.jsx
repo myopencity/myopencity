@@ -5,6 +5,7 @@ import {Grid, Header, Input, Button, Container, Loader} from 'semantic-ui-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Consults} from '/imports/api/consults/consults'
 import {ConsultParts} from '/imports/api/consult_parts/consult_parts'
+import {withRouter} from 'react-router-dom'
 
 export class AdminConsultEditPage extends TrackerReact(Component){
 
@@ -27,7 +28,7 @@ export class AdminConsultEditPage extends TrackerReact(Component){
   }
 
   go_consults_page(){
-    FlowRouter.go('AdminConsults')
+    this.props.history.push('/admin/consults')
   }
 
   render(){
@@ -64,4 +65,4 @@ export default AdminConsultEditPageContainer = createContainer(({ match }) => {
     consult,
     consult_parts
   }
-}, AdminConsultEditPage)
+}, withRouter(AdminConsultEditPage))

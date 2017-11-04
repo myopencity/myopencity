@@ -5,6 +5,7 @@ import {Grid, Container, Loader, Sidebar, Icon, Menu} from 'semantic-ui-react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import Navbar from '../../imports/components/navigation/Navbar'
 import {Configuration} from '/imports/api/configuration/configuration'
+import {withRouter} from 'react-router-dom'
 
 export class MainLayout extends TrackerReact(Component){
 
@@ -34,7 +35,7 @@ export class MainLayout extends TrackerReact(Component){
     const configuration = Configuration.findOne({})
     Session.set('global_configuration', configuration)
     if(configuration && configuration.initial_configuration){
-      FlowRouter.go('InitialPresentation')
+      this.props.history.push('/initial/presentation')
     }
     return configuration
   }

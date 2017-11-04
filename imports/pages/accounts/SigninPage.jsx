@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Container} from 'semantic-ui-react'
 import SigninForm from '/imports/components/accounts/SigninForm'
+import {withRouter} from 'react-router-dom'
 
-export default class SigninPage extends TrackerReact(Component){
+class SigninPage extends TrackerReact(Component){
 
   /*
     required params:
@@ -17,7 +18,7 @@ export default class SigninPage extends TrackerReact(Component){
   }
 
   signed_in(){
-    FlowRouter.go('Landing')
+    this.props.history.push('/')
   }
 
   render(){
@@ -35,3 +36,5 @@ export default class SigninPage extends TrackerReact(Component){
     )
   }
 }
+
+export default withRouter(SigninPage)

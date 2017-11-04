@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
+import {withRouter} from 'react-router-dom'
 import {Form, Input, Button, Grid, Divider} from 'semantic-ui-react'
 
-export default class SigninForm extends Component{
+class SigninForm extends Component{
 
   /*
     required props:
@@ -24,7 +25,7 @@ export default class SigninForm extends Component{
 
   go(route, e){
     e.preventDefault()
-    FlowRouter.go(route)
+    this.props.history.push(route)
     if(this.props.onSignupClick){
       this.props.onSignupClick()
     }
@@ -62,9 +63,9 @@ export default class SigninForm extends Component{
       }else{
         const return_route = Session.get('return_route')
         if(return_route){
-          FlowRouter.go(return_route)
+          this.props.history.push(return_route)
         }else{
-          FlowRouter.go('Consults')
+          this.props.history.push('/consults')
         }
       }
     })
@@ -78,9 +79,9 @@ export default class SigninForm extends Component{
       }else{
         const return_route = Session.get('return_route')
         if(return_route){
-          FlowRouter.go(return_route)
+          this.props.history.push(return_route)
         }else{
-          FlowRouter.go('Consults')
+          this.props.history.push('/consults')
         }
       }
     })
@@ -88,6 +89,7 @@ export default class SigninForm extends Component{
 
   render(){
     const {facebook_connected, google_connected} = Meteor.isClient && Session.get('global_configuration')
+
     return(
        <Form onSubmit={(e) => {this.signin(e)}} className="center-align">
          <Form.Field>
@@ -99,7 +101,7 @@ export default class SigninForm extends Component{
            <Input type="password" onChange={(e) => {this.handleChange('password', e)}} />
          </Form.Field>
          <Button positive onClick={(e) => {this.signin(e)}}>Se connecter</Button>
-         <Button onClick={(e) => {this.go('Signup', e)}}>Je n'ai pas encore de compte</Button>
+         <Button onClick={(e) => {this.go('/sign_up', e)}}>Je n'ai pas encore de compte</Button>
          {facebook_connected || google_connected ?
            <Divider horizontal>OU</Divider>
          : ''}
@@ -113,3 +115,5 @@ export default class SigninForm extends Component{
     )
   }
 }
+
+export default withRouter(SigninForm)

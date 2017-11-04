@@ -3,6 +3,7 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Card, Image, Button, Icon} from 'semantic-ui-react'
 import _ from 'lodash'
 import { createContainer } from 'meteor/react-meteor-data'
+import {Link} from 'react-router-dom'
 
 export  class ConsultPartial extends TrackerReact(Component){
 
@@ -47,11 +48,6 @@ export  class ConsultPartial extends TrackerReact(Component){
         })
       }
     });
-  }
-
-  go(route, params, e){
-    e.preventDefault()
-    FlowRouter.go(route, params)
   }
 
   removeConsult(e){
@@ -101,17 +97,23 @@ export  class ConsultPartial extends TrackerReact(Component){
           </Card.Content>
           {!this.props.hideButtons ?
             <Card.Content className="center-align" extra>
-              <Button onClick={(e) => {this.go('Consult', {urlShorten: consult.url_shorten}, e)}} fluid>Consulter</Button>
+              <Link to={"/consults/" + consult.url_shorten}>
+                <Button fluid>Consulter</Button>
+              </Link>
               {Roles.userIsInRole(user_id, ['admin', 'moderator']) ?
                 <div>
                   <Button fluid active={this.state.display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
                   {this.state.display_manage_buttons ?
                     <div>
-                      <Button onClick={(e) => {this.go('AdminConsultEdit', {consult_shorten_url: consult.url_shorten}, e)}} fluid>Modifier</Button>
+                      <Link to={"/admin/consults/" + consult.url_shorten + "/edit"}>
+                        <Button fluid>Modifier</Button>
+                      </Link>
                       <Button onClick={(e) => {this.toggleEditConsult('visible', e)}} fluid>{consult.visible ? "Rendre invisible" : "Rendre visible"}</Button>
                       <Button onClick={(e) => {this.toggleEditConsult('votable', e)}} fluid>{consult.votable ? "Stopper les votes" : "Lancer les votes"}</Button>
                       <Button onClick={(e) => {this.toggleEditConsult('ended', e)}} fluid>{consult.ended ? "Lancer la consultation" : "Stopper la consultation"}</Button>
-                      <Button onClick={(e) => {this.go('AdminConsultStats', {shorten_url: consult.url_shorten}, e)}} fluid>Statistiques</Button>
+                      <Link to={"/admin/consults/" + consult.url_shorten + "/stats"}>
+                        <Button fluid>Statistiques</Button>
+                      </Link>
                       <Button onClick={(e) => {this.toggleEditConsult('landing_display', e)}} fluid>{consult.landing_display ? "Ne plus mettre en avant" : "Mettre en avant"}</Button>
                       {this.state.remove_confirm ?
                         <div className="animated fadeInUp">

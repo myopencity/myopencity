@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data'
 import {Grid, Header, Button, Loader} from 'semantic-ui-react'
 import {Projects} from '/imports/api/projects/projects'
 import ProjectPartial from '/imports/components/projects/ProjectPartial'
+import {Link} from 'react-router-dom'
 
 export class ProjectsPage extends TrackerReact(Component){
 
@@ -19,11 +20,6 @@ export class ProjectsPage extends TrackerReact(Component){
     }
   }
 
-  go(route, params, e){
-    e.preventDefault()
-    FlowRouter.go(route, params)
-  }
-
   render(){
     const {loading, projects} = this.props
     const {projects_page_header_title} = Meteor.isClient && Session.get('global_configuration')
@@ -33,7 +29,9 @@ export class ProjectsPage extends TrackerReact(Component){
         <Grid stackable>
           <Grid.Column width={16} className="center-align">
             <Header className="wow fadeInUp" as="h1">{projects_page_header_title}</Header>
-            <Button positive size="big" onClick={(e) => {this.go('NewProject', null, e)}}>Proposer un projet</Button>
+            <Link to="/projects/new">
+              <Button positive size="big">Proposer un projet</Button>
+            </Link>
           </Grid.Column>
           {projects.map((project, index) => {
             return(

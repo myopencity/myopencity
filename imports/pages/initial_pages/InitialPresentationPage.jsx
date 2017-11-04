@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Grid, Header, Image} from 'semantic-ui-react'
 var Timers = require('react-timers')
+import {withRouter} from 'react-router-dom'
 
-export default class InitialPresentationPage extends TrackerReact(Component){
+class InitialPresentationPage extends TrackerReact(Component){
 
   /*
     required params:
@@ -34,7 +35,7 @@ export default class InitialPresentationPage extends TrackerReact(Component){
         new WOW().init()
         that.setState({step: 4, interval: 3000})
       }else if(that.state.step == 4){
-        FlowRouter.go('InitialConfiguration')
+        this.props.history.push('/initial/config')
       }
     }, that.state.interval)
   }
@@ -83,3 +84,5 @@ export default class InitialPresentationPage extends TrackerReact(Component){
     )
   }
 }
+
+export default withRouter(InitialPresentationPage)
