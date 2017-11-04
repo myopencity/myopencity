@@ -44,8 +44,8 @@ export class AdminAlternativesValidationPage extends TrackerReact(Component){
 }
 
 export default AdminAlternativesValidationPageContainer = createContainer(({}) => {
-  const alternativesPublication = Meteor.subscribe('alternatives.unvalidated')
-  const loading = !alternativesPublication.ready()
+  const alternativesPublication = Meteor.isClient && Meteor.subscribe('alternatives.unvalidated')
+  const loading = Meteor.isClient && !alternativesPublication.ready()
   const alternatives = Alternatives.find({validated: false}).fetch()
   return {
     loading,

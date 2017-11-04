@@ -197,9 +197,9 @@ export class AdminExternalApisPage extends TrackerReact(Component){
   }
 }
 
-export default AdminExternalApisPageContainer = createContainer(({ id }) => {
-  const externalApisConfigurationPublication = Meteor.subscribe('external_apis_configuration.admin')
-  const loading = !externalApisConfigurationPublication.ready()
+export default AdminExternalApisPageContainer = createContainer(() => {
+  const externalApisConfigurationPublication = Meteor.isClient && Meteor.subscribe('external_apis_configuration.admin')
+  const loading = Meteor.isClient && !externalApisConfigurationPublication.ready()
   const external_apis_configuration = ExternalApisConfiguration.findOne({})
   return {
     loading,

@@ -86,8 +86,8 @@ export class AdminApiAuthorizationsPage extends Component{
 }
 
 export default AdminApiAuthorizationsPageContainer = createContainer(({}) => {
-  const ApiAuthorizationsPublication = Meteor.subscribe('api_authorizations.all')
-  const loading = !ApiAuthorizationsPublication.ready()
+  const apiAuthorizationsPublication = Meteor.isClient && Meteor.subscribe('api_authorizations.all')
+  const loading = Meteor.isClient && !apiAuthorizationsPublication.ready()
   const api_authorizations = ApiAuthorizations.find({}).fetch()
   return {
     loading,

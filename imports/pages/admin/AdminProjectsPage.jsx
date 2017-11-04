@@ -49,9 +49,9 @@ export class AdminProjectsPage extends TrackerReact(Component){
   }
 }
 
-export default AdminProjectsPageContainer = createContainer(({ id }) => {
-  const ProjectsPublication = Meteor.subscribe('projects.all')
-  const loading = !ProjectsPublication.ready()
+export default AdminProjectsPageContainer = createContainer(() => {
+  const ProjectsPublication = Meteor.isClient && Meteor.subscribe('projects.all')
+  const loading = Meteor.isClient && !ProjectsPublication.ready()
   const projects = Projects.find({}, {sort: {likes: -1}}).fetch()
   return {
     loading,

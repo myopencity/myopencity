@@ -42,12 +42,13 @@ export class AdminConsultStatsPage extends TrackerReact(Component){
   }
 }
 
-export default AdminConsultStatsPageContainer = createContainer(({ shorten_url }) => {
-  const consultsPublication = Meteor.subscribe('consult.admin_by_shorten_url', shorten_url)
+export default AdminConsultStatsPageContainer = createContainer(({ match }) => {
+  const {shorten_url} = match.params
+  const consultsPublication = Meteor.isClient && Meteor.subscribe('consult.admin_by_shorten_url', shorten_url)
   const consult = Consults.findOne({url_shorten: shorten_url})
-  const consultPartsPublication = Meteor.subscribe('consult_parts.by_consult_url_shorten', shorten_url)
+  const consultPartsPublication = Meteor.isClient && Meteor.subscribe('consult_parts.by_consult_url_shorten', shorten_url)
   const consult_parts = ConsultParts.find({consult_url_shorten: shorten_url}).fetch()
-  const loading = !consultsPublication.ready() || !consultPartsPublication.ready()
+  const loading = Meteor.isClient && (!consultsPublication.ready() || !consultPartsPublication.ready())
   return {
     loading,
     consult,

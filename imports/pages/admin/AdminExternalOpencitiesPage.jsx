@@ -107,8 +107,8 @@ export class AdminExternalOpencitiesPage extends Component{
 }
 
 export default AdminExternalOpencitiesPageContainer = createContainer(({}) => {
-  const ExternalOpencitiesPublication = Meteor.subscribe('external_opencities.all')
-  const loading = !ExternalOpencitiesPublication.ready()
+  const ExternalOpencitiesPublication = Meteor.isClient && Meteor.subscribe('external_opencities.all')
+  const loading = Meteor.isClient && !ExternalOpencitiesPublication.ready()
   const external_opencities = ExternalOpencities.find({}).fetch()
   return {
     loading,
