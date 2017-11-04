@@ -98,7 +98,6 @@ export class ProjectPartial extends Component{
 
   render(){
     const {project, hideButtons, author, user_id, loading} = this.props
-    console.log("user_id", user_id);
 
     const {display_manage_buttons, display_admin_buttons, remove_confirm} = this.state
 

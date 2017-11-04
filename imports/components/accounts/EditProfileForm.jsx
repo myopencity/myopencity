@@ -18,7 +18,7 @@ export default class EditProfileForm extends TrackerReact(Component){
   }
 
   componentWillMount(){
-    this.setState({user_profile: Meteor.user().profile})
+    this.setState({user_profile: Meteor.isClient && Meteor.user().profile})
   }
 
   handleDescriptionChange(e){

@@ -62,6 +62,7 @@ export class MainLayoutServer extends Component {
             <Public component={ NewProjectPage }  exact path="/projects/new/:parent_id"       { ...this.props } />
             <Public component={ EditProjectPage }  exact path="/projects/edit/:shorten_url"       { ...this.props } />
             <Public component={ ProjectPage }  exact path="/projects/:shorten_url"       { ...this.props } />
+            <Public component={ MyProfile }  exact path="/me/profile"       { ...this.props } />
             <Public component={ NotFound } path="*"  { ...this.props } />
           </Switch>
         </main>
