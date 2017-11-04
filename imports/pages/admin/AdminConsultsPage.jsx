@@ -26,8 +26,8 @@ export class AdminConsultsPage extends TrackerReact(Component){
   }
 
   render(){
-    const consults = this.props.consults
-    if(!this.props.loading){
+    const {consults, loading} = this.props
+    if(!loading){
       return(
         <Grid stackable className="wow fadeInLeft">
           <Grid.Column width={16} className="center-align">
@@ -55,9 +55,9 @@ export class AdminConsultsPage extends TrackerReact(Component){
   }
 }
 
-export default AdminConsultsPageContainer = createContainer(({ id }) => {
-  const consultsPublication = Meteor.subscribe('consults.all')
-  const loading = !consultsPublication.ready()
+export default AdminConsultsPageContainer = createContainer(() => {
+  const consultsPublication = Meteor.isClient && Meteor.subscribe('consults.all')
+  const loading = Meteor.isClient && !consultsPublication.ready()
   const consults = Consults.find({}).fetch()
   return {
     loading,
