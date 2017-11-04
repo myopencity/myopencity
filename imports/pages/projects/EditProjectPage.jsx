@@ -38,10 +38,12 @@ export class EditProjectPage extends TrackerReact(Component){
   }
 }
 
-export default EditProjectPageContainer = createContainer(({ shorten_url }) => {
-  const ProjectsPublication = Meteor.subscribe('project', shorten_url)
-  const loading = !ProjectsPublication.ready()
-  const project = Projects.findOne({shorten_url: shorten_url, author: Meteor.userId()})
+export default EditProjectPageContainer = createContainer(({ match }) => {
+  const {shorten_url} = match.params
+  const user_id = Meteor.isClient ? Meteor.userId() : this.userId
+  const ProjectsPublication = Meteor.isClient && Meteor.subscribe('project', shorten_url)
+  const loading = Meteor.isClient && !ProjectsPublication.ready()
+  const project = Projects.findOne({shorten_url: shorten_url, author: user_id})
   return {
     loading,
     project

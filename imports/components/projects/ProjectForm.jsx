@@ -151,8 +151,8 @@ export class ProjectForm extends TrackerReact(Component){
 
 export default ProjectFormContainer = createContainer(({ project }) => {
   if(project){
-    const ProjectsPublication = Meteor.subscribe('project', project.parent )
-    const loading = !ProjectsPublication.ready()
+    const ProjectsPublication = Meteor.isClient && Meteor.subscribe('project', project.parent )
+    const loading = Meteor.isClient && !ProjectsPublication.ready()
     const parent_project = Projects.findOne({_id: project.parent})
     return {
       loading,
