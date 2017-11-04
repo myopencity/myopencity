@@ -43,9 +43,10 @@ export class ProfilePage extends TrackerReact(Component){
   }
 }
 
-export default ProfilePageContainer = createContainer(({ user_id }) => {
-  const userProfilePublication = Meteor.subscribe('user.profile', user_id)
-  const loading = !userProfilePublication.ready()
+export default ProfilePageContainer = createContainer(({ match }) => {
+  const {user_id} = match.params
+  const userProfilePublication = Meteor.isClient && Meteor.subscribe('user.profile', user_id)
+  const loading = Meteor.isClient && !userProfilePublication.ready()
   const user = Meteor.users.findOne({_id: user_id})
   return {
     loading,

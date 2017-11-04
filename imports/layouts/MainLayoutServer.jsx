@@ -56,6 +56,7 @@ export class MainLayoutServer extends Component {
             <Public component={ SigninPage }  exact path="/sign_in"       { ...this.props } />
             <Public component={ ConsultsPage }  exact path="/consults"       { ...this.props } />
             <Public component={ ConsultPage }  exact path="/consult/:urlShorten"       { ...this.props } />
+            <Public component={ ProfilePage }  exact path="/profile/:user_id"       { ...this.props } />
             <Public component={ NotFound } path="*"  { ...this.props } />
           </Switch>
         </main>
