@@ -2,7 +2,7 @@ import {Meteor} from 'meteor/meteor'
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Menu, Modal, Dropdown, Image} from 'semantic-ui-react'
-import SigninForm from '/imports/client/accounts/ui/SigninForm'
+import SigninForm from '/imports/components/accounts/SigninForm'
 
 export default class NavbarAccountItem extends TrackerReact(Component){
 

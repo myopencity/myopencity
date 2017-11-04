@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Sidebar, Grid, Segment, Button, Menu, Image, Icon, Header, Loader} from 'semantic-ui-react'
-import Navbar from '../../imports/client/general/ui/Navbar'
+import Navbar from '/imports/components/navigation/Navbar'
 import {Configuration} from '/imports/api/configuration/configuration'
+import { createContainer } from 'meteor/react-meteor-data'
 
 export class AdminLayout extends TrackerReact(Component){
 
@@ -28,11 +29,6 @@ export class AdminLayout extends TrackerReact(Component){
     new WOW().init()
   }
 
-  configuration(){
-    const configuration = Configuration.findOne({})
-    Session.set('global_configuration', configuration)
-    return configuration
-  }
 
   go(route){
     Session.set('open_sidebar', false)
@@ -46,9 +42,9 @@ export class AdminLayout extends TrackerReact(Component){
 
 
   render(){
-    const configuration = this.configuration()
+    const {global_configuration, loading} = this.props
 
-    if(configuration){
+    if(!loading){
       return (
         <div className="main-container">
           <Sidebar.Pushable>
@@ -116,3 +112,13 @@ export class AdminLayout extends TrackerReact(Component){
 
   }
 }
+
+export default AdminLayoutContainer = createContainer(() => {
+  const globalConfigurationPublication = Meteor.subscribe('global_configuration')
+  const loading = !globalConfigurationPublication.ready()
+  const global_configuration = Configuration.findOne({})
+  return {
+    loading,
+    global_configuration
+  }
+}, AdminLayout)

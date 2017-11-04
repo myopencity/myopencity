@@ -3,7 +3,7 @@ import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import {Grid, Container, Loader, Sidebar, Icon, Menu} from 'semantic-ui-react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import Navbar from '../../imports/client/general/ui/Navbar'
+import Navbar from '../../imports/components/navigation/Navbar'
 import {Configuration} from '/imports/api/configuration/configuration'
 
 export class MainLayout extends TrackerReact(Component){

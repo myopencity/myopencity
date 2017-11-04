@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Menu, Container, Sidebar, Icon} from 'semantic-ui-react'
-import NavbarAccountItem from '/imports/client/general/ui/NavbarAccountItem'
+import NavbarAccountItem from '/imports/components/navigation/NavbarAccountItem'
 
 export default class Navbar extends TrackerReact(Component){
 
@@ -27,7 +27,7 @@ export default class Navbar extends TrackerReact(Component){
   }
 
   render(){
-    const navbar_color = Session.get('global_configuration').navbar_color
+    const {navbar_color, main_title} = Session.get('global_configuration')
 
     return(
       <div>
