@@ -35,7 +35,7 @@ export class ConsultPage extends TrackerReact(Component){
       consult_description_background_color,
       consult_description_color,
       consult_description_font_size
-    } = Session.get('global_configuration')
+    } = Meteor.isClient && Session.get('global_configuration')
 
     if(!loading){
       return(
@@ -109,10 +109,11 @@ export class ConsultPage extends TrackerReact(Component){
   }
 }
 
-export default ConsultPageContainer = createContainer(({ urlShorten }) => {
-  const consultPublication = Meteor.subscribe('consult', urlShorten)
-  const consultPartsPublication = Meteor.subscribe('consult_parts.by_consult_url_shorten', urlShorten)
-  const loading = !consultPublication.ready() || !consultPartsPublication.ready()
+export default ConsultPageContainer = createContainer(({ match }) => {
+  const {urlShorten} = match.params
+  const consultPublication = Meteor.isClient && Meteor.subscribe('consult', urlShorten)
+  const consultPartsPublication = Meteor.isClient && Meteor.subscribe('consult_parts.by_consult_url_shorten', urlShorten)
+  const loading = Meteor.isClient && (!consultPublication.ready() || !consultPartsPublication.ready())
   const consult = Consults.findOne({url_shorten: urlShorten, visible: true})
   const consult_parts = ConsultParts.find({consult_url_shorten: urlShorten, active: true}).fetch()
   return {

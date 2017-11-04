@@ -192,11 +192,14 @@ export class ConsultPart extends TrackerReact(Component){
 }
 
 export default ConsultPartContainer = createContainer(({ consult_part }) => {
-  const consultPartVotePublication = Meteor.subscribe('consult_part_votes.my_vote_by_part', consult_part._id)
-  const alternativesPublication = Meteor.subscribe('alternatives.by_consult_part', consult_part._id)
-  const loading = !consultPartVotePublication.ready() || !alternativesPublication.ready()
+  const user_id = Meteor.isClient ? Meteor.userId() : this.userId
+  console.log("user_id", user_id);
+
+  const consultPartVotePublication = Meteor.isClient && Meteor.subscribe('consult_part_votes.my_vote_by_part', consult_part._id)
+  const alternativesPublication = Meteor.isClient && Meteor.subscribe('alternatives.by_consult_part', consult_part._id)
+  const loading = Meteor.isClient && (!consultPartVotePublication.ready() || !alternativesPublication.ready())
   const alternatives_count = Alternatives.find({consult_part: consult_part._id, validated: true}).count()
-  const consult_part_vote = ConsultPartVotes.findOne({user: Meteor.userId(), consult_part: consult_part._id})
+  const consult_part_vote = ConsultPartVotes.findOne({user: user_id, consult_part: consult_part._id})
   return {
     loading,
     consult_part_vote,
