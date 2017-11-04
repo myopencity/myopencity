@@ -17,10 +17,6 @@ import SignupPage from '/imports/pages/accounts/SignupPage'
 import SigninPage from '/imports/pages/accounts/SigninPage'
 import InitialPresentationPage from '/imports/pages/initial_pages/InitialPresentationPage'
 import InitialConfigPage from '/imports/pages/initial_pages/InitialConfigPage'
-import AdminConfigurationPage from '/imports/pages/admin/AdminConfigurationPage'
-import AdminConsultsPage from '/imports/pages/admin/AdminConsultsPage'
-import AdminConsultCreationPage from '/imports/pages/admin/AdminConsultCreationPage'
-import AdminConsultEditPage from '/imports/pages/admin/AdminConsultEditPage'
 import ConsultsPage from '/imports/pages/consults/ConsultsPage'
 import ConsultPage from '/imports/pages/consults/ConsultPage'
 import MyProfile from '/imports/pages/accounts/MyProfile'
@@ -29,14 +25,7 @@ import ProjectsPage from '/imports/pages/projects/ProjectsPage'
 import ProjectPage from '/imports/pages/projects/ProjectPage'
 import NewProjectPage from '/imports/pages/projects/NewProjectPage'
 import EditProjectPage from '/imports/pages/projects/EditProjectPage'
-import AdminProjectsPage from '/imports/pages/admin/AdminProjectsPage'
 import MyProjectsPage from '/imports/pages/projects/MyProjectsPage'
-import AdminConsultStatsPage from '/imports/pages/admin/AdminConsultStatsPage'
-import AdminApiAuthorizationsPage from '/imports/pages/admin/AdminApiAuthorizationsPage'
-import AdminExternalOpencitiesPage from '/imports/pages/admin/AdminExternalOpencitiesPage'
-import AdminExternalApisPage from '/imports/pages/admin/AdminExternalApisPage'
-import AdminAlternativesValidationPage from '/imports/pages/admin/AdminAlternativesValidationPage'
-import AdminUsersPage from '/imports/pages/admin/AdminUsersPage'
 import NotFound from '/imports/pages/general/NotFound'
 
 export class MainLayoutServer extends Component {
@@ -60,6 +49,8 @@ export class MainLayoutServer extends Component {
         <main>
           <Switch>
             <Public component={ Landing }  exact path="/"       { ...this.props } />
+            <Public component={ SignupPage }  exact path="/sign_up"       { ...this.props } />
+            <Public component={ SigninPage }  exact path="/sign_in"       { ...this.props } />
             <Public component={ NotFound } path="*"  { ...this.props } />
           </Switch>
         </main>

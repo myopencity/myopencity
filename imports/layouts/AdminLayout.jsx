@@ -16,7 +16,17 @@ import Public from '/imports/components/routes/Public'
 import {Configuration} from '/imports/api/configuration/configuration'
 
 // Pages
-import Landing from '/imports/pages/general/Landing'
+import AdminConfigurationPage from '/imports/pages/admin/AdminConfigurationPage'
+import AdminConsultsPage from '/imports/pages/admin/AdminConsultsPage'
+import AdminConsultCreationPage from '/imports/pages/admin/AdminConsultCreationPage'
+import AdminConsultEditPage from '/imports/pages/admin/AdminConsultEditPage'
+import AdminProjectsPage from '/imports/pages/admin/AdminProjectsPage'
+import AdminConsultStatsPage from '/imports/pages/admin/AdminConsultStatsPage'
+import AdminApiAuthorizationsPage from '/imports/pages/admin/AdminApiAuthorizationsPage'
+import AdminExternalOpencitiesPage from '/imports/pages/admin/AdminExternalOpencitiesPage'
+import AdminExternalApisPage from '/imports/pages/admin/AdminExternalApisPage'
+import AdminAlternativesValidationPage from '/imports/pages/admin/AdminAlternativesValidationPage'
+import AdminUsersPage from '/imports/pages/admin/AdminUsersPage'
 import NotFound from '/imports/pages/general/NotFound'
 
 export class MainLayout extends Component {

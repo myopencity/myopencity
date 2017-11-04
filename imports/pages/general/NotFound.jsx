@@ -3,7 +3,7 @@ import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Grid, Header, Loader} from 'semantic-ui-react'
 
-export class NotFound extends TrackerReact(Component){
+export default class NotFound extends TrackerReact(Component){
 
   /*
     required props:
@@ -18,7 +18,7 @@ export class NotFound extends TrackerReact(Component){
   }
 
   render(){
-    const {not_found_message} = Meteor.isClient &&  Session.get('configuration')
+    const {not_found_message} = Meteor.isClient &&  Session.get('global_configuration')
 
       return(
         <Grid stackable>

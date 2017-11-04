@@ -87,7 +87,7 @@ export default class SigninForm extends Component{
   }
 
   render(){
-    const {facebook_connected, google_connected} = Session.get('global_configuration')
+    const {facebook_connected, google_connected} = Meteor.isClient && Session.get('global_configuration')
     return(
        <Form onSubmit={(e) => {this.signin(e)}} className="center-align">
          <Form.Field>

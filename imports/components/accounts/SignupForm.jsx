@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
 import {Form, Input, Button, Divider} from 'semantic-ui-react'
 import {Meteor} from 'meteor/meteor'
+import { createContainer } from 'meteor/react-meteor-data'
+import {Configuration} from '/imports/api/configuration/configuration'
 
-export default class SignupForm extends Component{
+export class SignupForm extends Component{
 
   /*
     required params:
@@ -86,40 +88,56 @@ export default class SignupForm extends Component{
 
   render(){
     const {user} = this.state
-    const {facebook_connected, google_connected} = Session.get('global_configuration')
+    const {global_configuration, loading} = this.props
+    const {facebook_connected, google_connected} = global_configuration
     const isValid = user.email && user.password && user.username && user.password == user.confirm_password
-    return(
-       <Form>
-         <Form.Field>
-           <label>Nom d'utilisateur</label>
-           <Input fluid type="text" onChange={(e) => {this.handleChange('username', e)}} />
-         </Form.Field>
-         <Form.Field>
-           <label>Votre adresse email</label>
-           <Input fluid type="email" onChange={(e) => {this.handleChange('email', e)}} />
-         </Form.Field>
-         <Form.Field>
-           <label>Mot de passe</label>
-           <Input fluid type="password" onChange={(e) => {this.handleChange('password', e)}} />
-         </Form.Field>
-         <Form.Field>
-           <label>Confirmez votre mot de passe</label>
-           <Input fluid type="password" onChange={(e) => {this.handleChange('confirm_password', e)}} />
-           {this.state.confirm_password && (this.state.password != this.state.confirm_password) ?
-            <p>Le mot de passe et la confirmation ne sont pas identiques</p>
-           : ''}
-         </Form.Field>
-         <Button  disabled={!isValid} onClick={(e) => {this.create_account(e)}}>M'inscrire</Button>
-         {facebook_connected || google_connected ?
-           <Divider horizontal>OU</Divider>
-         : ''}
-         {facebook_connected ?
+
+    if(!loading){
+      return(
+        <Form>
+          <Form.Field>
+            <label>Nom d'utilisateur</label>
+            <Input fluid type="text" onChange={(e) => {this.handleChange('username', e)}} />
+          </Form.Field>
+          <Form.Field>
+            <label>Votre adresse email</label>
+            <Input fluid type="email" onChange={(e) => {this.handleChange('email', e)}} />
+          </Form.Field>
+          <Form.Field>
+            <label>Mot de passe</label>
+            <Input fluid type="password" onChange={(e) => {this.handleChange('password', e)}} />
+          </Form.Field>
+          <Form.Field>
+            <label>Confirmez votre mot de passe</label>
+            <Input fluid type="password" onChange={(e) => {this.handleChange('confirm_password', e)}} />
+            {this.state.confirm_password && (this.state.password != this.state.confirm_password) ?
+              <p>Le mot de passe et la confirmation ne sont pas identiques</p>
+            : ''}
+          </Form.Field>
+          <Button  disabled={!isValid} onClick={(e) => {this.create_account(e)}}>M'inscrire</Button>
+          {facebook_connected || google_connected ?
+            <Divider horizontal>OU</Divider>
+          : ''}
+          {facebook_connected ?
             <Button color="blue" icon="facebook" content="Se connecter avec Facebook" onClick={(e) => {this.connect_facebook(e)}}/>
-         : ''}
-         {google_connected ?
+          : ''}
+          {google_connected ?
             <Button color="red" icon="google" content="Se connecter avec Google" onClick={(e) => {this.connect_google(e)}}/>
-         : ''}
-       </Form>
-    )
+          : ''}
+        </Form>
+      )
+    }else{
+      return <div></div>
+    }
   }
 }
+
+export default SignupFormContainer = createContainer(() => {
+  const globalConfigurationPublication = Meteor.isClient && Meteor.subscribe('global_configuration')
+  const loading = Meteor.isClient && !globalConfigurationPublication.ready()
+  const global_configuration = Configuration.findOne({})
+  return {
+    loading,
+    global_configuration
+  }
+}, SignupForm)
