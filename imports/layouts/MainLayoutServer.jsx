@@ -47,13 +47,14 @@ export class MainLayoutServer extends Component {
       <div id="main-layout">
         <main>
           <Dimmer active style={{opacity: '1 !important'}}>
-              <Image src="/images/logo_myopencity.png" inline size="mini"/><br/>
+              <Image src="/images/myopencity-logo.png" inline size="mini"/><br/>
               <Loader color="blue"></Loader>
           </Dimmer>
           <Switch>
             <Public component={ Landing }  exact path="/"       { ...this.props } />
             <Public component={ SignupPage }  exact path="/sign_up"       { ...this.props } />
             <Public component={ SigninPage }  exact path="/sign_in"       { ...this.props } />
+            <Public component={ ConsultsPage }  exact path="/consults"       { ...this.props } />
             <Public component={ NotFound } path="*"  { ...this.props } />
           </Switch>
         </main>

@@ -67,6 +67,7 @@ export class MainLayout extends Component {
               <Public component={ Landing }  exact path="/" { ...this.props } />
               <Public component={ SignupPage }  exact path="/sign_up"       { ...this.props } />
               <Public component={ SigninPage }  exact path="/sign_in"       { ...this.props } />
+              <Public component={ ConsultsPage }  exact path="/consults"       { ...this.props } />
               <Public component={ NotFound } path="*"  { ...this.props } />
             </Switch>
           </main>

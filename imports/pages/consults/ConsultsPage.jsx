@@ -82,9 +82,9 @@ export class ConsultsPage extends TrackerReact(Component){
   }
 }
 
-export default ConsultsPageContainer = createContainer(({ id }) => {
-  const consultsPublication = Meteor.subscribe('consults.visible')
-  const loading = !consultsPublication.ready()
+export default ConsultsPageContainer = createContainer(() => {
+  const consultsPublication = Meteor.isClient && Meteor.subscribe('consults.visible')
+  const loading = Meteor.isClient && !consultsPublication.ready()
   const consults = Consults.find({visible: true, ended: false}).fetch()
   const ended_consults = Consults.find({visible: true, ended: true}).fetch()
   return {

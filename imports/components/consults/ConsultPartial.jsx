@@ -2,8 +2,9 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import {Card, Image, Button, Icon} from 'semantic-ui-react'
 import _ from 'lodash'
+import { createContainer } from 'meteor/react-meteor-data'
 
-export default class ConsultPartial extends TrackerReact(Component){
+export  class ConsultPartial extends TrackerReact(Component){
 
   /*
     required props:
@@ -74,7 +75,7 @@ export default class ConsultPartial extends TrackerReact(Component){
   }
 
   render(){
-    const {consult, className} = this.props
+    const {consult, className, user_id} = this.props
 
     if(consult){
       return(
@@ -101,7 +102,7 @@ export default class ConsultPartial extends TrackerReact(Component){
           {!this.props.hideButtons ?
             <Card.Content className="center-align" extra>
               <Button onClick={(e) => {this.go('Consult', {urlShorten: consult.url_shorten}, e)}} fluid>Consulter</Button>
-              {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
+              {Roles.userIsInRole(user_id, ['admin', 'moderator']) ?
                 <div>
                   <Button fluid active={this.state.display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
                   {this.state.display_manage_buttons ?
@@ -134,3 +135,9 @@ export default class ConsultPartial extends TrackerReact(Component){
     }
   }
 }
+
+export default ConsultPartialContainer = createContainer(() => {
+  return {
+    user_id: Meteor.isClient ? Meteor.userId() : this.userId
+  }
+}, ConsultPartial)
