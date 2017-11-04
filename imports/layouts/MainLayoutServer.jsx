@@ -4,6 +4,7 @@ import React, { Component } from "react"
 import { Switch } from 'react-router-dom'
 import { Helmet } from "react-helmet"
 import { createContainer } from 'meteor/react-meteor-data'
+import {Dimmer, Loader, Image} from 'semantic-ui-react'
 
 //components
 import Public from "/imports/components/routes/Public"
@@ -45,6 +46,10 @@ export class MainLayoutServer extends Component {
     return(
       <div id="main-layout">
         <main>
+          <Dimmer active style={{opacity: '1 !important'}}>
+              <Image src="/images/logo_myopencity.png" inline size="mini"/><br/>
+              <Loader color="blue"></Loader>
+          </Dimmer>
           <Switch>
             <Public component={ Landing }  exact path="/"       { ...this.props } />
             <Public component={ SignupPage }  exact path="/sign_up"       { ...this.props } />

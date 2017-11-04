@@ -46,6 +46,7 @@ export class BlankLayout extends Component {
           <main>
             <Switch>
               <Public component={ InitialPresentationPage }  exact path="/initial/presentation" { ...this.props } />
+              <Public component={ InitialConfigPage }  exact path="/initial/config" { ...this.props } />
               <Public component={ NotFound } path="*"  { ...this.props } />
             </Switch>
           </main>
