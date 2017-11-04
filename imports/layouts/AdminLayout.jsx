@@ -115,6 +115,8 @@ export class AdminLayout extends TrackerReact(Component) {
                     <Switch>
                       <Admin component={ AdminConfigurationPage }  exact path="/admin/configuration" { ...this.props } />
                       <Admin component={ AdminConsultsPage }  exact path="/admin/consults" { ...this.props } />
+                      <Admin component={ AdminConsultCreationPage }  exact path="/admin/consults/new" { ...this.props } />
+                      <Admin component={ AdminConsultEditPage }  exact path="/admin/consults/:consult_shorten_url/edit" { ...this.props } />
                       <Public component={ NotFound } path="*"  { ...this.props } />
                     </Switch>
                   </main>
