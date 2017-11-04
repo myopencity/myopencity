@@ -41,14 +41,14 @@ export class ProjectPage extends TrackerReact(Component){
 
   render(){
     const {project, author, loading, project_like, parent_project} = this.props
-    const {alternative_like_icon_color} = Session.get('global_configuration')
     const {
       project_header_height,
       project_header_color,
       project_description_background_color,
       project_description_color,
-      project_description_font_size
-    } = Session.get('global_configuration')
+      project_description_font_size,
+      alternative_like_icon_color
+    } = Meteor.isClient && Session.get('global_configuration')
 
     if(!loading){
       return(
@@ -102,19 +102,21 @@ export class ProjectPage extends TrackerReact(Component){
   }
 }
 
-export default ProjectPageContainer = createContainer(({ shorten_url }) => {
-  const ProjectsPublication = Meteor.subscribe('project', shorten_url)
+export default ProjectPageContainer = createContainer(({ match }) => {
+  const {shorten_url} = match.params
+  const user_id = Meteor.isClient ? Meteor.userId() : this.userId
+  const ProjectsPublication = Meteor.isClient && Meteor.subscribe('project', shorten_url)
   const project = Projects.findOne({shorten_url: shorten_url})
-  let ProjectLikesPublication = Meteor.subscribe('project_likes.by_project', null)
+  let ProjectLikesPublication = Meteor.isClient && Meteor.subscribe('project_likes.by_project', null)
   let project_like = null
   let parent_project = null
   if(project){
-    ProjectLikesPublication = Meteor.subscribe('project_likes.by_project', project._id)
-    ParentProjectPublication = Meteor.subscribe('project.by_id', project.parent)
-    project_like = ProjectLikes.findOne({user: Meteor.userId(), project: project._id })
+    ProjectLikesPublication = Meteor.isClient && Meteor.subscribe('project_likes.by_project', project._id)
+    ParentProjectPublication = Meteor.isClient && Meteor.subscribe('project.by_id', project.parent)
+    project_like = ProjectLikes.findOne({user: user_id, project: project._id })
     parent_project = Projects.findOne({_id: project.parent})
-    const AuthorPublication = Meteor.subscribe('project.author', project.author)
-    const loading = !ProjectsPublication.ready() || !AuthorPublication.ready() || !ProjectLikesPublication.ready()
+    const AuthorPublication = Meteor.isClient && Meteor.subscribe('project.author', project.author)
+    const loading = Meteor.isClient && (!ProjectsPublication.ready() || !AuthorPublication.ready() || !ProjectLikesPublication.ready())
     const author = Meteor.users.findOne({_id: project.author})
     return {
       loading,
