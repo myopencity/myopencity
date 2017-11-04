@@ -97,7 +97,9 @@ export class ProjectPartial extends Component{
   }
 
   render(){
-    const {project, hideButtons, author, loading} = this.props
+    const {project, hideButtons, author, user_id, loading} = this.props
+    console.log("user_id", user_id);
+
     const {display_manage_buttons, display_admin_buttons, remove_confirm} = this.state
 
     if(!loading){
@@ -127,7 +129,7 @@ export class ProjectPartial extends Component{
           {!hideButtons ?
             <Card.Content className="center-align" extra>
               <Button onClick={(e) => {this.go('Project', {shorten_url: project.shorten_url}, e)}} fluid>Consulter</Button>
-              {project.author == Meteor.userId() ?
+              {project.author == user_id ?
                 <div>
                   <Button fluid active={display_manage_buttons} onClick={(e) => {this.toggleState('display_manage_buttons', e)}}>Gérer</Button>
                   {display_manage_buttons ?
@@ -146,7 +148,7 @@ export class ProjectPartial extends Component{
                     : ''}
                   </div>
                   : ''}
-                {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
+                {Roles.userIsInRole(user_id, ['admin', 'moderator']) ?
                   <div>
                     <Button fluid active={display_admin_buttons} onClick={(e) => {this.toggleState('display_admin_buttons', e)}}>Administrer</Button>
                       {display_admin_buttons ?
@@ -167,11 +169,13 @@ export class ProjectPartial extends Component{
 }
 
 export default ProjectPartialContainer = createContainer(({ project }) => {
-  const AuthorPublication = Meteor.subscribe('project.author', project.author)
-  const loading = !AuthorPublication.ready()
+  const AuthorPublication = Meteor.isClient && Meteor.subscribe('project.author', project.author)
+  const loading = Meteor.isClient && !AuthorPublication.ready()
   const author = Meteor.users.findOne({_id: project.author})
+  const user_id = Meteor.isClient ? Meteor.userId() : this.userId
   return {
     loading,
-    author
+    author,
+    user_id
   }
 }, ProjectPartial)

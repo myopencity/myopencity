@@ -26,7 +26,7 @@ export class ProjectsPage extends TrackerReact(Component){
 
   render(){
     const {loading, projects} = this.props
-    const {projects_page_header_title} = Session.get('global_configuration')
+    const {projects_page_header_title} = Meteor.isClient && Session.get('global_configuration')
 
     if(!loading){
       return(
@@ -50,9 +50,9 @@ export class ProjectsPage extends TrackerReact(Component){
   }
 }
 
-export default ProjectsPageContainer = createContainer(({ id }) => {
-  const projectsPublication = Meteor.subscribe('projects.visible')
-  const loading = !projectsPublication.ready()
+export default ProjectsPageContainer = createContainer(() => {
+  const projectsPublication = Meteor.isClient && Meteor.subscribe('projects.visible')
+  const loading = Meteor.isClient && !projectsPublication.ready()
   const projects = Projects.find({visible: true, validated: true}, {sort: {likes: -1}}).fetch()
   return {
     loading,
