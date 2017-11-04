@@ -71,6 +71,7 @@ export class MainLayout extends Component {
               <Public component={ ConsultPage }  exact path="/consult/:urlShorten"       { ...this.props } />
               <Public component={ ProfilePage }  exact path="/profile/:user_id"       { ...this.props } />
               <Public component={ ProjectsPage }  exact path="/projects"       { ...this.props } />
+              <Public component={ NewProjectPage }  exact path="/project/new"       { ...this.props } />
               <Public component={ ProjectPage }  exact path="/project/:shorten_url"       { ...this.props } />
               <Public component={ NotFound } path="*"  { ...this.props } />
             </Switch>

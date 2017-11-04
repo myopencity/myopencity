@@ -21,7 +21,7 @@ export class NewProjectPage extends TrackerReact(Component){
     this.state = {
       step: "presentation", // presentation / anonymous / title / content / description / image
       new_project: {
-        anonymous: Session.get('global_configuration').projects_anonymous_default
+        anonymous: Meteor.isClient && Session.get('global_configuration').projects_anonymous_default
       }
     }
   }
@@ -42,7 +42,7 @@ export class NewProjectPage extends TrackerReact(Component){
           style: 'growl-bottom-left',
         })
       }else{
-        const {project_validation_enabled} = Session.get('global_configuration')
+        const {project_validation_enabled} = Meteor.isClient && Session.get('global_configuration')
         const validation_message = project_validation_enabled ? "Votre projet sera visible dès qu'il aura été validé" : ''
         Bert.alert({
           title: "Votre projet a bien été créé",
@@ -89,7 +89,7 @@ export class NewProjectPage extends TrackerReact(Component){
   render(){
     const {step, new_project} = this.state
     const {loading, parent_project} = this.props
-    const {projects_anonymous_choice} = Session.get('global_configuration')
+    const {projects_anonymous_choice} = Meteor.isClient && Session.get('global_configuration')
 
     if(!loading){
       return(
@@ -312,13 +312,14 @@ export class NewProjectPage extends TrackerReact(Component){
   }
 }
 
-export default NewProjectPageContainer = createContainer(({parent_id}) => {
-    const parentProjectPublication = Meteor.subscribe('project.by_id', parent_id)
-    const loading = !parentProjectPublication.ready()
-    const parent_project = Projects.findOne({_id: parent_id, validated: true})
+export default NewProjectPageContainer = createContainer(({match}) => {
+  const {parent_id} = match.params
+  const parentProjectPublication = Meteor.isClient && Meteor.subscribe('project.by_id', parent_id)
+  const loading = Meteor.isClient && !parentProjectPublication.ready()
+  const parent_project = Projects.findOne({_id: parent_id, validated: true})
 
-    return {
-      loading,
-      parent_project
-    }
+  return {
+    loading,
+    parent_project
+  }
 }, NewProjectPage)
