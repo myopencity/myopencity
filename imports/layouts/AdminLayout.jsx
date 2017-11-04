@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
 //packages
-import { Switch }           from 'react-router-dom'
+import { Switch, withRouter }           from 'react-router-dom'
 import { Helmet }           from "react-helmet"
 import { createContainer } from 'meteor/react-meteor-data'
 import {Loader, Sidebar, Menu, Button, Grid, Icon} from 'semantic-ui-react'
@@ -48,11 +48,13 @@ export class AdminLayout extends TrackerReact(Component) {
     Session.set('open_sidebar', !Session.get('open_sidebar'))
   }
 
+  go(route){
+    this.props.history.push(route)
+    Session.set('open_sidebar', false)
+  }
+
   render(){
     const { global_configuration, loading } = this.props
-
-    console.log("CLIENT: MAIN LAYOUT");
-
 
     if(!loading){
       Session.set('global_configuration', global_configuration)
@@ -65,41 +67,41 @@ export class AdminLayout extends TrackerReact(Component) {
           <Sidebar.Pushable>
             <Sidebar as={Menu} animation='push' width='thin' visible={Session.get('open_sidebar')} className="main-sidebar" icon='labeled' vertical inverted>
               {Roles.userIsInRole(Meteor.userId(), 'admin') ?
-                <Menu.Item onClick={() => {this.go('AdminConfiguration')}} name='cogs'>
+                <Menu.Item onClick={() => {this.go('/admin/configuration')}} name='cogs'>
                   <Icon name='cogs' />
                   Configuration
                 </Menu.Item>
               : ''}
-              <Menu.Item onClick={() => {this.go('AdminUsers')}} name='users'>
+              <Menu.Item onClick={() => {this.go('/admin/users')}} name='users'>
                 <Icon name='users' />
                 Utilisateurs
               </Menu.Item>
               {Roles.userIsInRole(Meteor.userId(), 'admin') ?
-                <Menu.Item onClick={() => {this.go('AdminExternalApis')}} name='google'>
+                <Menu.Item onClick={() => {this.go('/admin/external_apis')}} name='google'>
                   <Icon name='google' />
                   Services externes
                 </Menu.Item>
               : ''}
-              <Menu.Item onClick={() => {this.go('AdminConsults')}} name='comments'>
+              <Menu.Item onClick={() => {this.go('/admin/consults')}} name='comments'>
                 <Icon name='comments' />
                 Consultations
               </Menu.Item>
-              <Menu.Item onClick={() => {this.go('AdminProjects')}} name='projects'>
+              <Menu.Item onClick={() => {this.go('/admin/projects')}} name='projects'>
                 <Icon name='lightbulb' />
                 Projets
               </Menu.Item>
-              <Menu.Item onClick={() => {this.go('AdminAlternativesValidation')}} name='projects'>
+              <Menu.Item onClick={() => {this.go('/admin/alternatives')}} name='projects'>
                 <Icon name='check circle' />
                 Alternatives
               </Menu.Item>
               {Roles.userIsInRole(Meteor.userId(), 'admin') ?
-                <Menu.Item onClick={() => {this.go('AdminApiAuthorizations')}} name='api_authorizations'>
+                <Menu.Item onClick={() => {this.go('/admin/api_authorizations')}} name='api_authorizations'>
                   <Icon name='key' />
                   Autorisations API
                 </Menu.Item>
               : ''}
               {Roles.userIsInRole(Meteor.userId(), 'admin') ?
-                <Menu.Item onClick={() => {this.go('AdminExternalOpencities')}} name='external_opencities'>
+                <Menu.Item onClick={() => {this.go('/admin/external_opencities')}} name='external_opencities'>
                   <Icon name='exchange' />
                   Opencities connectés
                 </Menu.Item>
@@ -148,4 +150,4 @@ export default AdminLayoutContainer = createContainer(() => {
     loading,
     global_configuration
   }
-}, AdminLayout)
+}, withRouter(AdminLayout))
