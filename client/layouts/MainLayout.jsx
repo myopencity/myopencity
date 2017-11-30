@@ -34,7 +34,7 @@ export class MainLayout extends TrackerReact(Component){
   configuration(){
     const configuration = Configuration.findOne({})
     Session.set('global_configuration', configuration)
-    if(configuration && configuration.initial_configuration){
+    if(configuration && configuration.initial_configuration && Meteor.isClient()){
       this.props.history.push('/initial/presentation')
     }
     return configuration

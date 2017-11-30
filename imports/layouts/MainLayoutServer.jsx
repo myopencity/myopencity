@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 
 //packages
-import { Switch } from 'react-router-dom'
+import { Switch, withRouter } from 'react-router-dom'
 import { Helmet } from "react-helmet"
 import { createContainer } from 'meteor/react-meteor-data'
 import {Dimmer, Loader, Image} from 'semantic-ui-react'
@@ -35,7 +35,11 @@ export class MainLayoutServer extends Component {
     }
   }
 
+
   componentDidMount(){
+    if(this.props.configuration.initial_configuration){
+      this.props.history.push('/initial/presentation')
+    }
     this.setState({ loading: false })
   }
 
@@ -77,4 +81,4 @@ export default MainLayoutServerContainer = createContainer(() => {
   return {
     configuration
   }
-}, MainLayoutServer)
+}, withRouter(MainLayoutServer))
