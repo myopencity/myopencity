@@ -30,15 +30,15 @@ export default class Navbar extends TrackerReact(Component){
         {this.state.screen_size > 768 ?
           <Menu secondary className="main-navbar" size="massive" style={{backgroundColor: navbar_color}}>
             <Container>
-              <Link to='/'>
+              <Link className="item" to='/'>
                 <Menu.Item className="navbar-item" header>
                   {Session.get('global_configuration').main_title}
                 </Menu.Item>
               </Link>
-              <Link to="/consults">
+              <Link className="item" to="/consults">
                 <Menu.Item className="navbar-item" name='Consultations'/>
               </Link>
-              <Link to="/projects">
+              <Link className="item" to="/projects">
                 <Menu.Item className="navbar-item" name='Propositions'/>
               </Link>
               <Menu.Menu position='right'>

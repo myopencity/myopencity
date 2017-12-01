@@ -43,6 +43,13 @@ export class MainLayout extends TrackerReact(Component) {
     this.setState({ loading: false })
   }
 
+  componentWillReceiveProps(props){
+    console.log('this.props', props)
+    if(props.global_configuration.initial_configuration){
+      props.history.push('/initial/presentation')
+    }
+  }
+
   toggleSidebar(e){
     e.preventDefault()
     Session.set('open_sidebar', !Session.get('open_sidebar'))
@@ -119,7 +126,7 @@ export class MainLayout extends TrackerReact(Component) {
                       <Public component={ ProjectsPage }  exact path="/projects"       { ...this.props } />
                       <Public component={ NewProjectPage }  exact path="/projects/new"       { ...this.props } />
                       <Public component={ NewProjectPage }  exact path="/projects/new/:parent_id"       { ...this.props } />
-                      <Public component={ EditProjectPage }  exact path="/projects/edit/:shorten_url"       { ...this.props } />
+                      <Public component={ EditProjectPage }  exact path="/projects/:shorten_url/edit"       { ...this.props } />
                       <Public component={ ProjectPage }  exact path="/projects/:shorten_url"       { ...this.props } />
                       <Public component={ MyProfile }  exact path="/me/profile"       { ...this.props } />
                       <Public component={ MyProjectsPage }  exact path="/me/projects"       { ...this.props } />
@@ -142,6 +149,7 @@ export default MainLayoutContainer = createContainer(() => {
   const globalConfigurationPublication = Meteor.subscribe('global_configuration')
   const loading = !globalConfigurationPublication.ready()
   const global_configuration = Configuration.findOne({})
+  console.log('global conf', global_configuration)
   return {
     loading,
     global_configuration

@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 import { createContainer } from 'meteor/react-meteor-data'
 import {Image, Button} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 export default class AdminProjectPartial extends TrackerReact(Component){
 

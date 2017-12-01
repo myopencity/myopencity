@@ -37,9 +37,6 @@ export class MainLayoutServer extends Component {
 
 
   componentDidMount(){
-    if(this.props.configuration.initial_configuration){
-      this.props.history.push('/initial/presentation')
-    }
     this.setState({ loading: false })
   }
 
