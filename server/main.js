@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor'
 import {Configuration} from '/imports/api/configuration/configuration'
 import {ExternalApisConfiguration} from '/imports/api/external_apis_configuration/external_apis_configuration'
+import "/imports/startup/server"
 import '/imports/api/configuration/server/methods'
 import '/imports/api/configuration/server/publication'
 import '/imports/api/external_apis_configuration/server/methods'
@@ -32,6 +33,9 @@ Meteor.startup(() => {
   // Migrations
   Migrations.migrateTo('latest')
 
+  console.log("MAIN JS");
+
+
   // Initialization of global configuration singleton
   const configuration = Configuration.findOne({})
   if(!configuration){
@@ -57,7 +61,6 @@ Meteor.startup(() => {
   Accounts.onCreateUser(function (options, user) {
 
       if (user.services.facebook) {
-          console.log("user facebook", user.services.facebook);
           user.username = user.services.facebook.name
           user.emails = [{address: user.services.facebook.email}]
           // Handle avatar_url
@@ -66,7 +69,6 @@ Meteor.startup(() => {
           }
           return user
       }else if (user.services.google) {
-          console.log("user google", user.services.google);
           user.username = user.services.google.given_name
           user.emails = [{address: user.services.google.email}]
           // Handle avatar_url
