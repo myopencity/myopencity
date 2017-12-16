@@ -98,3 +98,8 @@
 .pusher, .pushable {
   min-height: 100vh !important;
 }
+
+// OVERIDE CLASSES
+.mce-notification{
+  display: none !important;
+}

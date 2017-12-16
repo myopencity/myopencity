@@ -10,3 +10,7 @@ Meteor.publish('users.search', function({page, filter_text, nb_results}){
     return Meteor.users.find({ _id: {$ne: this.userId}, $or: [ {username: {$regex: filter_text, $options: 'i'}}, {'emails.address': {$regex: filter_text, $options: 'i'}} ] }, {skip: limit * page, limit: limit, sort: {'profile.lastname': 1}})
   }
 })
+
+Meteor.publish('user.me', function(){
+  return Meteor.users.find({_id: this.userId}, {fields: {username: 1, profile: 1}})
+})
