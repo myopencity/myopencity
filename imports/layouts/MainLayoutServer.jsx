@@ -48,7 +48,7 @@ export class MainLayoutServer extends Component {
       <div id="main-layout">
         <main>
           <Dimmer active style={{opacity: '1 !important'}}>
-              <Image src="/images/myopencity-logo.png" inline size="mini"/><br/>
+              <Image src={configuration.global_logo_url} inline size="small"/><br/>
               <Loader color="blue"></Loader>
           </Dimmer>
           <Switch>

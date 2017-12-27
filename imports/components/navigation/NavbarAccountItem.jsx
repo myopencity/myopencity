@@ -60,9 +60,9 @@ class NavbarAccountItem extends TrackerReact(Component){
 
     if(current_user){
       const trigger = (
-        <Menu.Item className="navbar-item">
+        <div className="navbar-item" style={{display: 'flex', alignItems: 'center'}}>
           <Image floated="left" avatar src={current_user.profile.avatar_url} /> {current_user.username}
-        </Menu.Item>
+        </div>
       )
       return(
         <Dropdown trigger={trigger} icon={null}>
