@@ -102,6 +102,17 @@ Meteor.methods({
       }
     }
   },
+  'external_apis_configuration.email_smtp_update'({email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user}){
+    if(!Roles.userIsInRole(this.userId, 'admin')){
+      throw new Meteor.Error('403', "Vous devez être administrateur")
+    }else{
+      ExternalApisConfiguration.update({}, {$set: {email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user}})
+      if(email_smtp_password && email_smtp_port && email_smtp_server && email_smtp_user){
+        process.env.MAIL_URL = "smtps://" + email_smtp_user + ":" + email_smtp_password + "@" + email_smtp_server + ":" + email_smtp_port
+        Configuration.update({}, {$set: {email_smtp_connected: true}})
+      }
+    }
+  },
   'external_apis_configuration.reset_facebook'(){
     if(!Roles.userIsInRole(this.userId, 'admin')){
       throw new Meteor.Error('403', "Vous n'êtes pas administrateur")

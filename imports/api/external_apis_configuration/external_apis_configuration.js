@@ -27,6 +27,22 @@ const ExternalApisConfigurationSchema = new SimpleSchema({
   facebook_public_key: {
     type: String,
     optional: true
+  },
+  email_smtp_user: {
+    type: String,
+    optional: true
+  },
+  email_smtp_server: {
+    type: String,
+    optional: true
+  },
+  email_smtp_port: {
+    type: Number,
+    optional: true
+  },
+  email_smtp_password: {
+    type: String,
+    optional: true
   }
 })
 

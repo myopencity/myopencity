@@ -107,6 +107,10 @@ const ConfigurationSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: false
   },
+  email_smtp_connected: {
+    type: Boolean,
+    defaultValue: false
+  },
   projects_anonymous_choice: {
     type: Boolean,
     defaultValue: true

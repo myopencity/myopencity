@@ -45,3 +45,4 @@ percolate:migrations
 server-render@0.2.0
 static-html
 dynamic-import
+email

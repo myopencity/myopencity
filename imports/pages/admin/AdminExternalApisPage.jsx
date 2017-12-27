@@ -52,7 +52,19 @@ export class AdminExternalApisPage extends TrackerReact(Component){
 
   submit_external_services(e){
     e.preventDefault()
-    const {amazon_public_key, amazon_private_key, google_public_key, google_private_key, facebook_public_key, facebook_private_key} = this.state.external_apis_configuration
+    const {
+      amazon_public_key, 
+      amazon_private_key, 
+      google_public_key, 
+      google_private_key, 
+      facebook_public_key, 
+      facebook_private_key, 
+      email_smtp_password, 
+      email_smtp_port, 
+      email_smtp_server, 
+      email_smtp_user
+    } = this.state.external_apis_configuration
+
     if(amazon_public_key && amazon_private_key){
       Meteor.call('external_apis_configuration.amazon_update', {amazon_public_key, amazon_private_key} , (error, result) => {
         if(error){
@@ -107,6 +119,27 @@ export class AdminExternalApisPage extends TrackerReact(Component){
           Bert.alert({
             title: "La configuration des services extérieurs a bien été prise en compte",
             message: "",
+            type: 'success',
+            style: 'growl-bottom-left',
+          })
+        }
+      })
+    }
+
+    if(email_smtp_password && email_smtp_port && email_smtp_server && email_smtp_user){
+      Meteor.call('external_apis_configuration.email_smtp_update', {email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user} , (error, result) => {
+        if(error){
+          console.log(error)
+          Bert.alert({
+            title: "Erreur lors de la configuration des apis SMTP",
+            message: error.reason,
+            type: 'danger',
+            style: 'growl-bottom-left',
+          })
+        }else{
+          Bert.alert({
+            title: "La configuration de votre serveur email a été prise en compte",
+            message: "Certaines fonctionnalités d'emailing ont été activées. Vous pouvez les désactivées dans le panneau de configuration",
             type: 'success',
             style: 'growl-bottom-left',
           })
@@ -174,6 +207,24 @@ export class AdminExternalApisPage extends TrackerReact(Component){
                           <Form.Group>
                             <Input placeholder="**********" label="Clé privée" value={external_apis_configuration.amazon_private_key} type="text" onChange={(e) => {this.handleExternalConfigChange('amazon_private_key', e)}} />
                             <Input placeholder="**********" label="Clé publique" value={external_apis_configuration.amazon_public_key} type="text" onChange={(e) => {this.handleExternalConfigChange('amazon_public_key', e)}} />
+                          </Form.Group>
+                          {amazon_connected ?
+                            <Button color="red" onClick={(e) => {this.reset_api_configuration('amazon', e)}}>Réinitialiser</Button>
+                          : ''}
+                        </Item.Description>
+                      </Item.Content>
+                    </Item>
+                    <Item className="animated fadeInUp">
+                      <Item.Image size='tiny' src='/images/external_services_logos/email.png' />
+
+                      <Item.Content>
+                        <Item.Header as='a'>Envoi d'emails</Item.Header>
+                        <Item.Description>
+                          <Form.Group>
+                            <Input placeholder="Username" label="Compte SMTP (nom d'utilisateur)" value={external_apis_configuration.email_smtp_user} type="text" onChange={(e) => {this.handleExternalConfigChange('email_smtp_user', e)}} />
+                            <Input placeholder="ex: smtp.mandrill.com" label="Serveur SMTP" value={external_apis_configuration.email_smtp_server} type="text" onChange={(e) => {this.handleExternalConfigChange('email_smtp_server', e)}} />
+                            <Input placeholder="587" label="Port SMTP" value={external_apis_configuration.email_smtp_port} type="text" onChange={(e) => {this.handleExternalConfigChange('email_smtp_port', e)}} />
+                            <Input placeholder="587" label="Mot de passe SMTP" value={external_apis_configuration.email_smtp_password} type="password" onChange={(e) => {this.handleExternalConfigChange('email_smtp_password', e)}} />
                           </Form.Group>
                           {amazon_connected ?
                             <Button color="red" onClick={(e) => {this.reset_api_configuration('amazon', e)}}>Réinitialiser</Button>

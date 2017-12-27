@@ -75,5 +75,11 @@ Meteor.methods({
     }else{
       return Meteor.users.find({_id: {$ne: this.userId}}).count()
     }
-  }, 
+  },
+  'users.reset_password_email'(email){
+    const user = Meteor.users.findOne({'emails.address': email})
+    if(user){
+      Accounts.sendResetPasswordEmail(user, user.emails[0].address)
+    }
+  } 
 })
