@@ -43,6 +43,10 @@ const ExternalApisConfigurationSchema = new SimpleSchema({
   email_smtp_password: {
     type: String,
     optional: true
+  },
+  email_smtp_from: {
+    type: String,
+    optional: true
   }
 })
 

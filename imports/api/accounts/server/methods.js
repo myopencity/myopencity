@@ -1,5 +1,11 @@
 import {Meteor} from 'meteor/meteor'
 import _ from 'lodash'
+const mailer = require('mailer')
+import {ExternalApisConfiguration} from '/imports/api/external_apis_configuration/external_apis_configuration'
+import EmailResetPassword from '/imports/components/emails/EmailResetPassword'
+import React                    from "react"
+import { renderToString }       from "react-dom/server"
+import { ServerStyleSheet }     from "styled-components"
 
 Meteor.methods({
   'user.signup'({email, password, username}){
@@ -78,12 +84,28 @@ Meteor.methods({
   },
   'users.reset_password_email'(email){
     const user = Meteor.users.findOne({'emails.address': email})
+    const external_configuration = ExternalApisConfiguration.findOne()
     if(user){
-      Email.send({
+
+      const sheet = new ServerStyleSheet()
+
+      const html = renderToString(
+        sheet.collectStyles(
+          <EmailResetPassword username={user.username} />
+        )
+      )
+
+      mailer.send({
+        host: external_configuration.email_smtp_server,
+        port: external_configuration.email_smtp_port,
+        domain: "localhost",
+        authentication: "login",
+        username: external_configuration.email_smtp_username,
+        password: external_configuration.email_smtp_password,
         to: user.emails[0].address,
         from: 'contac@myopencity.io',
-        subject: "Recover password",
-        text: "UN TEXTE DE TEST"
+        subject: "Demande de nouveau mot de passe",
+        html: html
       })
       // Accounts.sendResetPasswordEmail(user, user.emails[0].address)
     }else{

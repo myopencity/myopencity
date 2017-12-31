@@ -102,12 +102,12 @@ Meteor.methods({
       }
     }
   },
-  'external_apis_configuration.email_smtp_update'({email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user}){
+  'external_apis_configuration.email_smtp_update'({email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user, email_smtp_from}){
     if(!Roles.userIsInRole(this.userId, 'admin')){
       throw new Meteor.Error('403', "Vous devez être administrateur")
     }else{
-      ExternalApisConfiguration.update({}, {$set: {email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user}})
-      if(email_smtp_password && email_smtp_port && email_smtp_server && email_smtp_user){
+      ExternalApisConfiguration.update({}, {$set: {email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user, email_smtp_from}})
+      if(email_smtp_password && email_smtp_port && email_smtp_server && email_smtp_user && email_smtp_from){
         const address = 'smtps://' + encodeURIComponent(email_smtp_user) + ':' + email_smtp_password + '@' + email_smtp_server + ':' + email_smtp_port;
         console.log('SERVER NEW SMTP ADDRESS',address)
         process.env.MAIL_URL = 'smtp://' + encodeURIComponent(email_smtp_user) + ':' + email_smtp_password + '@' + email_smtp_server + ':' + email_smtp_port;
