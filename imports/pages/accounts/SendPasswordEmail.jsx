@@ -14,6 +14,7 @@ export default class SendPasswordEmail extends Component {
     }
 
     sendPasswordEmail = (e) => {
+        e.preventDefault()
         const { email } = this.state
         Meteor.call('users.reset_password_email', email, (error, result) => {
             if (error) {
@@ -44,7 +45,7 @@ export default class SendPasswordEmail extends Component {
                     <p>Entrez votre adresse email pour recevoir un email de réinitialisation</p>
                     <Form onSubmit={this.sendPasswordEmail}>
                         <Form.Field>
-                            <Input type="email" onChange={this.handleChange} name={email} value={email} placeholder="Email" />
+                            <Input type="email" onChange={this.handleChange} name="email" value={email} placeholder="Email" />
                         </Form.Field>
                         <Form.Field>
                             <Button disabled={!email} color="green" icon="mail" content="Demander un nouveau mot de passe" />

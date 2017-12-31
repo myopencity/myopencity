@@ -108,7 +108,9 @@ Meteor.methods({
     }else{
       ExternalApisConfiguration.update({}, {$set: {email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user}})
       if(email_smtp_password && email_smtp_port && email_smtp_server && email_smtp_user){
-        process.env.MAIL_URL = "smtps://" + email_smtp_user + ":" + email_smtp_password + "@" + email_smtp_server + ":" + email_smtp_port
+        const address = 'smtps://' + encodeURIComponent(email_smtp_user) + ':' + email_smtp_password + '@' + email_smtp_server + ':' + email_smtp_port;
+        console.log('SERVER NEW SMTP ADDRESS',address)
+        process.env.MAIL_URL = 'smtp://' + encodeURIComponent(email_smtp_user) + ':' + email_smtp_password + '@' + email_smtp_server + ':' + email_smtp_port;
         Configuration.update({}, {$set: {email_smtp_connected: true}})
       }
     }

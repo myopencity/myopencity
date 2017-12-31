@@ -79,7 +79,15 @@ Meteor.methods({
   'users.reset_password_email'(email){
     const user = Meteor.users.findOne({'emails.address': email})
     if(user){
-      Accounts.sendResetPasswordEmail(user, user.emails[0].address)
+      Email.send({
+        to: user.emails[0].address,
+        from: 'contac@myopencity.io',
+        subject: "Recover password",
+        text: "UN TEXTE DE TEST"
+      })
+      // Accounts.sendResetPasswordEmail(user, user.emails[0].address)
+    }else{
+      throw new Meteor.Error('403', "Aucun compte n'a été trouvé pour cette adresse email")
     }
   } 
 })
