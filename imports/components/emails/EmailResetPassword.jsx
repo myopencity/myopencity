@@ -1,40 +1,49 @@
 import React, { Component } from 'react';
-import { Button } from 'semantic-ui-react';
+import {Configuration} from '/imports/api/configuration/configuration'
+import { createContainer } from 'meteor/react-meteor-data'
 
-export default class EmailResetPassword extends Component {
+export class EmailResetPassword extends Component {
     render() {
+        const { username, url, configuration, loading } = this.props
 
-        const {username} = this.props
-
-        return (
-            <html xmlns="http://www.w3.org/1999/xhtml">
-                <head>
-                    <meta name="viewport" content="width=device-width" />
-                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-                    <title>Demande de nouveau mot de passe</title>
-                    <link href="styles.css" media="all" rel="stylesheet" type="text/css" />
-                </head>
-
-                <body itemscope itemtype="http://schema.org/EmailMessage">
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td width="600">
-                                <table width="100%">
-                                    <tr>
-                                        <th>Demande de nouveau mot de passe</th>
-                                        <td>{username}</td>
-                                    </tr>
-                                    <tr>
-                                        <th>UN BOUTON</th>
-                                        <td><Button href="https://jeuxvideo.com" target="_blank" content="GO"/></td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                </body>
-            </html>
-        );
+        if(!loading){
+            return (
+                <html>
+                    <head>
+                        <title>Demande de nouveau mot de passe</title>
+                    </head>
+                    <body style={{fontFamily: 'Arial'}}>
+                        <table width="100%" cellpadding="0" cellspacing="0" align="center">
+                            <tr style={{height: "20em !important"}}>
+                                <td width="600" style={{backgroundColor: '#f7f3f3', textAlign: "center", padding: "2em 0"}}>
+                                    <img src={configuration.global_image_url} style={{height: "10em"}}/>
+                                    <h1 style={{fontSize: "3em"}}>{configuration.main_title}</h1>
+                                </td>
+                            </tr>
+                            <tr style={{padding: "5em 0"}}>
+                                <td width="600" height="300" style={{textAlign: "center"}}>
+                                    <h2>Vous avez demandé un nouveau mot de passe</h2>
+                                    <p>Pour ce faire, rien de plus simple. Cliquez simplement sur le lien ci-dessous</p><br/><br/>
+                                    <a href={url} style={{borderRadius: "5px", padding: "1em", color: "white", backgroundColor: "#345fff"}} target="_blank">Changer mon mot de passe</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </body>
+                </html>
+            );
+        }else{
+            return <div></div>
+        }
     }
 }
+
+
+export default EmailResetPasswordContainer = createContainer(() => {
+  const configurationPublication = Meteor.isClient && Meteor.subscribe('global_configuration')
+  const loading = Meteor.isClient && !configurationPublication.ready()
+  const configuration = Configuration.findOne({})
+  return {
+    loading,
+    configuration
+  }
+}, EmailResetPassword)

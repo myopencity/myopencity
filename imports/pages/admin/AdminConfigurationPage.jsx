@@ -80,6 +80,15 @@ export default class AdminConfigurationPage extends TrackerReact(Component){
           <Grid.Column width={16}>
             <Container>
               <Form onSubmit={(e) => {this.submit_configuration(e)}}>
+              <Header as="h3">Logos du site</Header>
+                <Form.Field>
+                  <label>URL de l'image principale (ex: page d'inscription)</label>
+                  <Input type="text" value={configuration.global_image_url} onChange={(e) => {this.handleConfigurationChange('global_image_url', e)}} />
+                </Form.Field>
+                <Form.Field>
+                  <label>URL du logo principal (ex: barre de navigation)</label>
+                  <Input type="text" value={configuration.global_logo_url} onChange={(e) => {this.handleConfigurationChange('global_logo_url', e)}} />
+                </Form.Field>
                 <Header as="h3">Barre de navigation</Header>
                 <Form.Field>
                   <label>Nom de votre espace (nom du territoire)</label>

@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import {Form, Input, Button, Grid, Divider} from 'semantic-ui-react'
 
 class SigninForm extends Component{
@@ -111,6 +111,9 @@ class SigninForm extends Component{
          {google_connected ?
             <Button color="red" icon="google" content="Se connecter avec Google" onClick={(e) => {this.connect_google(e)}}/>
          : ''}
+         <Divider/>
+         <a onClick={(e) => this.go('/lost_password', e)}>Mot de passe oublié ?</a>
+          
        </Form>
     )
   }

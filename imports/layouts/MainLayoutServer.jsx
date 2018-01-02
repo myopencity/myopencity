@@ -26,6 +26,7 @@ import NewProjectPage from '/imports/pages/projects/NewProjectPage'
 import EditProjectPage from '/imports/pages/projects/EditProjectPage'
 import MyProjectsPage from '/imports/pages/projects/MyProjectsPage'
 import SendPasswordEmail from '/imports/pages/accounts/SendPasswordEmail'
+import ResetPassword from '/imports/pages/accounts/ResetPassword'
 import NotFound from '/imports/pages/general/NotFound'
 
 export class MainLayoutServer extends Component {
@@ -67,6 +68,7 @@ export class MainLayoutServer extends Component {
             <Public component={ MyProfile }  exact path="/me/profile"       { ...this.props } />
             <Public component={ MyProjectsPage }  exact path="/me/projects"       { ...this.props } />
             <Public component={ SendPasswordEmail }  exact path="/lost_password" { ...this.props } />
+            <Public component={ ResetPassword }  exact path="/reset-password/:token" { ...this.props } />
             <Public component={ NotFound } path="*"  { ...this.props } />
           </Switch>
         </main>
