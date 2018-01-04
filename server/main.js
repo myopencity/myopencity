@@ -56,6 +56,7 @@ Meteor.startup(() => {
     }
     return true
   })
+  
 
   // Handling external services login
   Accounts.onCreateUser(function (options, user) {

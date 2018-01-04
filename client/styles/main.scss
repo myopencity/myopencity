@@ -42,6 +42,10 @@
   background-repeat: no-repeat;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 /* -------- COLOR CLASSES */
 .white{
   color: white !important;
@@ -73,6 +77,11 @@
 
 
 /* -------- MAIN CLASSES */
+
+body{
+  -webkit-print-color-adjust: exact;
+}
+
 .main-container{
   min-height: 100vh;
 }

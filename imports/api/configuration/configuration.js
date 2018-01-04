@@ -107,6 +107,10 @@ const ConfigurationSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: false
   },
+  email_smtp_connected: {
+    type: Boolean,
+    defaultValue: false
+  },
   projects_anonymous_choice: {
     type: Boolean,
     defaultValue: true
@@ -122,7 +126,15 @@ const ConfigurationSchema = new SimpleSchema({
   alternatives_anonymous_default: {
     type: Boolean,
     defaultValue: false
-  } 
+  },
+  global_image_url: {
+    type: String,
+    defaultValue: "/images/myopencity-logo.png"
+  },
+  global_logo_url: {
+    type: String,
+    defaultValue: "/images/myopencity-favicon.png"
+  }
 })
 
 Configuration.attachSchema(ConfigurationSchema);

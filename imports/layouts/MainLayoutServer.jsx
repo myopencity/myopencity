@@ -25,6 +25,8 @@ import ProjectPage from '/imports/pages/projects/ProjectPage'
 import NewProjectPage from '/imports/pages/projects/NewProjectPage'
 import EditProjectPage from '/imports/pages/projects/EditProjectPage'
 import MyProjectsPage from '/imports/pages/projects/MyProjectsPage'
+import SendPasswordEmail from '/imports/pages/accounts/SendPasswordEmail'
+import ResetPassword from '/imports/pages/accounts/ResetPassword'
 import NotFound from '/imports/pages/general/NotFound'
 
 export class MainLayoutServer extends Component {
@@ -48,10 +50,10 @@ export class MainLayoutServer extends Component {
       <div id="main-layout">
         <main>
           <Dimmer active style={{opacity: '1 !important'}}>
-              <Image src="/images/myopencity-logo.png" inline size="mini"/><br/>
+              <Image src={configuration.global_logo_url} inline size="small"/><br/>
               <Loader color="blue"></Loader>
           </Dimmer>
-          <Switch>
+          <Switch style={{display: 'none'}}>
             <Public component={ Landing }  exact path="/"       { ...this.props } />
             <Public component={ SignupPage }  exact path="/sign_up"       { ...this.props } />
             <Public component={ SigninPage }  exact path="/sign_in"       { ...this.props } />
@@ -65,6 +67,8 @@ export class MainLayoutServer extends Component {
             <Public component={ ProjectPage }  exact path="/projects/:shorten_url"       { ...this.props } />
             <Public component={ MyProfile }  exact path="/me/profile"       { ...this.props } />
             <Public component={ MyProjectsPage }  exact path="/me/projects"       { ...this.props } />
+            <Public component={ SendPasswordEmail }  exact path="/forgot_password" { ...this.props } />
+            <Public component={ ResetPassword }  exact path="/reset-password/:token" { ...this.props } />
             <Public component={ NotFound } path="*"  { ...this.props } />
           </Switch>
         </main>

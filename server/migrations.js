@@ -2,6 +2,20 @@ import {Meteor} from 'meteor/meteor'
 import {Consults} from '/imports/api/consults/consults'
 import {Configuration} from '/imports/api/configuration/configuration'
 
+
+Migrations.add({
+  version: 4,
+  name: "MIGRATION 4 : Add logo and global image customization",
+  up() {
+    Configuration.find({global_image_url: {$exists: false}, global_logo_url: {$exists: false}}).forEach(configuration => {
+      Configuration.update(configuration._id, {$set: {global_image_url: "/images/myopencity-logo.png", global_logo_url: "/images/myopencity-favicon.png"}})
+    })
+  },
+  down() {
+    Configuration.update({}, {$unset: {global_image_url: true, global_logo_url: true}}, {multi: true})
+  }
+})
+
 Migrations.add({
   version: 3,
   name: "MIGRATION 3 : Add configuration anonymous fields",

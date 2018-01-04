@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
-import {Grid, Header, Button, Loader, Container} from 'semantic-ui-react'
+import {Grid, Header, Button, Loader, Container, Icon} from 'semantic-ui-react'
 import ConsultPartial from '/imports/components/consults/ConsultPartial'
 import {Consults} from '/imports/api/consults/consults'
 import { createContainer } from 'meteor/react-meteor-data'
@@ -36,6 +36,11 @@ export class AdminConsultsPage extends TrackerReact(Component){
               <Link to="/admin/consults/new">
                 <Button positive>Créer une nouvelle consultation</Button>
               </Link>
+              {consults.length > 0 &&
+                <Link to="/admin/consults_summary" target="_blank">
+                  <Button><Icon name="print"/> Compte rendu imprimable</Button>
+                </Link>
+              }
               <Grid stackable>
                 {consults.map((consult, index) => {
                   return (
