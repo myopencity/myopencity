@@ -77,6 +77,11 @@
 
 
 /* -------- MAIN CLASSES */
+
+body{
+  -webkit-print-color-adjust: exact;
+}
+
 .main-container{
   min-height: 100vh;
 }
