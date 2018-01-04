@@ -2,6 +2,7 @@ import {Meteor} from 'meteor/meteor'
 import {Consults} from '/imports/api/consults/consults'
 import {Configuration} from '/imports/api/configuration/configuration'
 
+
 Migrations.add({
   version: 4,
   name: "MIGRATION 4 : Add logo and global image customization",
