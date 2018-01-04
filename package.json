@@ -9,6 +9,7 @@
     "bcrypt": "^1.0.2",
     "chart.js": "^2.6.0",
     "chartjs": "^0.3.24",
+    "core-js": "^2.5.3",
     "lodash": "^4.17.4",
     "mailer": "^0.6.7",
     "meteor-node-stubs": "~0.2.4",
