@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Header, Input, Form, Button } from 'semantic-ui-react';
+import { Grid, Header, Input, Form, Button, Container } from 'semantic-ui-react';
 
 export default class SendPasswordEmail extends Component {
 
@@ -7,7 +7,7 @@ export default class SendPasswordEmail extends Component {
         email: ""
     }
 
-    handleChange = (e, {name}) => {
+    handleChange = (e, { name }) => {
         let state = this.state
         state[name] = e.target.value
         this.setState(state)
@@ -39,20 +39,22 @@ export default class SendPasswordEmail extends Component {
     render() {
         const { email } = this.state
         return (
-            <Grid stackable>
-                <Grid.Column width={16} className="center-align">
-                    <Header as='h3'>Vous avez perdu votre mot de passe ?</Header>
-                    <p>Entrez votre adresse email pour recevoir un email de réinitialisation</p>
-                    <Form onSubmit={this.sendPasswordEmail}>
-                        <Form.Field>
-                            <Input type="email" onChange={this.handleChange} name="email" value={email} placeholder="Email" />
-                        </Form.Field>
-                        <Form.Field>
-                            <Button disabled={!email} color="green" icon="mail" content="Demander un nouveau mot de passe" />
-                        </Form.Field>
-                    </Form>
-                </Grid.Column>
-            </Grid>
+            <Container>
+                <Grid stackable className="main-container">
+                    <Grid.Column width={16} className="center-align wow fadeInUp">
+                        <Header as='h1'>Vous avez perdu votre mot de passe ?</Header>
+                        <p>Entrez votre adresse email pour recevoir un email de réinitialisation</p>
+                        <Form onSubmit={this.sendPasswordEmail}>
+                            <Form.Field>
+                                <Input type="email" onChange={this.handleChange} name="email" value={email} placeholder="Email" />
+                            </Form.Field>
+                            <Form.Field>
+                                <Button disabled={!email} color="green" icon="mail" content="Demander un nouveau mot de passe" />
+                            </Form.Field>
+                        </Form>
+                    </Grid.Column>
+                </Grid>
+            </Container>
         );
     }
 }

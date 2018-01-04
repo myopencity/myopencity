@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Grid, Header, Form, Input, Button } from 'semantic-ui-react';
+import { Grid, Header, Form, Input, Button, Container, Icon } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom'
 
-export default class ResetPassword extends Component {
+class ResetPassword extends Component {
 
     state = {
         password: "",
@@ -34,35 +35,43 @@ export default class ResetPassword extends Component {
                     type: 'success',
                     style: 'growl-bottom-left',
                 })
+                this.props.history.push('/sign_in')
             }
         });
     }
 
     render() {
-        const {password, password_confirmation} = this.state
+        const { password, password_confirmation } = this.state
 
         return (
-            <Grid stackable>
-                <Grid.Column width={16} className="center-align">
-                    <Header as='h3'>Entrez votre nouveau mot de passe</Header>
-                    <Form onSubmit={this.submit_form}>
-                        <Form.Group widths='equal'>
+            <Container>
+                <Grid stackable>
+                    <Grid.Column width={16} className="center-align">
+                        <Icon name="lock" size="huge" className="wow fadeInUp"/>
+                        <Header as='h1' className="wow fadeInDown">Changement de mot de passe</Header>
+                        <Form onSubmit={this.submit_form}>
+                            <Form.Group widths='equal'>
+                                <Form.Field>
+                                    <label>Nouveau mot de passe</label>
+                                    <Input type='password' onChange={this.handleChange} value={password} attr="password" />
+                                </Form.Field>
+                                <Form.Field>
+                                    <label>Confirmation du nouveau mot de passe</label>
+                                    <Input type='password' onChange={this.handleChange} value={password_confirmation} attr="password_confirmation" />
+                                    {password && password_confirmation && (password !== password_confirmation) ?
+                                        <label>Le mot de passe et sa confirmation sont différents</label>
+                                        : ''}
+                                </Form.Field>
+                            </Form.Group>
                             <Form.Field>
-                                <Input type='password' onChange={this.handleChange} value={password} attr="password" />
+                                <Button color='green' content='Envoyer' disabled={password == '' || password_confirmation == '' || password !== password_confirmation} />
                             </Form.Field>
-                            <Form.Field>
-                                <Input type='password' onChange={this.handleChange} value={password_confirmation} attr="password_confirmation" />
-                                {password && password_confirmation && (password !== password_confirmation) ?
-                                    <label>Le mot de passe et sa confirmation sont différents</label>
-                                    : ''}
-                            </Form.Field>
-                        </Form.Group>
-                        <Form.Field>
-                            <Button color='green' content='Envoyer' disabled={password == '' || password_confirmation == '' || password !== password_confirmation} />
-                        </Form.Field>
-                    </Form>
-                </Grid.Column>
-            </Grid>
+                        </Form>
+                    </Grid.Column>
+                </Grid>
+            </Container>
         );
     }
 }
+
+export default withRouter(ResetPassword)

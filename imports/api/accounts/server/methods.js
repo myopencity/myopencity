@@ -102,7 +102,7 @@ Meteor.methods({
         }
       })
 
-      const resetPasswordUrl = Accounts.urls.resetPassword(token);
+      const resetPasswordUrl = external_configuration.email_smtp_from_domain + "/reset-password/" + token;
       const sheet = new ServerStyleSheet()
 
       const html = renderToString(
@@ -115,12 +115,12 @@ Meteor.methods({
         mailer.send({
           host: external_configuration.email_smtp_server,
           port: external_configuration.email_smtp_port,
-          domain: "localhost",
+          domain: external_configuration.email_smtp_from_domain,
           authentication: "login",
           username: external_configuration.email_smtp_username,
           password: external_configuration.email_smtp_password,
           to: user.emails[0].address,
-          from: 'contac@myopencity.io',
+          from: external_configuration.email_smtp_from,
           subject: "Demande de nouveau mot de passe",
           html: html
         })
@@ -139,6 +139,13 @@ Meteor.methods({
       const user = Meteor.users.findOne({"services.password.reset.token": token})
       if(user){
         Accounts.setPassword(user._id, password)
+        Meteor.users.update({_id: user._id}, {$set: {
+          "services.password.reset": {
+            token: null,
+            email: null,
+            when: null
+          }
+        }})
       }else{
         throw new Meteor.Error('403', "Aucun utilisateur correspondant")
       }

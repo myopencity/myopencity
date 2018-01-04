@@ -62,7 +62,9 @@ export class AdminExternalApisPage extends TrackerReact(Component) {
       email_smtp_password,
       email_smtp_port,
       email_smtp_server,
-      email_smtp_user
+      email_smtp_user,
+      email_smtp_from,
+      email_smtp_from_domain
     } = this.state.external_apis_configuration
 
     if (amazon_public_key && amazon_private_key) {
@@ -126,8 +128,8 @@ export class AdminExternalApisPage extends TrackerReact(Component) {
       })
     }
 
-    if (email_smtp_password && email_smtp_port && email_smtp_server && email_smtp_user) {
-      Meteor.call('external_apis_configuration.email_smtp_update', { email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user }, (error, result) => {
+    if (email_smtp_port && email_smtp_server && email_smtp_user && email_smtp_from && email_smtp_from_domain) {
+      Meteor.call('external_apis_configuration.email_smtp_update', { email_smtp_password, email_smtp_port, email_smtp_server, email_smtp_user, email_smtp_from, email_smtp_from_domain }, (error, result) => {
         if (error) {
           console.log(error)
           Bert.alert({
@@ -229,6 +231,7 @@ export class AdminExternalApisPage extends TrackerReact(Component) {
                             <Form.Group widths="equal">
                               <Input placeholder="********" label="Mot de passe SMTP" value={external_apis_configuration.email_smtp_password} type="password" onChange={(e) => { this.handleExternalConfigChange('email_smtp_password', e) }} />
                               <Input placeholder="contact@votreopencity.com" label="Adresse d'envoi" value={external_apis_configuration.email_smtp_from} type="text" onChange={(e) => { this.handleExternalConfigChange('email_smtp_from', e) }} />
+                              <Input placeholder="https://votreopencity.com" label="Domaine d'envoi" value={external_apis_configuration.email_smtp_from_domain} type="text" onChange={(e) => { this.handleExternalConfigChange('email_smtp_from_domain', e) }} />
                             </Form.Group>
                           </Form>
                           {amazon_connected ?
