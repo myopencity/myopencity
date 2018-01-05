@@ -2,7 +2,9 @@ import {Meteor} from 'meteor/meteor'
 import {Consults} from '../consults'
 
 Meteor.publish('consults.all', function(){
-  return Consults.find()
+  if(Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+    return Consults.find()
+  }
 })
 
 Meteor.publish('consults.visible', function(){

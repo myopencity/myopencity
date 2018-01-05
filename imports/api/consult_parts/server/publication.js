@@ -10,5 +10,7 @@ Meteor.publish('consult_parts.admin_by_consult_url_shorten', function(url_shorte
 })
 
 Meteor.publish('consult_parts.all', function(){
-  return ConsultParts.find({})
+  if(Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+    return ConsultParts.find({})
+  }
 })
