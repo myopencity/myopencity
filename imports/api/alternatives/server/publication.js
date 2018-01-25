@@ -2,9 +2,7 @@ import {Meteor} from 'meteor/meteor'
 import {Alternatives} from '../alternatives'
 
 Meteor.publish('alternatives.all', function(){
-  if(!this.userId || !Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
-    throw new Meteor.Error('403', "Vous n'êtes pas administrateur")
-  }else{
+  if(Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
     return Alternatives.find({})
   }
 })

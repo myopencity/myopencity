@@ -88,7 +88,7 @@ class SigninForm extends Component{
   }
 
   render(){
-    const {facebook_connected, google_connected} = Meteor.isClient && Session.get('global_configuration')
+    const {facebook_connected, google_connected, email_smtp_connected} = Meteor.isClient && Session.get('global_configuration')
 
     return(
        <Form onSubmit={(e) => {this.signin(e)}} className="center-align">
@@ -111,8 +111,12 @@ class SigninForm extends Component{
          {google_connected ?
             <Button color="red" icon="google" content="Se connecter avec Google" onClick={(e) => {this.connect_google(e)}}/>
          : ''}
-         <Divider/>
-         <a onClick={(e) => this.go('/forgot_password', e)} className="pointer">Mot de passe oublié ?</a>
+         {email_smtp_connected &&
+          [
+            <Divider/>,
+            <a onClick={(e) => this.go('/forgot_password', e)} className="pointer">Mot de passe oublié ?</a>
+          ]
+        }
           
        </Form>
     )

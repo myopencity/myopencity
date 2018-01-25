@@ -32,7 +32,7 @@ export class AdminConsultsSummaryPage extends Component {
                             const parts = _.filter(consult_parts, (o) => { return (o.consult == consult._id && o.votes_activated) })
                             return (
                                 <Grid.Column width={16}>
-                                    <Header as='h2' style={{backgroundColor: navbar_color, padding: "1em"}}>{consult.title}</Header>
+                                    <Header as='h2' style={{backgroundColor: navbar_color, padding: "1em", color: "white"}}>{consult.title}</Header>
                                     <p>Créée le {moment(consult.created_at).format('DD.MM.YYYY à HH:mm')}</p>
                                     <Grid stackable>
                                         {parts.map((part, part_index) => {

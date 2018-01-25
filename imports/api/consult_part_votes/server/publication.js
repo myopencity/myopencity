@@ -2,7 +2,9 @@ import {Meteor} from 'meteor/meteor'
 import {ConsultPartVotes} from '../consult_part_votes'
 
 Meteor.publish('consult_part_votes.all', function(){
-  return ConsultPartVotes.find({})
+  if(Roles.userIsInRole(this.userId, ['admin', 'moderator'])){
+    return ConsultPartVotes.find({})
+  }
 })
 
 Meteor.publish('consult_part_votes.by_part', function(consult_part_id){
