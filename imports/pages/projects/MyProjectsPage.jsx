@@ -24,15 +24,17 @@ export class MyProjectsPage extends Component {
           </Grid.Column>
 
           {projects.length ?
-            <Grid stackable>
-              {projects.map((project, index) => {
-                return (
-                  <Grid.Column width={5} className="center-align wow fadeInUp">
-                    <ProjectPartial project={project} />
-                  </Grid.Column>
-                )
-              })}
-            </Grid>
+            <Grid.Column width={16}>
+              <Grid stackable>
+                {projects.map((project, index) => {
+                  return (
+                    <Grid.Column width={5} className="center-align wow fadeInUp">
+                      <ProjectPartial project={project} />
+                    </Grid.Column>
+                  )
+                })}
+              </Grid>
+            </Grid.Column>
             :
             <Grid.Column width={16} className="center-align wow fadeInDown" data-wow-delay="0.3s">
               <Header as='h3'>Vous n'avez encore proposé aucun projet</Header>
