@@ -27,6 +27,7 @@ import EditProjectPage from '/imports/pages/projects/EditProjectPage'
 import MyProjectsPage from '/imports/pages/projects/MyProjectsPage'
 import SendPasswordEmail from '/imports/pages/accounts/SendPasswordEmail'
 import ResetPassword from '/imports/pages/accounts/ResetPassword'
+import Conditions from '/imports/pages/general/Conditions'
 import NotFound from '/imports/pages/general/NotFound'
 
 export class MainLayoutServer extends Component {
@@ -63,6 +64,7 @@ export class MainLayoutServer extends Component {
           </Dimmer>
           <Switch style={{ display: 'none' }}>
             <Public component={Landing} exact path="/"       { ...this.props } />
+            <Public component={Conditions} exact path="/conditions" { ...this.props } />
             <Public component={SignupPage} exact path="/sign_up"       { ...this.props } />
             <Public component={SigninPage} exact path="/sign_in"       { ...this.props } />
             <Public component={ConsultsPage} exact path="/consults"       { ...this.props } />

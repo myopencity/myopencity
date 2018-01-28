@@ -8,6 +8,7 @@ import ConfigurationLandingForm from '/imports/components/admin/ConfigurationLan
 import ConfigurationNavbarForm from '/imports/components/admin/ConfigurationNavbarForm'
 import ConfigurationConsultsForm from '/imports/components/admin/ConfigurationConsultsForm'
 import ConfigurationProjectsForm from '/imports/components/admin/ConfigurationProjectsForm'
+import ConfigurationFooterForm from '/imports/components/admin/ConfigurationFooterForm'
 
 export default class AdminConfigurationPage extends TrackerReact(Component) {
 
@@ -17,7 +18,7 @@ export default class AdminConfigurationPage extends TrackerReact(Component) {
   */
 
   state = {
-    part: "general" // general / consults / projects / navbar / landing
+    part: "general" // general / consults / projects / navbar / landing / footer
   }
 
   componentWillMount() {
@@ -69,7 +70,7 @@ export default class AdminConfigurationPage extends TrackerReact(Component) {
     return (
       <Grid stackable className="admin-page">
         <Container>
-          <Grid.Column width={16}>
+          <Grid.Column width={16} style={{padding: "3em 0 0"}} >
             <Header as="h1" className="wow fadeInLeft">Configuration de votre OpenCity</Header>
           </Grid.Column>
           <Grid.Column width={16} className="admin-form-container">
@@ -93,6 +94,10 @@ export default class AdminConfigurationPage extends TrackerReact(Component) {
           <Menu.Item active={part === 'projects'} onClick={() => this.changePart('projects')} >
                 <Icon name="retweet" />
                 Propositions
+          </Menu.Item>
+          <Menu.Item active={part === 'footer'} onClick={() => this.changePart('footer')} >
+                <Icon name="quote left" />
+                Footer / CGU
           </Menu.Item>
             </Menu>
             {part == 'general' &&
@@ -123,6 +128,12 @@ export default class AdminConfigurationPage extends TrackerReact(Component) {
               [
                 <Header as='h3'>Propositions citoyennes</Header>,
                 <ConfigurationProjectsForm className="wow fadeInDown" />
+              ]
+            }
+            {part == 'footer' &&
+              [
+                <Header as='h3'>Footer / Conditions d'utilisation</Header>,
+                <ConfigurationFooterForm className="wow fadeInDown" />
               ]
             }
           </Grid.Column>

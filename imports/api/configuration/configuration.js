@@ -162,7 +162,40 @@ const ConfigurationSchema = new SimpleSchema({
   global_logo_url: {
     type: String,
     defaultValue: "/images/myopencity-favicon.png"
+  },
+  footer_display: {
+    type: Boolean,
+    defaultValue: true
+  },
+  footer_height: {
+    type: String,
+    defaultValue: "10em"
+  },
+  footer_color: {
+    type: String,
+    defaultValue: 'white'
+  },
+  footer_background_color: {
+    type: String,
+    defaultValue: '#1abc9c'
+  },
+  footer_cgu_display: {
+    type: String,
+    defaultValue: false
+  },
+  footer_content: {
+    type: String,
+    defaultValue: "Développé avec Myopencity, plateforme de Démocratie Open-Source"
+  },
+  cgu_term: {
+    type: String,
+    defaultValue: "Conditions d'utilisation"
+  },
+  cgu: {
+    type: String,
+    defaultValue: ""
   }
+
 })
 
 Configuration.attachSchema(ConfigurationSchema);

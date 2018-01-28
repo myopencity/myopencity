@@ -15,7 +15,12 @@ Migrations.add({
           navbar_projects: true,
           ended_consults_title: "Consultations terminées",
           consults_title: "Consultations en cours",
-          consults_no_consults: "Aucune consultation en cours"
+          consults_no_consults: "Aucune consultation en cours",
+          footer_display: true,
+          footer_height: "10em",
+          footer_color: "white",
+          footer_background_color: '#1abc9c',
+          footer_cgu_display: false
         }
       })
     })

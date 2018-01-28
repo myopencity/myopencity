@@ -143,7 +143,7 @@ export class AdminLayout extends TrackerReact(Component) {
 }
 
 export default AdminLayoutContainer = createContainer(() => {
-  const globalConfigurationPublication = Meteor.subscribe('global_configuration')
+  const globalConfigurationPublication = Meteor.subscribe('configuration.with_cgu')
   const loading = !globalConfigurationPublication.ready()
   const global_configuration = Configuration.findOne({})
   return {
