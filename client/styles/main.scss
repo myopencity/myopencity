@@ -83,7 +83,7 @@ body{
 }
 
 .main-container{
-  min-height: 100vh;
+  min-height: 90vh;
 }
 
 .ui {
@@ -111,6 +111,16 @@ body{
 
 .pusher, .pushable {
   min-height: 100vh !important;
+}
+
+.avatar-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 100em;
+  height: 21em;
+  width: 21em;
+  display: inline-block;
 }
 
 // OVERIDE CLASSES

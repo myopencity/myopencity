@@ -70,10 +70,6 @@ export default class EditProfileForm extends TrackerReact(Component){
                <label>Présentez vous en quelques mots</label>
                  <TinyMCE
                    content={user_profile.description}
-                   config={{
-                     plugins: 'image autoresize',
-                     toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | formatselect',
-                   }}
                    onChange={this.handleDescriptionChange.bind(this)}
                   />
              </Form.Field>

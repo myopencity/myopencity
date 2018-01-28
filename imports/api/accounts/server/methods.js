@@ -8,6 +8,10 @@ import { renderToString } from "react-dom/server"
 import { ServerStyleSheet } from "styled-components"
 import { Random } from 'meteor/random'
 import { Accounts } from 'meteor/accounts-base'
+import { Projects } from '/imports/api/projects/projects'
+import { Alternatives } from '/imports/api/alternatives/alternatives'
+import { ProjectLikes } from '/imports/api/project_likes/project_likes'
+import { ConsultPartVotes } from '/imports/api/consult_part_votes/consult_part_votes'
 
 Meteor.methods({
   'user.signup'({ email, password, username }) {
@@ -149,6 +153,18 @@ Meteor.methods({
       }else{
         throw new Meteor.Error('403', "Aucun utilisateur correspondant")
       }
+    }
+  },
+  'users.profile_stats'(user_id){
+    const user = Meteor.users.findOne({_id: user_id})
+    if(user){
+      const projects = Projects.find({author: user_id}).count()
+      const votes = ConsultPartVotes.find({user: user_id}).count()
+      const project_likes = ProjectLikes.find({user: user_id}).count()
+      const alternatives = Alternatives.find({user: user_id}).count()
+      return {projects, votes, project_likes, alternatives}
+    }else{
+      throw new Meteor.Error('403', "Utilisateur introuvable")
     }
   }
 })
