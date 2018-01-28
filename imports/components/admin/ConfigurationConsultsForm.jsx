@@ -144,6 +144,19 @@ export default class ConfigurationConsultsForm extends Component {
                                 <SketchPicker color={configuration.alternative_like_icon_color} onChangeComplete={(e) => { this.handleColorChange('alternative_like_icon_color', e) }} />
                             </Form.Field>
                         </Form.Group>
+                        <Divider className="opencity-divider" style={{ color: configuration.navbar_color }} section>Anonymat</Divider>
+                        <Form.Group>
+                            <Form.Checkbox
+                                checked={configuration.alternatives_anonymous_choice}
+                                onClick={() => this.toggleConfiguration('alternatives_anonymous_choice')}
+                                label={"Les citoyens peuvent choisir l'anonymat des alternatives"}
+                            />
+                            <Form.Checkbox
+                                checked={configuration.alternatives_anonymous_default}
+                                onClick={() => this.toggleConfiguration('alternatives_anonymous_default')}
+                                label={"Alternatives anonymes par défaut"}
+                            />
+                        </Form.Group>
                         <Button color="green" content="Valider les modifications" />
                     </Form>
                 </Grid.Column>
