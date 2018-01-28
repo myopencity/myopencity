@@ -52,7 +52,6 @@ export default class ConfigurationNavbarForm extends Component {
     }
 
     toggleConfiguration = (attr) => {
-        console.log('attr', attr)
         let { configuration } = this.state
         configuration[attr] = !configuration[attr]
         this.setState({ configuration })

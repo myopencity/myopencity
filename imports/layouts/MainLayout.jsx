@@ -1,10 +1,10 @@
 import React, { Component } from "react"
 
 //packages
-import { Switch, withRouter }           from 'react-router-dom'
-import { Helmet }           from "react-helmet"
+import { Switch, withRouter } from 'react-router-dom'
+import { Helmet } from "react-helmet"
 import { createContainer } from 'meteor/react-meteor-data'
-import {Loader, Grid, Sidebar, Button, Menu, Icon} from 'semantic-ui-react'
+import { Loader, Grid, Sidebar, Button, Menu, Icon } from 'semantic-ui-react'
 
 // Components
 import Navbar from '/imports/components/navigation/Navbar'
@@ -13,7 +13,7 @@ import Navbar from '/imports/components/navigation/Navbar'
 import Public from '/imports/components/routes/Public'
 
 // Collection
-import {Configuration} from '/imports/api/configuration/configuration'
+import { Configuration } from '/imports/api/configuration/configuration'
 
 // Pages
 import Landing from '/imports/pages/general/Landing'
@@ -34,79 +34,80 @@ import NotFound from '/imports/pages/general/NotFound'
 import TrackerReact from 'meteor/ultimatejs:tracker-react'
 
 export class MainLayout extends TrackerReact(Component) {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       loading: true
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.setState({ loading: false })
   }
 
-  componentWillReceiveProps(props){
+  componentWillReceiveProps(props) {
     console.log('this.props', props)
-    if(props.global_configuration.initial_configuration){
+    if (props.global_configuration.initial_configuration) {
       props.history.push('/initial/presentation')
     }
   }
 
-  toggleSidebar(e){
+  toggleSidebar(e) {
     e.preventDefault()
     Session.set('open_sidebar', !Session.get('open_sidebar'))
   }
 
-  go(route, e){
+  go(route, e) {
     e.preventDefault()
     this.props.history.push(route)
     Session.set('open_sidebar', false)
   }
 
-  render(){
+  render() {
     const { global_configuration, loading } = this.props
 
     console.log("CLIENT: MAIN LAYOUT");
 
 
-    if(!loading){
+    if (!loading) {
       Session.set('global_configuration', global_configuration)
-      return(
+      return (
         <div className="main-container">
           <Helmet>
-            <title>{global_configuration.website_name}</title>
-            <meta name="description" content={global_configuration.website_description} />
+            <title>{global_configuration.main_title}</title>
+            <meta name="description" content={global_configuration.main_description} />
+            <link rel="icon" href={global_configuration.global_logo_url} />
             {!global_configuration.seo_active ?
-              <meta name="robots" content="noindex"/>
-            : ''}
+              <meta name="robots" content="noindex" />
+              : ''}
           </Helmet>
           <Sidebar.Pushable>
             <Sidebar as={Menu} animation='push' width='thin' visible={Session.get('open_sidebar')} className="main-sidebar" icon='labeled' vertical inverted>
-              <Menu.Item name='consultations' onClick={(e) => {this.go('/', e)}}>
+              <Menu.Item name='consultations' onClick={(e) => { this.go('/', e) }}>
                 Accueil
               </Menu.Item>
-              <Menu.Item name='consultations' onClick={(e) => {this.go('/consults', e)}}>
+              <Menu.Item name='consultations' onClick={(e) => { this.go('/consults', e) }}>
                 Consultations
               </Menu.Item>
-              <Menu.Item name='propositions' onClick={(e) => {this.go('/projects', e)}}>
+              <Menu.Item name='propositions' onClick={(e) => { this.go('/projects', e) }}>
                 Propositions
               </Menu.Item>
               {Meteor.userId() ?
                 <span>
                   {Roles.userIsInRole(Meteor.userId(), ['admin', 'moderator']) ?
-                    <Menu.Item floated="bottom" name='admin' onClick={(e) => {this.go('/admin/consults', e)}}>
+                    <Menu.Item floated="bottom" name='admin' onClick={(e) => { this.go('/admin/consults', e) }}>
                       Admin
                     </Menu.Item>
-                  : ''}
-                  <Menu.Item floated="bottom" name='profile' onClick={(e) => {this.go('/me/profile', e)}}>
+                    : ''}
+                  <Menu.Item floated="bottom" name='profile' onClick={(e) => { this.go('/me/profile', e) }}>
                     Profil
                   </Menu.Item>
-                  <Menu.Item floated="bottom" name='profile' onClick={(e) => {this.logout(e)}}>
+                  <Menu.Item floated="bottom" name='profile' onClick={(e) => { this.logout(e) }}>
                     Déconnexion
                   </Menu.Item>
                 </span>
-              :
-                <Menu.Item name='sign_in' onClick={(e) => {this.go('/sign_in', e)}}>
+                :
+                <Menu.Item name='sign_in' onClick={(e) => { this.go('/sign_in', e) }}>
                   Connexion
                 </Menu.Item>
               }
@@ -119,22 +120,22 @@ export class MainLayout extends TrackerReact(Component) {
                 <Grid.Column width={16}>
                   <main>
                     <Switch>
-                      <Public component={ Landing }  exact path="/" { ...this.props } />
-                      <Public component={ SignupPage }  exact path="/sign_up"       { ...this.props } />
-                      <Public component={ SigninPage }  exact path="/sign_in"       { ...this.props } />
-                      <Public component={ ConsultsPage }  exact path="/consults"       { ...this.props } />
-                      <Public component={ ConsultPage }  exact path="/consults/:urlShorten"       { ...this.props } />
-                      <Public component={ ProfilePage }  exact path="/profile/:user_id"       { ...this.props } />
-                      <Public component={ ProjectsPage }  exact path="/projects"       { ...this.props } />
-                      <Public component={ NewProjectPage }  exact path="/projects/new"       { ...this.props } />
-                      <Public component={ NewProjectPage }  exact path="/projects/new/:parent_id"       { ...this.props } />
-                      <Public component={ EditProjectPage }  exact path="/projects/:shorten_url/edit"       { ...this.props } />
-                      <Public component={ ProjectPage }  exact path="/projects/:shorten_url"       { ...this.props } />
-                      <Public component={ MyProfile }  exact path="/me/profile"       { ...this.props } />
-                      <Public component={ MyProjectsPage }  exact path="/me/projects"       { ...this.props } />
-                      <Public component={ SendPasswordEmail }  exact path="/forgot_password" { ...this.props } />
-                      <Public component={ ResetPassword }  exact path="/reset-password/:token" { ...this.props } />
-                      <Public component={ NotFound } path="*"  { ...this.props } />
+                      <Public component={Landing} exact path="/" { ...this.props } />
+                      <Public component={SignupPage} exact path="/sign_up"       { ...this.props } />
+                      <Public component={SigninPage} exact path="/sign_in"       { ...this.props } />
+                      <Public component={ConsultsPage} exact path="/consults"       { ...this.props } />
+                      <Public component={ConsultPage} exact path="/consults/:urlShorten"       { ...this.props } />
+                      <Public component={ProfilePage} exact path="/profile/:user_id"       { ...this.props } />
+                      <Public component={ProjectsPage} exact path="/projects"       { ...this.props } />
+                      <Public component={NewProjectPage} exact path="/projects/new"       { ...this.props } />
+                      <Public component={NewProjectPage} exact path="/projects/new/:parent_id"       { ...this.props } />
+                      <Public component={EditProjectPage} exact path="/projects/:shorten_url/edit"       { ...this.props } />
+                      <Public component={ProjectPage} exact path="/projects/:shorten_url"       { ...this.props } />
+                      <Public component={MyProfile} exact path="/me/profile"       { ...this.props } />
+                      <Public component={MyProjectsPage} exact path="/me/projects"       { ...this.props } />
+                      <Public component={SendPasswordEmail} exact path="/forgot_password" { ...this.props } />
+                      <Public component={ResetPassword} exact path="/reset-password/:token" { ...this.props } />
+                      <Public component={NotFound} path="*"  { ...this.props } />
                     </Switch>
                   </main>
                 </Grid.Column>
@@ -143,7 +144,7 @@ export class MainLayout extends TrackerReact(Component) {
           </Sidebar.Pushable>
         </div>
       )
-    }else{
+    } else {
       return <Loader className="inline-block">Chargement de la page</Loader>
     }
   }

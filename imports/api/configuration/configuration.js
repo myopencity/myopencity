@@ -7,6 +7,10 @@ const ConfigurationSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: true
   },
+  seo_active: {
+    type: Boolean,
+    defaultValue: false
+  },
   navbar_color: {
     type: String,
     defaultValue: "#1abc9c"
@@ -74,6 +78,18 @@ const ConfigurationSchema = new SimpleSchema({
   consult_description_font_size: {
     type: String,
     defaultValue: "1.2em"
+  },
+  consults_title: {
+    type: String,
+    defaultValue: "Consultations en cours"
+  },
+  ended_consults_title: {
+    type: String,
+    defaultValue: "Consultations terminées"
+  },
+  consults_no_consults: {
+    type: String,
+    defaultValue: "Aucune consultation en cours"
   },
   alternative_like_icon_color: {
     type: String,

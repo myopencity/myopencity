@@ -72,8 +72,35 @@ export default class ConfigurationConsultsForm extends Component {
                 <Grid.Column width={16}>
                     <Form onSubmit={this.submit_form}>
                         <Divider className="opencity-divider" style={{ color: configuration.navbar_color }} section>Termes et hauteurs</Divider>
-                        <Form.Group widths="equal">
+                        <Form.Group>
                             <Form.Input
+                                width={5}
+                                label="Titre de la page de consultations en cours"
+                                placeholder="ex: Consultations en cours"
+                                name="consults_title"
+                                value={configuration.consults_title}
+                                onChange={this.handleConfigurationChange}
+                            />
+                            <Form.Input
+                                width={5}
+                                label="Titre de la page de consultations terminées"
+                                placeholder="ex: Consultations en cours"
+                                name="ended_consults_title"
+                                value={configuration.ended_consults_title}
+                                onChange={this.handleConfigurationChange}
+                            />
+                            <Form.Input
+                                width={5}
+                                label="Message si pas de consultations"
+                                placeholder="Aucune consultation"
+                                name="consults_no_consults"
+                                value={configuration.consults_no_consults}
+                                onChange={this.handleConfigurationChange}
+                            />
+                        </Form.Group>
+                        <Form.Group>
+                            <Form.Input
+                                width={5}
                                 label="Terme pour les 'soutiens' d'alternative"
                                 placeholder="ex: likes"
                                 name="alternative_likes_term"
@@ -81,6 +108,7 @@ export default class ConfigurationConsultsForm extends Component {
                                 onChange={this.handleConfigurationChange}
                             />
                             <Form.Input
+                                width={5}
                                 label="Hauteur de la bannière de consultation"
                                 placeholder="10em"
                                 name="consult_header_height"
@@ -88,6 +116,7 @@ export default class ConfigurationConsultsForm extends Component {
                                 onChange={this.handleConfigurationChange}
                             />
                             <Form.Input
+                                width={5}
                                 label="Taille du texte de description"
                                 placeholder="1.2em"
                                 name="consult_description_font_size"

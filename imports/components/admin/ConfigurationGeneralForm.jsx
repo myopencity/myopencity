@@ -48,7 +48,11 @@ export default class ConfigurationGeneralForm extends Component {
         this.setState({ configuration })
     }
 
-    toggleState = (e) => this.setState({ [e.target.name]: !this.state[e.target.name] })
+    toggleConfiguration = (attr) => {
+        let { configuration } = this.state
+        configuration[attr] = !configuration[attr]
+        this.setState({ configuration })
+    }
 
     render() {
         const { configuration } = this.state
@@ -72,6 +76,11 @@ export default class ConfigurationGeneralForm extends Component {
                                 name="main_description"
                                 value={configuration.main_description}
                                 onChange={this.handleConfigurationChange}
+                            />
+                            <Form.Checkbox
+                                checked={configuration.seo_active}
+                                onClick={() => this.toggleConfiguration('seo_active')}
+                                label={"Référencement sur les réseaux sociaux"}
                             />
                         </Form.Group>
                         <Divider className="opencity-divider" style={{ color: configuration.navbar_color }} section>Images et icônes</Divider>
