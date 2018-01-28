@@ -12,10 +12,11 @@ export class ProfilePage extends TrackerReact(Component) {
   */
 
   state = {
-    stats: { projects: 0, votes: 0 }
+    stats: { projects: 0, votes: 0, alternatives: 0, project_likes: 0 }
   }
 
   componentDidMount() {
+    window.scrollTo(0,0)
     Meteor.call('users.profile_stats', this.props.user._id, (error, result) => {
       if (error) {
         console.log(error)
@@ -36,32 +37,32 @@ export class ProfilePage extends TrackerReact(Component) {
             <AvatarImage src={user.profile.avatar_url} className="wow fadeInUp" />
             <Header className="wow fadeInDown" data-wow-delay="0.2s" as="h1">{user.username}</Header>
           </Grid.Column>
-          <Grid.Column width={8}>
+          <Grid.Column width={8} className="profile-description">
             {user.profile.description ?
-              <Grid>
-                <Grid.Column width={16}>
+              <Grid stackable>
+                <Grid.Column width={16} >
                   <Header as='h2' className="wow fadeInUp" >À PROPOS DE MOI</Header>
                   <div className="wow fadeInUp" data-wow-delay="0.5s" dangerouslySetInnerHTML={{ __html: user.profile.description }}></div>
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column className="center-align" computer={4} mobile={8}>
                   <Statistic className="wow fadeInDown" data-wow-delay="0.2s">
                     <Statistic.Value>{stats.projects}</Statistic.Value>
                     <Statistic.Label>Propositions</Statistic.Label>
                   </Statistic>
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column className="center-align" computer={4} mobile={8}>
                   <Statistic className="wow fadeInDown" data-wow-delay="0.4s">
                     <Statistic.Value>{stats.project_likes}</Statistic.Value>
                     <Statistic.Label>Soutiens</Statistic.Label>
                   </Statistic>
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column className="center-align" computer={4} mobile={8}>
                   <Statistic className="wow fadeInDown" data-wow-delay="0.6s">
                     <Statistic.Value>{stats.votes}</Statistic.Value>
                     <Statistic.Label>Votes</Statistic.Label>
                   </Statistic>
                 </Grid.Column>
-                <Grid.Column width={4}>
+                <Grid.Column className="center-align" computer={4} mobile={8}>
                   <Statistic className="wow fadeInDown" data-wow-delay="0.7s">
                     <Statistic.Value>{stats.alternatives}</Statistic.Value>
                     <Statistic.Label>Alternatives</Statistic.Label>
