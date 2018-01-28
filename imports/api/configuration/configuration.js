@@ -11,9 +11,21 @@ const ConfigurationSchema = new SimpleSchema({
     type: String,
     defaultValue: "#1abc9c"
   },
+  navbar_consults: {
+    type: Boolean,
+    defaultValue: true
+  },
+  navbar_projects: {
+    type: Boolean,
+    defaultValue: true
+  },
   main_title: {
     type: String,
     defaultValue: "Ma ville"
+  },
+  main_description: {
+    type: String,
+    defaultValue: "Plateforme de démocratie"
   },
   landing_main_title: {
     type: String,

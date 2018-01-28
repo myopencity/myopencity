@@ -4,6 +4,23 @@ import {Configuration} from '/imports/api/configuration/configuration'
 
 
 Migrations.add({
+  version: 5,
+  name: "MIGRATION 5 : Add new configuration fields",
+  up() {
+    Configuration.find({main_description: {$exists: false}}).forEach(configuration => {
+      Configuration.update(configuration._id, {$set: {
+        main_description: "Plateforme de démocratie",
+        navbar_consults: true,
+        navbar_projects: true
+      }})
+    })
+  },
+  down() {
+    Configuration.update({}, {$unset: {main_description: true}}, {multi: true})
+  }
+}) 
+
+Migrations.add({
   version: 4,
   name: "MIGRATION 4 : Add logo and global image customization",
   up() {
