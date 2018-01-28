@@ -65,6 +65,11 @@ export class MainLayout extends TrackerReact(Component) {
     Session.set('open_sidebar', false)
   }
 
+  logout = () => {
+    Meteor.logout()
+    this.props.history.push('/')
+  }
+
   render() {
     const { global_configuration, loading } = this.props
 
@@ -104,7 +109,7 @@ export class MainLayout extends TrackerReact(Component) {
                   <Menu.Item floated="bottom" name='profile' onClick={(e) => { this.go('/me/profile', e) }}>
                     Profil
                   </Menu.Item>
-                  <Menu.Item floated="bottom" name='profile' onClick={(e) => { this.logout(e) }}>
+                  <Menu.Item floated="bottom" name='profile' onClick={this.logout}>
                     Déconnexion
                   </Menu.Item>
                 </span>
