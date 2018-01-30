@@ -20,7 +20,9 @@ Migrations.add({
           footer_height: "10em",
           footer_color: "white",
           footer_background_color: '#1abc9c',
-          footer_cgu_display: false
+          footer_cgu_display: false,
+          cgu_term: "Conditions d'utilisation",
+          cgu: ""
         }
       })
     })
