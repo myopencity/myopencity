@@ -180,7 +180,7 @@ const ConfigurationSchema = new SimpleSchema({
     defaultValue: '#1abc9c'
   },
   footer_cgu_display: {
-    type: String,
+    type: Boolean,
     defaultValue: false
   },
   footer_content: {
