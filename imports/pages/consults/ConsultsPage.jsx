@@ -28,11 +28,13 @@ export class ConsultsPage extends TrackerReact(Component){
   render(){
     const {consults, ended_consults, loading} = this.props
     const {show_ended_consults} = this.state
+    const {ended_consults_title, consults_title, consults_no_consults} = Meteor.isClient && Session.get('global_configuration')
+
     if(!loading){
       return(
         <Grid className="wow fadeInUp" stackable>
           <Grid.Column width={16} className="center-align">
-            <Header as="h1">Consultations {!show_ended_consults ? "en cours" : "terminées"}</Header>
+            <Header as="h1">{!show_ended_consults ? consults_title : ended_consults_title}</Header>
             {ended_consults.length > 0 ?
               <Button size="mini" onClick={(e) => {this.toggleState('show_ended_consults', e)}}>Voir les consultations {!show_ended_consults ? "terminées" : "en cours"}</Button>
             : ''}
@@ -40,7 +42,7 @@ export class ConsultsPage extends TrackerReact(Component){
           {!show_ended_consults ?
             <Grid.Column width={16}>
               {consults.length == 0 ?
-                <Header className="center-align" as="h3">Aucune consultation en cours actuellement</Header>
+                <Header className="center-align" as="h3">{consults_no_consults}</Header>
                 :
                 <Grid stackable>
                   {consults.map((consult, index) => {

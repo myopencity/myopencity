@@ -7,13 +7,29 @@ const ConfigurationSchema = new SimpleSchema({
     type: Boolean,
     defaultValue: true
   },
+  seo_active: {
+    type: Boolean,
+    defaultValue: false
+  },
   navbar_color: {
     type: String,
     defaultValue: "#1abc9c"
   },
+  navbar_consults: {
+    type: Boolean,
+    defaultValue: true
+  },
+  navbar_projects: {
+    type: Boolean,
+    defaultValue: true
+  },
   main_title: {
     type: String,
     defaultValue: "Ma ville"
+  },
+  main_description: {
+    type: String,
+    defaultValue: "Plateforme de démocratie"
   },
   landing_main_title: {
     type: String,
@@ -62,6 +78,18 @@ const ConfigurationSchema = new SimpleSchema({
   consult_description_font_size: {
     type: String,
     defaultValue: "1.2em"
+  },
+  consults_title: {
+    type: String,
+    defaultValue: "Consultations en cours"
+  },
+  ended_consults_title: {
+    type: String,
+    defaultValue: "Consultations terminées"
+  },
+  consults_no_consults: {
+    type: String,
+    defaultValue: "Aucune consultation en cours"
   },
   alternative_like_icon_color: {
     type: String,
@@ -134,7 +162,40 @@ const ConfigurationSchema = new SimpleSchema({
   global_logo_url: {
     type: String,
     defaultValue: "/images/myopencity-favicon.png"
+  },
+  footer_display: {
+    type: Boolean,
+    defaultValue: true
+  },
+  footer_height: {
+    type: String,
+    defaultValue: "10em"
+  },
+  footer_color: {
+    type: String,
+    defaultValue: 'white'
+  },
+  footer_background_color: {
+    type: String,
+    defaultValue: '#1abc9c'
+  },
+  footer_cgu_display: {
+    type: String,
+    defaultValue: false
+  },
+  footer_content: {
+    type: String,
+    defaultValue: "Développé avec Myopencity, plateforme de Démocratie Open-Source"
+  },
+  cgu_term: {
+    type: String,
+    defaultValue: "Conditions d'utilisation"
+  },
+  cgu: {
+    type: String,
+    defaultValue: ""
   }
+
 })
 
 Configuration.attachSchema(ConfigurationSchema);
